@@ -28,8 +28,6 @@ char	*ft_strjoin_modified(char const *s1, char const *s2)
 	res[s1_len + 1 + i] = '\0';
 	return (res);
 }
-
-
 /*
 5. 콜론으로 구분된 `CDPATH`에서 첫 경로명부터 시작한다. 경로명이 널이 아닐 때, 경로명이 /로 끝나지 않았다면 그 경로명, /, `directory`피연산자를 연결한 문자열이 디렉토리를 명시하는지 시험하라.
 경로명이 널일 때, `./피연산자`가 디렉토리를 명시하는 지 시험하라. 둘 중 결과가 되는 문자열이 존재하면, `curpath`를 그 문자열로 설정하고 7번으로 진행된다.
@@ -81,31 +79,193 @@ static int	check_cdpath(char **curpath_adr, char *env_cdpath)
 	}
 }
 
+static char	*delete_dot_slash(char *curpath)
+{
+	char	*temp;
+	int		i;
+	int		k;
+
+	i = 0;
+	while (ft_strnstr(curpath, "./", ft_strlen(curpath)))
+	{
+		temp = ft_strnstr(curpath, "./", 2);
+		*temp = ' ';
+		*(temp + 1) = ' ';
+		i += 2;
+	}
+	temp = (char *)malloc(ft_strlen(curpath) - i);
+	if (!temp)
+	{
+		free(curpath);
+		return (NULL);
+	}
+	i = 0;
+	k = 0;
+	while (k < ft_strlen(curpath))
+	{
+		if (curpath[i] != ' ')
+		{
+			temp[i] = curpath[k];
+			i++;
+		}
+		k++;
+	}
+	free(curpath);
+	return (temp);
+}
+
+static char	*get_p_comp(char *curpath)
+{
+	char	*dot_dot_adr;
+	char	*ret;
+	int		i;
+
+	dot_dot_adr = ft_strnstr(curpath, "..", ft_strlen(curpath));
+	if (curpath == dot_dot_adr)
+		return (dot_dot_adr);
+	dot_dot_adr -= 3;
+	i = 0;
+	while (*(dot_dot_adr - i) != '/')
+		i++;
+	i--;
+	ret = ft_substr((dot_dot_adr - i), 0, i);
+	if (!ret)
+		return (NULL);
+	return (ret);
+}
+
+static char	*process_dot_dots(char *curpath)
+{
+	char	*p_comp;
+	char	*temp;
+
+	while (ft_strnstr(curpath, "..", ft_strlen(curpath)))
+	{
+		p_comp = get_p_comp(curpath);
+		if (!p_comp)
+			return (NULL);
+		else if (p_comp == curpath)
+			curpath += 3;
+		else if (p_comp[0] != '/' || p_comp[0] != '.' || p_comp[1] == '.')
+		{
+			temp = ft_strdup(curpath);
+			if (!temp)
+				return (NULL);
+			*(ft_strnstr(temp, "..", ft_strlen(temp)) - 1) = '\0';
+			if (!opendir(temp))
+			{
+				free(temp);
+				return (NULL);
+			}
+			free(temp);
+		}
+		else
+			curpath = ft_strnstr(curpath, "..", ft_strlen(curpath)) + 2;
+	}
+}
+
+static char	*trim_ret(char *curpath)
+{
+	char	*ret;
+	char	*start_adr;
+	int		i;
+	int		k;
+
+	i = 0;
+	while (ft_strnstr(curpath, "//", ft_strlen(curpath)))
+	{
+		start_adr = ft_strnstr(curpath, "//", ft_strlen(curpath)) + 1;
+		while (*(start_adr + i) == '/')
+		{
+			*(start_adr + i) = ' ';
+			i++;
+		}
+	}
+	ret = (char *)malloc(ft_strlen(curpath) - i);
+	if (!ret)
+	{
+		free(curpath);
+		return (NULL);
+	}
+	i = 0;
+	k = 0;
+	while (k < ft_strlen(curpath))
+	{
+		if (curpath[k] != ' ')
+		{
+			ret[i] = curpath[k];
+			i++;
+		}
+		k++;
+	}
+	free(curpath);
+	return (ret);
+}
+
+static char	*get_canonical_curpath(char *curpath)
+{
+	char	*ret;
+	char	*free_temp;
+
+	ret = delete_dot_slash(curpath);	//a
+	if (!ret)
+	{
+		free(curpath);
+		return (NULL);
+	}
+	free_temp = ret;
+	ret = process_dot_dots(ret);	//b
+	if (!ret)
+	{
+		free(free_temp);
+		free(curpath);
+		return (NULL);
+	}
+	free_temp = ret;
+	ret = trim_ret(ret);	//c
+	if (!ret)
+	{
+		free(free_temp);
+		free(curpath);
+	}
+	return (ret);
+}
+
 /*	빌트인 cd 함수입니다. 상대 경로 혹은 절대 경로만을 사용합니다.
+	옵션을 지원하지 않습니다.
 	original : cd [-L|-P] [directory]	*/
 int	ft_cd(char *dir, char *env_home, char *env_cdpath, char *env_pwd)
 {
 	char	*curpath;
+	char	*temp_free;
 
 	if (!dir && (!env_home || env_home[0] == '\0'))	//1st
-		return (0);
+		return (1);
 	else if (!dir)	//2nd
 		dir = env_home;
 	if (dir[0] == '/')	//3rd
-		curpath = dir;
+		curpath = ft_strdup(dir);
 	else
 	{
 		if (!ft_strncmp(dir, "..", 2) || dir[0] == '.' || check_cdpath(&curpath, env_cdpath))	//4th, 5th
-			curpath = dir;
+			curpath = ft_strdup(dir);
 	}
+	if (!curpath)
+		return (-1);
 	if (curpath[0] != '/')	//7th
 	{
+		temp_free = curpath;
 		if (env_pwd[ft_strlen(env_pwd)] != '/')
 			curpath = ft_strjoin_modified(env_pwd, curpath);
 		else
 			curpath = ft_strjoin(env_pwd, curpath);
+		free(temp_free);
+		if (!curpath)
+			return (-1);
 	}
-	get_canonical_curpath();	//8th
-	trim_curpath(&curpath);	//9th
+	curpath = get_canonical_curpath(curpath);	//8th
+	if (!curpath)
+		return (1);
+	//trim_max_length(&curpath);	//9th, after implement PWD
 	return (chdir(curpath));	//10th
 }
