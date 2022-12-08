@@ -26,6 +26,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "./libft_garage/libft/libft.h"
+# include "./libft_garage/ft_printf/ft_printf.h"
 
 # ifndef PATH_MAX
 #  define PATH_MAX	1024
