@@ -6,13 +6,9 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/06 17:41:27 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/08 15:41:49 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#ifndef PATH_MAX
-# define PATH_MAX	1024
-#endif
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -30,6 +26,10 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "./libft_garage/libft/libft.h"
+
+# ifndef PATH_MAX
+#  define PATH_MAX	1024
+# endif
 
 enum	e_token_type {
 	WORD,

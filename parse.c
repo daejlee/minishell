@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:47:49 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/06 17:47:38 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/08 15:51:34 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,10 @@ int	is_white_space(char c)
 	return (0);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_token_meta	*meta;
-	t_token	*node;
+	t_token			*node;
 
 	argc = 0;
 	meta = parse(argv[1]);
