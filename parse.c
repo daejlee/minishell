@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:47:49 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/08 17:25:05 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/08 17:49:21 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ t_token	*lexical_analyzer(char *str)
 		return (NULL);
 	if (ft_strlen(str) == 1 && !ft_strncmp(str, "|", 1))
 		token->type = PIPE;
-	else if (!ft_strncmp(str, "-", 1))
-		token->type = OPTION;
 	else if (ft_strlen(str) == 1 && !ft_strncmp(str, "<", 1))
 		token->type = I_REDIR;
 	else if (ft_strlen(str) == 1 && !ft_strncmp(str, ">", 1))
