@@ -1,4 +1,7 @@
 #include "minishell.h"
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 /* 종료 상태를 일단 전역 변수로 선언해놓았음 */
 int	g_exit_status;
@@ -12,9 +15,6 @@ int	get_prompt();
 /* 커맨드 인풋 입력 */
 int	get_command_input();
 
-/* 파싱부 */
-int	parse();
-
 /* 실행부 */
 int get_process();
 
@@ -26,14 +26,15 @@ parser -> 링크드 리스트를 순회하며 이진 트리 구성 -> 하지만 
 
 int	main(int argc, char **argv, char **envp)
 {
-	if (initialize())
-		return (1);
+	char			*buf;
+	t_token_meta	*meta;
+
 	while (1)
 	{
-		get_prompt();
-		get_command_input();
-		parse();
-		if (get_process())
+		buf = readline(">");
+		meta = parse(buf);
+		if (get_process(meta))
 			return (g_exit_status);
 	}
+	return (0);
 }

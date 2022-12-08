@@ -32,9 +32,9 @@
 # include "./libft_garage/libft/libft.h"
 
 enum	e_token_type {
-	WORD,
+	COM,
+	//OPTION, -> 명령어와 옵션이 같이 쓰일 것 같습니다
 	PIPE,
-	OPTION,
 	I_REDIR,
 	O_REDIR,
 	I_HRDOC,
@@ -82,6 +82,7 @@ t_token_meta	*free_token_meta(t_token_meta *meta);
  * parse.c
  */
 
+t_token_meta	*parse(char *str);
 t_token			*lexical_analyzer(char *str);
 int				is_white_space(char c);
 void			set_start_end(size_t *start, size_t *end, \
