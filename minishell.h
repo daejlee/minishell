@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/08 17:38:08 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/08 17:42:25 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@
 # endif
 
 enum	e_token_type {
-	WORD,
+	COM,
+	//OPTION, -> 명령어와 옵션이 같이 쓰일 것 같습니다
 	PIPE,
-	OPTION,
 	I_REDIR,
 	O_REDIR,
 	I_HRDOC,
@@ -90,6 +90,7 @@ t_token_meta	*free_token_meta(t_token_meta *meta);
  * parse.c
  */
 
+t_token_meta	*parse(char *str);
 t_token			*lexical_analyzer(char *str);
 void			set_start_end(size_t *start, size_t *end, \
 							size_t start_num, size_t end_num);
