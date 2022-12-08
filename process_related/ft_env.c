@@ -3,7 +3,19 @@
 /*	빌트인 env 함수입니다. 옵션을 지원하지 않습니다.
 	original : env [-0iv] [-u name] [name=value ...]
 	env [-iv] [-P altpath] [-S string] [-u name] [name=value ...] utility [argument ...]	*/
-int	ft_env(void)
+int	ft_env(t_env *env)
 {
-	//환경변수 구조체 설정 후 구현이 필요합니다. 환경변수를 출력합니다.
+	t_env	*head;
+	t_env	*now;
+
+	head = env;
+	now = head;
+	now = now->next;
+	ft_printf("%s=%s\n", now->key, now->value);
+	while (now != head)
+	{
+		ft_printf("%s=%s\n", now->key, now->value);
+		now = now->next;
+	}
+	return (0);
 }
