@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/08 15:41:49 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/08 17:05:02 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,14 @@ typedef struct s_token_meta
 	t_token	*head;
 }	t_token_meta;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*prev;
+	struct s_env	*next;
+}	t_env;
+
 /*
  * token_list.c
  * t_token 리스트는 queue형태로 push/pop이 진행됨
@@ -86,4 +94,19 @@ t_token			*lexical_analyzer(char *str);
 int				is_white_space(char c);
 void			set_start_end(size_t *start, size_t *end, \
 							size_t start_num, size_t end_num);
+
+/*
+ * env.c
+ */
+
+/*
+ * 빈 문자열이 env의 value인 것은 O, key로 두는 것은 X
+ * '='을 기준으로 파싱, 여러 개라면 맨 처음에 있는 것을 기준!
+ * '='이 없다면, env에 저장되지 않는다.
+ */
+
+t_env			*init_env(char *key, char *value);
+
+/**/
+
 #endif
