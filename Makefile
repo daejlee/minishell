@@ -6,14 +6,14 @@
 #    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2022/12/08 15:46:23 by hkong            ###   ########.fr        #
+#    Updated: 2022/12/08 17:39:37 by hkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CFLAGS = -Wall -Wextra -Werror
 CC = cc
-SRC_FILES = parse.c token_list.c #./process_related/ft_pwd.c 
+SRC_FILES = parse.c token_list.c string_utils.c #./process_related/ft_pwd.c env_list.c
 OBJ_FILES = $(SRC_FILES:.c=.o)
 LIBFT = ./libft_garage/libft.a
 LIBFT_DIR = ./libft_garage

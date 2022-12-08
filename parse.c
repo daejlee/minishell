@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:47:49 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/08 15:51:34 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/08 17:25:05 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,19 +95,14 @@ void	set_start_end(size_t *start, size_t *end, \
 		*end = end_num;
 }
 
-int	is_white_space(char c)
-{
-	if (c == 9 || c == 10 || c == 11 || c == 12 || c == 13 || c == 32)
-		return (1);
-	return (0);
-}
+
 
 int	main(int argc, char *argv[])
 {
 	t_token_meta	*meta;
 	t_token			*node;
 
-	argc = 0;
+	printf("%d\n",argc);
 	meta = parse(argv[1]);
 	node = pop_token(meta);
 	while (node)
