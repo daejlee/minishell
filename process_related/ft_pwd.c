@@ -1,7 +1,11 @@
 #include "../minishell.h"
 
-/*	빌트인 pwd 함수입니다. 옵션을 지원하지 않습니다.
-	original : pwd [-L | -P]	*/
+/**
+ * @brief 
+ * 빌트인 pwd 함수입니다. 옵션을 지원하지 않습니다.
+ * original : pwd [-L | -P]
+ * @return int 성공 시 0, 실패 시 -1
+ */
 int	ft_pwd(void)
 {
 	char	buf[PATH_MAX];

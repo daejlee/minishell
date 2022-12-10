@@ -1,8 +1,11 @@
 #include "../minishell.h"
 
-/*	빌트인 env 함수입니다. 옵션을 지원하지 않습니다.
-	original : env [-0iv] [-u name] [name=value ...]
-	env [-iv] [-P altpath] [-S string] [-u name] [name=value ...] utility [argument ...]	*/
+/**
+ * @brief 
+ * 빌트인 env 함수입니다. 옵션을 지원하지 않습니다.
+ * original : env [-0iv] [-u name] [name=value ...]
+ * @return int 성공 시 0
+ */
 int	ft_env(t_env *env)
 {
 	t_env	*head;

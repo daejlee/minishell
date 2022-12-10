@@ -7,13 +7,23 @@
 int	g_exit_status;
 
 /* 시작 전 각종 초기화가 이뤄지는 부분 */
-int	intialize();
+int	intialize(t_env *env, char **envp)
+{
+	int		i;
+	char	**temp;
+	t_env	*now;
 
-/* 프롬프트 생성 */
-int	get_prompt();
+	temp = ft_split(envp[0], '=');
+	env = init_env(temp[1], temp[2]);
+	now = env;
+	i = 1;
+	while (envp[i])
+	{
+		free_double_arr(temp);
+		temp = ft_split(envp[i], '=');
 
-/* 커맨드 인풋 입력 */
-int	get_command_input();
+	}
+}
 
 /* 실행부 */
 int get_process();
@@ -28,7 +38,9 @@ int	main(int argc, char **argv, char **envp)
 {
 	char			*buf;
 	t_token_meta	*meta;
+	t_env			*env;
 
+	intialize(env, envp);
 	while (1)
 	{
 		buf = readline("minishell 0.0.1$ ");

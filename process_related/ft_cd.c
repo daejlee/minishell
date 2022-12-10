@@ -28,11 +28,7 @@ char	*ft_strjoin_modified(char const *s1, char const *s2)
 	res[s1_len + 1 + i] = '\0';
 	return (res);
 }
-/*
-5. 콜론으로 구분된 `CDPATH`에서 첫 경로명부터 시작한다. 경로명이 널이 아닐 때, 경로명이 /로 끝나지 않았다면 그 경로명, /, `directory`피연산자를 연결한 문자열이 디렉토리를 명시하는지 시험하라.
-경로명이 널일 때, `./피연산자`가 디렉토리를 명시하는 지 시험하라. 둘 중 결과가 되는 문자열이 존재하면, `curpath`를 그 문자열로 설정하고 7번으로 진행된다.
-그렇지 않을 때는 이 단계를 `CDPATH`의 경로명이 바닥날 때 까지 다음 경로명으로 넘어가며 반복하라.
-*/
+
 static int	check_cdpath(char **curpath_adr, char *env_cdpath)
 {
 	char	**splitted_cdpath;
@@ -231,9 +227,12 @@ static char	*get_canonical_curpath(char *curpath)
 	return (ret);
 }
 
-/*	빌트인 cd 함수입니다. 상대 경로 혹은 절대 경로만을 사용합니다.
-	옵션을 지원하지 않습니다.
-	original : cd [-L|-P] [directory]	*/
+/**
+ * @brief 
+ * 빌트인 cd 함수입니다. 상대 경로 혹은 절대 경로만을 사용합니다. 옵션을 지원하지 않습니다.
+ * original : cd [-L|-P] [directory]
+ * @return int 성공 시 0, 실패 시 -1
+ */
 int	ft_cd(char *dir, char *env_home, char *env_cdpath, char *env_pwd)
 {
 	char	*curpath;
@@ -265,7 +264,7 @@ int	ft_cd(char *dir, char *env_home, char *env_cdpath, char *env_pwd)
 	}
 	curpath = get_canonical_curpath(curpath);	//8th
 	if (!curpath)
-		return (1);
+		return (-1);
 	//trim_max_length(&curpath);	//9th, after implement PWD
 	return (chdir(curpath));	//10th
 }

@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-/* 들어온 커맨드가 빌트인 함수를 호출하는 지 판단하는 함수입니다. */
 int	is_built_in(char *com)
 {
 	if (!ft_strncmp(com, "echo", 4))
@@ -21,7 +20,6 @@ int	is_built_in(char *com)
 		return (0);
 }
 
-/*	빌트인 함수 실행을 준비하는 함수입니다. */
 int	exec_built_in(int built_in_code)
 {
 	int	ret;
