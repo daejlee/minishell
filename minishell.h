@@ -65,7 +65,6 @@ typedef struct s_token_meta
 {
 	size_t	size;
 	t_token	*head;
-	int		pcs_cnt;	//하나의 메타당 생성할 프로세스 갯수 입니다.
 }	t_token_meta;
 
 typedef struct s_env
@@ -119,6 +118,18 @@ t_env			*find_env(t_env *head, char *key);
 
 int				is_white_space(char c);
 int				is_exactly_same(char *str1, char *str2);
+
+/*
+ * built_in_related
+ */
+
+int	ft_cd(char *dir, char *env_home, char *env_cdpath, char *env_pwd);
+int	ft_echo(char *buf, int n_option);
+int	ft_env(t_env *env);
+int	ft_exit(void);
+int	ft_export(char *name, t_env *env);
+int	ft_pwd(void);
+int	ft_unset(char *name, t_env *env);
 
 
 #endif

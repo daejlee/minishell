@@ -13,8 +13,8 @@ int	ft_env(t_env *env)
 
 	head = env;
 	now = head;
-	now = now->next;
 	ft_printf("%s=%s\n", now->key, now->value);
+	now = now->next;
 	while (now != head)
 	{
 		ft_printf("%s=%s\n", now->key, now->value);
