@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/12 21:50:18 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/12 21:55:47 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ t_token			*pop_token(t_token_meta *meta);
 t_token_meta	*free_token_meta(t_token_meta *meta);
 
 /**
- * parse.c
+ * old_parse.c
  */
 
-t_token_meta	*parse(char *str);
-t_token			*lexical_analyzer(char *str);
-void			set_start_end(size_t *start, size_t *end, \
+t_token_meta	*old_parse(char *str);
+t_token			*old_lexical_analyzer(char *str);
+void			old_set_start_end(size_t *start, size_t *end, \
 							size_t start_num, size_t end_num);
 
 /**
@@ -119,7 +119,7 @@ t_env			*find_env(t_env *head, char *key);
 int				is_white_space(char c);
 int				is_exactly_same(char *str1, char *str2);
 
-/*
+/**
  * built_in_related
  */
 
