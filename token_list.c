@@ -26,6 +26,7 @@ t_token_meta	*init_token_meta(void)
 		return (NULL);
 	meta->size = 0;
 	meta->head = NULL;
+	meta->pcs_cnt = 0;
 	return (meta);
 }
 
@@ -48,7 +49,7 @@ t_token	*init_token(char *str)
 		return (NULL);
 	}
 	token->str = str;
-	token->type = WORD;
+	token->type = CMD;
 	token->prev = NULL;
 	token->next = NULL;
 	return (token);

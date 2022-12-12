@@ -33,7 +33,7 @@
 # endif
 
 enum	e_token_type {
-	WORD,
+	CMD, // ex) echo -n 이 있으면 [echo -n]이 통째로 CMD인 형식을 따르는 게 좋을 것 같습니다.
 	PIPE,
 	I_REDIR,
 	O_REDIR,
@@ -65,6 +65,7 @@ typedef struct s_token_meta
 {
 	size_t	size;
 	t_token	*head;
+	int		pcs_cnt;	//하나의 메타당 생성할 프로세스 갯수 입니다.
 }	t_token_meta;
 
 typedef struct s_env
