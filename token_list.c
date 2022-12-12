@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:41:15 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/12 15:05:44 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/12 21:49:57 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_token	*init_token(char *str)
 		return (NULL);
 	}
 	token->str = str;
-	token->type = CMD;
+	token->type = ARG;
 	token->prev = NULL;
 	token->next = NULL;
 	return (token);

@@ -59,12 +59,12 @@ int	get_child_count(t_token_meta *meta)
 
 	ret = 0;
 	now = meta->head;
-	if (now->type == CMD)
+	if (now->type == ARG)
 		ret++;
 	now = now->next;
 	while (now != meta->head)
 	{
-		if (now->type == CMD)
+		if (now->type == ARG)
 			ret++;
 		now = now->next;
 	}

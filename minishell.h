@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/12 15:24:54 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/12 21:50:18 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # endif
 
 enum	e_token_type {
-	CMD, // ex) echo -n 이 있으면 [echo -n]이 통째로 CMD인 형식을 따르는 게 좋을 것 같습니다.
+	ARG, // ex) echo -n 이 있으면 [echo -n]이 통째로 ARG인 형식을 따르는 게 좋을 것 같습니다.
 	PIPE,
 	I_REDIR,
 	O_REDIR,
