@@ -8,5 +8,5 @@
  */
 int	ft_exit(void)
 {
-	exit(g_exit_status);
+	exit(0);
 }

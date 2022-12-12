@@ -16,5 +16,6 @@ int	ft_pwd(void)
 	if (!ret)
 		return (-1);
 	write(1, buf, ft_strlen(buf));
+	write(1, "\n", 1);
 	return (0);
 }

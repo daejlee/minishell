@@ -9,9 +9,11 @@
 int	ft_export(char *name, t_env *env)
 {
 	char	**temp;
+	t_env	*env_temp;
 
 	temp = ft_split(name, '=');
-	if (!temp || push_env(env, init_env(temp[1], temp[2])))
+	env_temp = init_env(temp[0], temp[1]);
+	if (!temp || push_env(&env, &env_temp))
 		return (-1);
 	return (0);
 }

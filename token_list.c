@@ -26,7 +26,6 @@ t_token_meta	*init_token_meta(void)
 		return (NULL);
 	meta->size = 0;
 	meta->head = NULL;
-	meta->pcs_cnt = 0;
 	return (meta);
 }
 
