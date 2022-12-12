@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:47:49 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/08 17:49:21 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/12 21:06:11 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ void	set_start_end(size_t *start, size_t *end, \
 	if (end)
 		*end = end_num;
 }
-
-
 
 // int	main(int argc, char *argv[])
 // {

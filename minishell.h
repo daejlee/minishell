@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/08 21:39:01 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/12 15:24:54 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-/*
+/**
  * token_list.c
  * t_token 리스트는 queue형태로 push/pop이 진행됨
  */
@@ -87,7 +87,7 @@ int				push_token(t_token_meta *meta, t_token *node);
 t_token			*pop_token(t_token_meta *meta);
 t_token_meta	*free_token_meta(t_token_meta *meta);
 
-/*
+/**
  * parse.c
  */
 
@@ -96,12 +96,12 @@ t_token			*lexical_analyzer(char *str);
 void			set_start_end(size_t *start, size_t *end, \
 							size_t start_num, size_t end_num);
 
-/*
+/**
  * env_list.c
  * env 관련 함수 실행을 위한 utils가 있는 파일.
  */
 
-/*
+/**
  * about env.
  * 빈 문자열이 env의 value인 것은 O, key로 두는 것은 X
  * '='을 기준으로 파싱, 여러 개라면 맨 처음에 있는 것을 기준!
@@ -113,7 +113,7 @@ int				push_env(t_env **head, t_env	**node);
 int				delete_env(t_env *head, char *key);
 t_env			*find_env(t_env *head, char *key);
 
-/*
+/**
  * string_utils.c
  */
 

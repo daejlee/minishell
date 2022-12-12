@@ -6,13 +6,13 @@
 #    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2022/12/08 21:57:18 by hkong            ###   ########.fr        #
+#    Updated: 2022/12/09 20:23:28 by hkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CFLAGS = #-Wall -Wextra -Werror
-LDLN_FLAG = -lreadline #-L/usr/lib/x86_64-linux-gnu -I/usr/include #-L/usr/local/Cellar/readline/8.2.1/lib -I/usr/local/Cellar/readline/8.2.1/include
+LDLN_FLAG = -lreadline -L/usr/lib/x86_64-linux-gnu -I/usr/include #-L/usr/local/Cellar/readline/8.2.1/lib -I/usr/local/Cellar/readline/8.2.1/include
 CC = cc
 SRC_FILES =  ./pseudo_main.c  ./parse.c ./token_list.c ./string_utils.c ./env_list.c
 OBJ_FILES = $(SRC_FILES:.c=.o)
