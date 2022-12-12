@@ -47,8 +47,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		buf = readline("minishell 0.0.1$ ");
 		meta = parse(buf);
-		//if (get_process(meta))
-		//	return (g_exit_status);
+		if (get_process(meta))
+			return (g_exit_status);
 	}
 	return (0);
 }

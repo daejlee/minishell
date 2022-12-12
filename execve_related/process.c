@@ -13,6 +13,30 @@ typedef struct s_pcs
 	pid_t	*pids;
 }	t_pcs;
 
+/* 환경변수 포인터를 받아와 실행 경로를 추출하는 함수입니다. */
+char	**get_sh_path(char **envp)
+{
+	unsigned int	i;
+	char			**sh_paths;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp("PATH", envp[i], 4))
+		{
+			sh_paths = ft_split(envp[i], ':');
+			if (!sh_paths)
+				return (NULL);
+			ft_strlcpy(sh_paths[0], sh_paths[0] + 5,
+				ft_strlen(sh_paths[0]) - 4);
+			return (sh_paths);
+		}
+		else
+			i++;
+	}
+	return (NULL);
+}
+
 void	init_p(t_pcs *p)
 {
 	p->here_doc_flag = 0;
