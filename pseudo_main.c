@@ -7,26 +7,28 @@
 int	g_exit_status;
 
 /* 시작 전 각종 초기화가 이뤄지는 부분 */
-int	intialize(t_env *env, char **envp)
+int	intialize(t_env **env, char **envp)
 {
 	int		i;
 	char	**temp;
 	t_env	*now;
 
+	*env = NULL;
 	temp = ft_split(envp[0], '=');
-	env = init_env(temp[1], temp[2]);
-	now = env;
+	now = init_env(temp[0], temp[1]);
+	push_env(env, &now);
 	i = 1;
 	while (envp[i])
 	{
-		free_double_arr(temp);
+		//free_double_arr(temp);
 		temp = ft_split(envp[i], '=');
-
+		now = init_env(temp[0], temp[1]);
+		push_env(env, &now);
+		i++;
 	}
+	//free_double_arr(temp);
+	return (0);
 }
-
-/* 실행부 */
-int get_process();
 
 /*
 ex) minishell $ cat temp.txt | grep 'a'
@@ -40,13 +42,13 @@ int	main(int argc, char **argv, char **envp)
 	t_token_meta	*meta;
 	t_env			*env;
 
-	intialize(env, envp);
+	intialize(&env, envp);
 	while (1)
 	{
 		buf = readline("minishell 0.0.1$ ");
 		meta = parse(buf);
-		if (get_process(meta))
-			return (g_exit_status);
+		//if (get_process(meta))
+		//	return (g_exit_status);
 	}
 	return (0);
 }

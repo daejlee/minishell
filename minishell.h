@@ -33,7 +33,7 @@
 # endif
 
 enum	e_token_type {
-	COM,
+	WORD,
 	PIPE,
 	I_REDIR,
 	O_REDIR,
@@ -108,7 +108,7 @@ void			set_start_end(size_t *start, size_t *end, \
  */
 
 t_env			*init_env(char *key, char *value);
-int				push_env(t_env *head, t_env	*node);
+int				push_env(t_env **head, t_env	**node);
 int				delete_env(t_env *head, char *key);
 t_env			*find_env(t_env *head, char *key);
 
@@ -116,7 +116,7 @@ t_env			*find_env(t_env *head, char *key);
  * string_utils.c
  */
 
-int				is_whitespace(char c);
+int				is_white_space(char c);
 int				is_exactly_same(char *str1, char *str2);
 
 

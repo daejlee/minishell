@@ -31,7 +31,7 @@ int	is_exactly_same(char *str1, char *str2)
  * char c가 whitespace인지 확인하는 함수
  * @return int 맞으면 1, 아니면 0
  */
-int	is_whitespace(char c)
+int	is_white_space(char c)
 {
 	if (c == 9 || c == 10 || c == 11 || c == 12 || c == 13 || c == 32)
 		return (1);

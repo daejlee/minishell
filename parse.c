@@ -95,18 +95,18 @@ void	set_start_end(size_t *start, size_t *end, \
 
 
 
-int	main(int argc, char *argv[])
-{
-	t_token_meta	*meta;
-	t_token			*node;
+// int	main(int argc, char *argv[])
+// {
+// 	t_token_meta	*meta;
+// 	t_token			*node;
 
-	printf("%d\n",argc);
-	meta = parse(argv[1]);
-	node = pop_token(meta);
-	while (node)
-	{
-		printf("%s %d\n", node->str, node->type);
-		node = pop_token(meta);
-	}
-	return (0);
-}
+// 	printf("%d\n",argc);
+// 	meta = parse(argv[1]);
+// 	node = pop_token(meta);
+// 	while (node)
+// 	{
+// 		printf("%s %d\n", node->str, node->type);
+// 		node = pop_token(meta);
+// 	}
+// 	return (0);
+// }

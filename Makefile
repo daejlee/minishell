@@ -14,7 +14,7 @@ NAME = minishell
 CFLAGS = #-Wall -Wextra -Werror
 LDLN_FLAG = -lreadline #-L/usr/lib/x86_64-linux-gnu -I/usr/include #-L/usr/local/Cellar/readline/8.2.1/lib -I/usr/local/Cellar/readline/8.2.1/include
 CC = cc
-SRC_FILES =  ./pseudo_main.c  #parse.c token_list.c string_utils.c env_list.c
+SRC_FILES =  ./pseudo_main.c  ./parse.c ./token_list.c ./string_utils.c ./env_list.c
 OBJ_FILES = $(SRC_FILES:.c=.o)
 LIBFT = ./libft_garage/libft.a
 LIBFT_DIR = ./libft_garage

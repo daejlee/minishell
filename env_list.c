@@ -47,21 +47,21 @@ t_env	*init_env(char *key, char *value)
  * t_env의 제일 끝에 노드를 삽입하는 함수
  * @return int 성공시 0, 실패시 1
  */
-int	push_env(t_env *head, t_env	*node)
+int	push_env(t_env **head, t_env **node)
 {
-	if (!node)
+	if (!*node)
 		return (1);
-	if (!head)
+	if (!*head)
 	{
-		head = node;
-		head->next = head;
-		head->prev = head;
+		*head = *node;
+		(*head)->next = *head;
+		(*head)->prev = *head;
 		return (0);
 	}
-	node->next = head;
-	node->prev = head->prev;
-	head->prev->next = node;
-	head->prev = node;
+	(*node)->next = (*head);
+	(*node)->prev = (*head)->prev;
+	(*head)->prev->next = *node;
+	(*head)->prev = *node;
 	return (0);
 }
 
