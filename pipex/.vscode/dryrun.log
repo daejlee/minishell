@@ -1,0 +1,9 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory `/Users/daejlee/Desktop/pipex'
+cc -Wall -Wextra -Werror -c pipex_utils_1.c pipex_utils_2.c pipex.c
+cc -Wall -Wextra -Werror -c pipex_utils_1.c pipex_utils_2.c pipex.c
+ 
+cc -Wall -Wextra -Werror -c pipex_utils_1.c pipex_utils_2.c pipex.c
+cc -Wall -Wextra -Werror -o pipex pipex_utils_1.o pipex_utils_2.o pipex.o -lft -L./libft_garage
+make: Leaving directory `/Users/daejlee/Desktop/pipex'
+ 

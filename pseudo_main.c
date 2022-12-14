@@ -52,8 +52,8 @@ int	main(int argc, char **argv, char **envp)
 		printf("\n");
 		ft_unset("test", env);
 		ft_env(env);
-		//if (get_process(meta))
-		//	return (g_exit_status);
+		if (get_pcs(meta))
+			return (g_exit_status);
 	}
 	return (0);
 }

@@ -1,0 +1,402 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-apple-darwin11.3.0
+ 
+
+# Make data base, printed on Tue Aug 23 19:33:16 2022
+
+# Variables
+
+ 
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# makefile (from `Makefile', line 17)
+OBJ = pipex_utils_1.o pipex_utils_2.o pipex.o
+# makefile (from `Makefile', line 16)
+SRC = pipex_utils_1.c pipex_utils_2.c pipex.c
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# makefile
+CURDIR := /Users/daejlee/Desktop/pipex
+# makefile
+SHELL = /bin/sh
+# environment
+VSCODE_NLS_CONFIG = {"locale":"ko","availableLanguages":{"*":"ko"},"_languagePackId":"26f3b44ea4f1e942cca002e9545643cc.ko","_translationsConfigFile":"/Users/daejlee/Library/Application Support/Code/clp/26f3b44ea4f1e942cca002e9545643cc.ko/tcf.json","_cacheRoot":"/Users/daejlee/Library/Application Support/Code/clp/26f3b44ea4f1e942cca002e9545643cc.ko","_resolvedLanguagePackCoreLocation":"/Users/daejlee/Library/Application Support/Code/clp/26f3b44ea4f1e942cca002e9545643cc.ko/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5","_corruptedFile":"/Users/daejlee/Library/Application Support/Code/clp/26f3b44ea4f1e942cca002e9545643cc.ko/corrupted.info","_languagePackSupport":true}
+# environment
+_ = /usr/bin/make
+# makefile (from `Makefile', line 14)
+CFLAGS = -Wall -Wextra -Werror
+# makefile (from `Makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cqnc0035xb/T/vscode-ipc-76afa20f-df63-4b4b-a97b-c37afa49e249.sock
+# environment
+VSCODE_CWD = /Users/daejlee/Desktop/pipex
+# makefile (from `Makefile', line 27)
+OBJ_FILES = $(OBJ)
+# environment
+PATH = /Users/daejlee/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Users/daejlee/.brew/bin
+# environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
+LaunchInstanceID = 98DBA27B-5BA7-4A79-A897-76877AEE1CFE
+# environment
+VSCODE_LOG_STACK = false
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# makefile (from `Makefile', line 21)
+LIBFT_DIR = ./libft_garage
+# environment
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.6UCj9PHyFQ/Listeners
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+PWD = /Users/daejlee/Desktop/pipex
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /Users/daejlee
+# makefile (from `Makefile', line 19)
+BONUS_OBJ = pipex_utils_1_bonus.o pipex_utils_2_bonus.o pipex_bonus.o
+# default
+MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
+# environment
+VSCODE_CODE_CACHE_PATH = /Users/daejlee/Library/Application Support/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+# environment
+LOGNAME = daejlee
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+ZSH = /Users/daejlee/.oh-my-zsh
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+XPC_FLAGS = 0x0
+# environment
+COLORTERM = truecolor
+# default
+MAKE = $(MAKE_COMMAND)
+# environment
+LC_TERMINAL = iTerm2
+# environment
+SHLVL = 3
+# makefile (from `Makefile', line 20)
+LIBFT = ./libft_garage/libft.a
+# makefile (from `Makefile', line 15)
+CC = cc
+# default
+MAKE_VERSION := 3.81
+# environment
+USER = daejlee
+# makefile
+.DEFAULT_GOAL := all
+# default
+MAKECMDGOALS := all
+# environment
+TERM_SESSION_ID = w0t0p0:62C63905-C975-406D-96FC-5DD064120BDD
+# makefile (from `Makefile', line 13)
+NAME = pipex
+# environment
+LESS = -R
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# default
+MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
+# environment
+TERM_PROGRAM = iTerm.app
+# default
+.VARIABLES := 
+# environment
+TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n000cqnc0035xb/T/
+# automatic
+*F = $(notdir $*)
+# environment
+VSCODE_IPC_HOOK = /Users/daejlee/Library/Application Support/Code/1.67.2-main.sock
+# makefile
+MAKEFLAGS = Rrqp
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+TERM_PROGRAM_VERSION = 3.3.7
+# environment
+MAIL = daejlee@student.42seoul.kr
+# environment
+XPC_SERVICE_NAME = com.microsoft.VSCode.2140.4E5C38EB-2E56-4A30-8BCE-87AF184F75FA
+# environment
+LC_TERMINAL_VERSION = 3.3.7
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# automatic
++F = $(notdir $+)
+# environment
+ITERM_SESSION_ID = w0t0p0:62C63905-C975-406D-96FC-5DD064120BDD
+# environment
+COLORFGBG = 7;0
+# environment
+__CF_USER_TEXT_ENCODING = 0x197AB:0x3:0x33
+# environment
+COMMAND_MODE = unix2003
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+ITERM_PROFILE = Default
+# environment
+PAGER = less
+# environment
+LC_ALL = C
+# makefile (from `Makefile', line 18)
+BONUS_SRC = pipex_utils_1_bonus.c pipex_utils_2_bonus.c pipex_bonus.c
+# environment
+SECURITYSESSIONID = 18728
+# automatic
+^F = $(notdir $^)
+# makefile (from `Makefile', line 28)
+SRC_FILES = $(SRC)
+# default
+SUFFIXES := 
+# default
+.INCLUDE_DIRS = /usr/local/include
+# environment
+MAKELEVEL := 0
+# environment
+LANG = C
+# environment
+TERM = xterm-256color
+# environment
+VSCODE_PID = 20806
+# variable set hash-table stats:
+# Load=89/1024=9%, Rehash=0, Collisions=7/132=5%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 16777225, inode 2986890): 20 files, no impossibilities.
+
+# 20 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+pipex_bonus.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+pipex_utils_2_bonus.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+all: pipex
+#  Command-line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/6=0%
+
+bonus: pipex pipex_utils_1_bonus.c pipex_utils_2_bonus.c pipex_bonus.c
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 55):
+	make WITH_BONUS=1 $(NAME)
+	
+
+# Not a target:
+pipex_utils_1.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-23 17:29:11
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-23 19:33:14
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+pipex.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-23 19:33:08
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+ 
+pipex_utils_2.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-23 17:29:11
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+libft_garage/libft.a:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 40):
+	cd $(LIBFT_DIR); $(MAKE)
+	
+
+fclean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 47):
+	make -C libft_garage/ fclean
+	rm -f $(OBJ_FILES) $(BONUS_OBJ) $(NAME)
+	
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+re:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 51):
+	$(MAKE) fclean
+	$(MAKE) all
+	
+
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 43):
+	make -C libft_garage/ clean
+	rm -f $(OBJ_FILES) $(BONUS_OBJ)
+	
+
+pipex_utils_1.o: pipex_utils_1.c pipex_utils_2.c pipex.c
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: `'
+#  Last modified 2022-08-23 19:32:49
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := pipex_utils_1.o
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := pipex_utils_1.c pipex_utils_2.c pipex.c
+# automatic
+# | := 
+# automatic
+# < := pipex_utils_1.c
+# automatic
+# ^ := pipex_utils_1.c pipex_utils_2.c pipex.c
+# automatic
+# ? := pipex.c
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=3/14=21%
+#  commands to execute (from `Makefile', line 37):
+	$(CC) $(CFLAGS) -c $(SRC_FILES)
+	
+
+# Not a target:
+pipex_utils_1_bonus.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+pipex.o: pipex_utils_1.c pipex_utils_2.c pipex.c
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 37):
+	$(CC) $(CFLAGS) -c $(SRC_FILES)
+	
+
+pipex: pipex_utils_1.o pipex_utils_2.o pipex.o libft_garage/libft.a
+#  Implicit rule search has not been done.
+#  Last modified 2022-08-23 19:32:51
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/6=0%
+#  commands to execute (from `Makefile', line 34):
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) -lft -L$(LIBFT_DIR)
+	
+
+pipex_utils_2.o: pipex_utils_1.c pipex_utils_2.c pipex.c
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 37):
+	$(CC) $(CFLAGS) -c $(SRC_FILES)
+	
+
+# files hash-table stats:
+# Load=19/1024=2%, Rehash=0, Collisions=1/51=2%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Finished Make data base on Tue Aug 23 19:33:16 2022
+
+ 
