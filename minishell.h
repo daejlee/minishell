@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/16 14:42:11 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/16 15:40:58 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,21 @@ typedef struct s_env
  */
 
 t_token_meta	*init_token_meta(void);
-t_token			*init_token(char *str);
+t_token			*init_token(char *str, enum e_token_type type);
 int				push_token(t_token_meta *meta, t_token *node);
 t_token			*pop_token(t_token_meta *meta);
 t_token_meta	*free_token_meta(t_token_meta *meta);
 
 /**
- * old_parse.c
- */
-
-t_token_meta	*old_parse(char *str);
-t_token			*old_lexical_analyzer(char *str);
-void			old_set_start_end(size_t *start, size_t *end, \
-							size_t start_num, size_t end_num);
-
-/**
  * parse/parse.c
  */
 t_token_meta	*parse(t_env *env, char *str);
+int				interprete_quotes(t_token_meta *meta, char *str, t_env *env);
+
+
+/**
+ * parse/interprete_env.c
+ */
 void			interprete_env(char **str, t_env *env);
 int				change_key_to_value(char **str, char *value, \
 									size_t start, size_t end);
@@ -125,7 +122,6 @@ t_env			*find_env(t_env *head, char *key);
  * string_utils.c
  */
 
-int				is_white_space(char c);
 int				is_exactly_same(char *str1, char *str2);
 void			free_multiple_str(char *str1, char *str2, \
 										char *str3, char *str4);

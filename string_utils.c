@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:24:23 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/15 18:35:30 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/16 15:37:21 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,6 @@ int	is_exactly_same(char *str1, char *str2)
 	if (ft_strncmp(str1, str2, ft_strlen(str1)))
 		return (0);
 	return (1);
-}
-
-/**
- * @brief 
- * char c가 whitespace인지 확인하는 함수
- * @return int 맞으면 1, 아니면 0
- */
-int	is_white_space(char c)
-{
-	if (c == 9 || c == 10 || c == 11 || c == 12 || c == 13 || c == 32)
-		return (1);
-	return (0);
 }
 
 /**

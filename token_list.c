@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:41:15 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/12 21:49:57 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/16 15:36:06 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_token_meta	*init_token_meta(void)
  * @param str 토큰 문자열
  * @return t_token* 실패 시 NULL
  */
-t_token	*init_token(char *str)
+t_token	*init_token(char *str, enum e_token_type type)
 {
 	t_token	*token;
 
@@ -48,7 +48,7 @@ t_token	*init_token(char *str)
 		return (NULL);
 	}
 	token->str = str;
-	token->type = ARG;
+	token->type = type;
 	token->prev = NULL;
 	token->next = NULL;
 	return (token);
