@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/16 16:55:23 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/16 17:47:04 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,23 @@ t_token_meta	*free_token_meta(t_token_meta *meta);
 /**
  * parse/parse.c
  */
-t_token_meta	*parse(t_env *env, char *str);
-int				interpret_quotes(t_token_meta *meta, char *str, t_env *env);
 
+t_token_meta	*parse(t_env *env, char *str);
+
+/**
+ * parse/interpret_quotes.c
+ */
+
+int				interpret_quotes(t_token_meta *meta, char *str, t_env *env);
+int				interpret_quotes_single(t_token_meta *meta, char *str, \
+																size_t start);
+int				interpret_quotes_double(t_token_meta *meta, \
+										t_env *env, char *str, size_t start);
 
 /**
  * parse/interpret_env.c
  */
+
 void			interpret_env(char **str, t_env *env);
 int				change_key_to_value(char **str, char *value, \
 									size_t start, size_t end);
