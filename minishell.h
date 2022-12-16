@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/12 21:55:47 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/16 14:42:11 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,15 @@ void			old_set_start_end(size_t *start, size_t *end, \
 							size_t start_num, size_t end_num);
 
 /**
+ * parse/parse.c
+ */
+t_token_meta	*parse(t_env *env, char *str);
+void			interprete_env(char **str, t_env *env);
+int				change_key_to_value(char **str, char *value, \
+									size_t start, size_t end);
+int				is_env_allowed_char(int is_first, char c);
+
+/**
  * env_list.c
  * env 관련 함수 실행을 위한 utils가 있는 파일.
  */
@@ -118,6 +127,8 @@ t_env			*find_env(t_env *head, char *key);
 
 int				is_white_space(char c);
 int				is_exactly_same(char *str1, char *str2);
+void			free_multiple_str(char *str1, char *str2, \
+										char *str3, char *str4);
 
 /**
  * built_in_related

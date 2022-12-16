@@ -46,14 +46,18 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		buf = readline("minishell 0.0.1$ ");
-		meta = parse(buf);
-		ft_export("test=test", env);
-		ft_env(env);
-		printf("\n");
-		ft_unset("test", env);
-		ft_env(env);
-		if (get_pcs(meta))
-			return (g_exit_status);
+		meta = parse(env, buf);
+		while (meta->size)
+		{
+			printf("%s\n", pop_token(meta)->str);
+		}
+		// ft_export("test=test", env);
+		// ft_env(env);
+		// printf("\n");
+		// ft_unset("test", env);
+		// ft_env(env);
+		// if (get_pcs(meta))
+		// 	return (g_exit_status);
 	}
 	return (0);
 }
