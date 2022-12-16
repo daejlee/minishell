@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/16 15:40:58 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/16 16:55:23 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # endif
 
 enum	e_token_type {
+	INIT,
 	ARG, // ex) echo -n 이 있으면 [echo -n]이 통째로 ARG인 형식을 따르는 게 좋을 것 같습니다.
 	PIPE,
 	I_REDIR,
@@ -90,13 +91,13 @@ t_token_meta	*free_token_meta(t_token_meta *meta);
  * parse/parse.c
  */
 t_token_meta	*parse(t_env *env, char *str);
-int				interprete_quotes(t_token_meta *meta, char *str, t_env *env);
+int				interpret_quotes(t_token_meta *meta, char *str, t_env *env);
 
 
 /**
- * parse/interprete_env.c
+ * parse/interpret_env.c
  */
-void			interprete_env(char **str, t_env *env);
+void			interpret_env(char **str, t_env *env);
 int				change_key_to_value(char **str, char *value, \
 									size_t start, size_t end);
 int				is_env_allowed_char(int is_first, char c);
