@@ -42,14 +42,11 @@ int	main(int argc, char **argv, char **envp)
 	intialize(&env, envp);
 	while (1)
 	{
-		buf = readline("minishell 0.0.1$ ");
+		buf = readline("minishell 0.0.2$ ");
+		//todo: buf null일 때 예외처리
 		meta = parse(env, buf);
-		while (meta->size)
-		{
-			printf("%s\n", pop_token(meta)->str);
-		}
-		// if (get_pcs(meta, env, envp))
-		// 	return (g_exit_status);
+		if (get_pcs(meta, env, envp))
+			return (g_exit_status);
 	}
 	return (0);
 }

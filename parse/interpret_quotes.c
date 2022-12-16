@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:46:16 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/16 21:42:24 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/16 21:55:01 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	interpret_quotes(t_token_meta *meta, char *str, t_env *env)
 		free(str);
 		return (0);
 	}
-	while (str[start] && str[start] == '\'' && str[start] == '\"')
+	while (str[start] && str[start] != '\'' && str[start] != '\"')
 		start++;
 	if (!str[start])
 		return (push_token(meta, init_token(str, INIT)));
@@ -71,7 +71,7 @@ int	interpret_quotes_single(t_token_meta *meta, char *str, size_t start)
 		return (end);
 	}
 	if (start)
-		if (push_token(meta, init_token(ft_substr(str, start, start), INIT)))
+		if (push_token(meta, init_token(ft_substr(str, 0, start), INIT)))
 			return (0);
 	if (end - start - 1)
 		if (push_token(meta, \
@@ -105,7 +105,7 @@ int	interpret_quotes_double(t_token_meta *meta, \
 		return (end);
 	}
 	if (start)
-		if (push_token(meta, init_token(ft_substr(str, start, start), INIT)))
+		if (push_token(meta, init_token(ft_substr(str, 0, start), INIT)))
 			return (0);
 	if (end - start - 1)
 	{
