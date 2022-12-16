@@ -23,9 +23,12 @@ SRCS_PARSE = parse.c interprete_env.c interprete_quotes.c
 BUILT_IN_DIR = built_in_related/
 SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c
 
+EXECVE_DIR = execve_related/
+SRCS_EXECVE = process.c
+
 OBJ_FILES = $(SRCS:%.c=%.o) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.o) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.o)
 
-TEST_SRCS = $(SRCS:%.c=%.c) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.c) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.c)
+TEST_SRCS = $(SRCS:%.c=%.c) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.c) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.c) $(SRCS_EXECVE:%.c=$(EXECVE_DIR)%.c)
 
 LIBFT = ./libft_garage/libft.a
 LIBFT_DIR = ./libft_garage
