@@ -1,6 +1,14 @@
 #include "../minishell.h"
 #include "./process.h"
 
+enum	e_redir_flag
+{
+	I_ONLY,
+	O_ONLY,
+	I_O_BOTH,
+	NONE
+};
+
 void	swap_pfd(int **pfd1, int **pfd2)
 {
 	int	*temp;
@@ -108,9 +116,36 @@ static void	prep(int input_fd, int output_fd, int closing_fd, t_pcs *p)
 	}
 }
 
-void	prep_fds(t_pcs *p, int i, int pcs_cnt)
+int	check_redir(t_token_meta *meta)
 {
-	if (p->here_doc_flag)
+	t_token	*now;
+	int		input_flag;
+	int		output_flag;
+
+	input_flag = 0;
+	output_flag = 0;
+	now = meta->head->next;
+	if (now->type == I_REDIR || now->type == I_HRDOC)
+		input_flag = 1;
+	now = meta->head->prev->prev;
+	if (now->type == O_REDIR || now->type == O_APPND)
+		output_flag = 1;
+	if (input_flag && output_flag)
+		return (I_O_BOTH);
+	else if (input_flag)
+		return (I_ONLY);
+	else if (output_flag)
+		return (O_ONLY);
+	else
+		return (NONE);
+}
+
+void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
+{
+	int	redir_flag;
+
+	redir_flag = check_redir(meta);
+	if (redir_flag == I_O_BOTH)
 	{
 		if (!i)
 			prep(p->infile_fd, p->next_pfd[1], 0, p);
@@ -119,12 +154,30 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt)
 		else
 			prep(p->pfd[0], p->next_pfd[1], 1, p);
 	}
-	else
+	else if (redir_flag == I_ONLY)
 	{
 		if (!i)
 			prep(p->infile_fd, p->next_pfd[1], 0, p);
 		else if (i == pcs_cnt - 1)
+			prep(p->pfd[0], 1, -1, NULL);
+		else
+			prep(p->pfd[0], p->next_pfd[1], 1, p);
+	}
+	else if (redir_flag == O_ONLY)
+	{
+		if (!i)
+			prep(0, p->next_pfd[1], -1, p);
+		else if (i == pcs_cnt - 1)
 			prep(p->pfd[0], p->outfile_fd, p->pfd[1], NULL);
+		else
+			prep(p->pfd[0], p->next_pfd[1], 1, p);
+	}
+	else
+	{
+		if (!i)
+			prep(0, p->next_pfd[1], -1, p); 
+		else if (i == pcs_cnt - 1)
+			prep(p->pfd[0], 1, 0, NULL);
 		else
 			prep(p->pfd[0], p->next_pfd[1], 1, p);
 	}
@@ -225,7 +278,7 @@ void	exec_com(t_pcs *p, t_token *now, int i, t_env *env)
 {
 	char	*sh_func;
 
-	if (now->next->type == PIPE)
+	if (now->next->type == PIPE || now->prev->type == PIPE)
 		close(p->next_pfd[0]);
 	p->com = ft_split(now->str, ' ');
 	if (!p->com)
@@ -291,32 +344,36 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	while (i < pcs_cnt)
 	{
 		if (now->type == PIPE)
+		{
+			prep_fds(p, i, pcs_cnt, meta);
 			now = now->next;
+		}
 		else if (now->type != ARG) //now == I_REDIR
 			now = now->next->next;
 		else //now == ARG
 		{
-			p->pids[i] = fork();
-			if (p->pids[i] == -1)
-				return (err_terminate(p));
-			else if (!p->pids[i])
-				exec_com(p, now, i, env);
 			if (now->next->type == PIPE) //now == ARG && NEXT == PIPE
 			{
 				if (pipe(p->next_pfd) == -1)
 					return (err_terminate(p));
 				if (p->infile_fd == -1 && !i) //when infile_fd == -1 and fst loop
 					close(p->next_pfd[1]);
-				prep_fds(p, i, pcs_cnt);
+				prep_fds(p, i, pcs_cnt, meta);
 			}
+			p->pids[i] = fork();
+			if (p->pids[i] == -1)
+				return (err_terminate(p));
+			else if (!p->pids[i])
+				exec_com(p, now, i, env);
 			swap_pfd(&p->next_pfd, &p->pfd);
 			i++;
+			now = now->next;
 		}
 	}
 	return (wait_for_children(p, p->pids, pcs_cnt));
 }
 
-//	ARG	I_R	ARG		P	ARG				O_R	ARG
+//	ARG	I_R	ARG		P	ARG		ARG		O_R	ARG
 //	cat	<	infile	|	grep	"now"	>	outfile
 int	get_pcs(t_token_meta *meta, t_env *env, char **envp)
 {
@@ -325,14 +382,14 @@ int	get_pcs(t_token_meta *meta, t_env *env, char **envp)
 
 	init_p(&p);
 	p.envp = envp;
-	now = meta->head->next;
+	now = get_i_redir_location(); //재지향 토큰 순서는 2번째가 아닐 수 있다.
 	if (now->type == I_REDIR)
 		p.infile_fd = open(now->next->str, O_RDONLY);
 	else if (now->type == I_HRDOC)
 		p.here_doc_flag = 1;
 	if (p.infile_fd == -1)
 		perror("pipex error");
-	now = meta->head->prev->prev;
+	now = get_o_redir_location();
 	if (now->type == O_APPEND)
 		p.outfile_fd = open(now->next->str, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	else if (now->type == O_REDIR)

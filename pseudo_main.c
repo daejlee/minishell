@@ -40,6 +40,10 @@ int	main(int argc, char **argv, char **envp)
 	t_env			*env;
 
 	intialize(&env, envp);
+	meta = init_token_meta();
+	push_token(meta, init_token("ls", ARG));
+	push_token(meta, init_token("|", PIPE));
+	push_token(meta, init_token("grep a", ARG));
 	while (1)
 	{
 		buf = readline("minishell 0.0.2$ ");
