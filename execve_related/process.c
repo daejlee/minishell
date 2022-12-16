@@ -1,6 +1,60 @@
 #include "../minishell.h"
 #include "./process.h"
 
+int	wait_for_children(t_pcs *p, pid_t *pids, int temp)
+{
+	int	i;
+	int	status;
+
+	status = 0;
+	close(p->pfd[0]);
+	close(p->pfd[1]);
+	close(p->next_pfd[0]);
+	close(p->next_pfd[1]);
+	close(0);
+	close(1);
+	i = 0;
+	while (i < temp)
+		waitpid(pids[i++], &status, 0);
+	free(pids);
+	return (status);
+}
+
+int	free_arr(char **com)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (com[i])
+		free(com[i++]);
+	free(com);
+	return (0);
+}
+
+int	err_terminate(t_pcs *p)
+{
+	perror("pipex error");
+	if (p->infile_fd != -1)
+		close(p->infile_fd);
+	if (p->outfile_fd != -1)
+		close(p->outfile_fd);
+	if (p->pfd)
+	{
+		close(p->pfd[0]);
+		close(p->pfd[1]);
+	}
+	if (p->next_pfd)
+	{
+		close(p->next_pfd[0]);
+		close(p->next_pfd[1]);
+	}
+	close(0);
+	close(1);
+	if (p->here_doc_flag)
+		unlink(HERE_DOC_INPUT_BUFFER);
+	return (1);
+}
+
 void	init_p(t_pcs *p)
 {
 	p->here_doc_flag = 0;
@@ -12,7 +66,6 @@ void	init_p(t_pcs *p)
 	(p->pfd + 1)[1] = 0;
 	p->pfd = NULL;
 	p->next_pfd = NULL;
-	p->envp = NULL;
 	p->com = NULL;
 }
 
@@ -57,15 +110,106 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt)
 	}
 }
 
-void	exec_com(t_pcs *p, t_token *now, int i)
+char	*ft_strjoin_modified(char const *s1, char const *s2)
+{
+	int				i;
+	unsigned int	s1_len;
+	char			*res;
+
+	if (!s1 || !s2)
+		return (0);
+	s1_len = ft_strlen(s1);
+	res = (char *)malloc(sizeof(char) * (s1_len + ft_strlen(s2) + 2));
+	if (!res)
+		return (0);
+	i = 0;
+	while (s1[i])
+	{
+		res[i] = s1[i];
+		i++;
+	}
+	res[i] = '/';
+	i = 0;
+	while (s2[i])
+	{
+		res[s1_len + 1 + i] = s2[i];
+		i++;
+	}
+	res[s1_len + 1 + i] = '\0';
+	return (res);
+}
+
+static char	**get_sh_path(t_env *env)
+{
+	unsigned int	i;
+	char			**sh_paths;
+	t_env			*now;
+
+	i = 0;
+	now = env;
+	if (!ft_strncmp("PATH", now->key, 4))
+	{
+		sh_paths = ft_split(now->value, ':');
+		if (!sh_paths)
+			return (NULL);
+		ft_strlcpy(sh_paths[0], sh_paths[0] + 5,
+			ft_strlen(sh_paths[0]) - 4);
+		return (sh_paths);
+	}
+	now = now->next;
+	while (now != env)
+	{
+		if (!ft_strncmp("PATH", now->key, 4))
+		{
+			sh_paths = ft_split(now->value, ':');
+			if (!sh_paths)
+				return (NULL);
+			ft_strlcpy(sh_paths[0], sh_paths[0] + 5,
+				ft_strlen(sh_paths[0]) - 4);
+			return (sh_paths);
+		}
+		else
+			now = now->next;
+	}
+	return (NULL);
+}
+
+static char	*get_sh_func(char **com, t_env *env)
+{
+	char			*sh_func;
+	char			**sh_paths;
+	unsigned int	i;
+
+	i = 0;
+	if (!access((const char *)com[0], X_OK))
+		return (com[0]);
+	sh_paths = get_sh_path(env);
+	if (!sh_paths)
+		return (NULL);
+	while (sh_paths[i])
+	{
+		sh_func = ft_strjoin_modified(sh_paths[i++], com[0]);
+		if (!access(sh_func, X_OK) || !sh_func)
+		{
+			free_arr(sh_paths);
+			return (sh_func);
+		}
+		free(sh_func);
+	}
+	sh_func = ft_strjoin_modified(sh_paths[0], com[0]);
+	free_arr(sh_paths);
+	return (sh_func);
+}
+
+void	exec_com(t_pcs *p, t_token *now, int i, t_env *env)
 {
 	char	*sh_func;
 
 	close(p->next_pfd[0]);
-	p->com = ft_split(argv[i], ' ');
+	p->com = ft_split(now->str, ' ');
 	if (!p->com)
 		exit (err_terminate(p));
-	sh_func = get_sh_func(p->com, p->envp);
+	sh_func = get_sh_func(p->com, env);
 	if (!sh_func)
 	{
 		free_arr(p->com);
@@ -75,21 +219,22 @@ void	exec_com(t_pcs *p, t_token *now, int i)
 	execve_failed(p, sh_func);
 }
 
-int	exec_fork(t_pcs *p, t_token_meta *meta)
+int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 {
 	int		i;
 	int		ret;
 	int		pcs_cnt;
 	t_token	*now;
 
-	if (p->here_doc_flag)
-	{
-		ret = here_doc(p, meta);
-		if (ret)
-			return (ret);
-		else
-			return (0);
-	}
+	// here_doc은 나중에
+	// if (p->here_doc_flag)
+	// {
+	// 	ret = here_doc(p, meta);
+	// 	if (ret)
+	// 		return (ret);
+	// 	else
+	// 		return (0);
+	// }
 
 	pcs_cnt = get_pcs_cnt(meta);
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (pcs_cnt));
@@ -106,13 +251,13 @@ int	exec_fork(t_pcs *p, t_token_meta *meta)
 			now = now->next;
 		else if (now->type != ARG) //now == I_REDIR
 			now = now->next->next;
-		else
+		else //now == ARG
 		{
 			p->pids[i] = fork();
 			if (p->pids[i] == -1)
 				return (err_terminate(p));
 			else if (p->pids[i])
-				exec_com(p, now, i);
+				exec_com(p, now, i, env);
 			if (now->next->type == PIPE) //now == ARG && NEXT == PIPE
 			{
 				if (pipe(p->next_pfd) == -1)
@@ -125,17 +270,18 @@ int	exec_fork(t_pcs *p, t_token_meta *meta)
 			i++;
 		}
 	}
-	return (wait_for_children(p, p->pids, argc - 2));
+	return (wait_for_children(p, p->pids, pcs_cnt));
 }
 
 //	ARG	I_R	ARG		P	ARG				O_R	ARG
 //	cat	<	infile	|	grep	"now"	>	outfile
-int	get_pcs(t_token_meta *meta)
+int	get_pcs(t_token_meta *meta, t_env *env, char **envp)
 {
 	t_pcs	p;
 	t_token	*now;
 
 	init_p(&p);
+	p.envp = envp;
 	now = meta->head->next;
 	if (now->type == I_REDIR)
 		p.infile_fd = open(now->next->str, O_RDONLY);
@@ -152,5 +298,5 @@ int	get_pcs(t_token_meta *meta)
 		return (err_terminate(&p));
 	p.pfd = p.pfd_arr[0];
 	p.next_pfd = p.pfd_arr[1];
-	return (exec_fork(&p, meta));
+	return (exec_fork(&p, meta, env));
 }
