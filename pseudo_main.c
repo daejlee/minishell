@@ -3,9 +3,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-/* 종료 상태를 일단 전역 변수로 선언해놓았음 */
-int	g_exit_status;
-
 /* 시작 전 각종 초기화가 이뤄지는 부분 */
 int	intialize(t_env **env, char **envp)
 {
@@ -47,8 +44,12 @@ int	main(int argc, char **argv, char **envp)
 	{
 		buf = readline("minishell 0.0.1$ ");
 		meta = parse(env, buf);
-		if (get_pcs(meta, env, envp))
-			return (g_exit_status);
+		while (meta->size)
+		{
+			printf("%s\n", pop_token(meta)->str);
+		}
+		// if (get_pcs(meta, env, envp))
+		// 	return (g_exit_status);
 	}
 	return (0);
 }

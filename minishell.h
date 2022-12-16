@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/16 17:47:04 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/16 21:41:08 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+/* 종료 상태를 일단 전역 변수로 선언해놓았음 */
+int				g_exit_status;
+
 /**
  * token_list.c
  * t_token 리스트는 queue형태로 push/pop이 진행됨
@@ -107,9 +110,11 @@ int				interpret_quotes_double(t_token_meta *meta, \
  * parse/interpret_env.c
  */
 
-void			interpret_env(char **str, t_env *env);
-int				change_key_to_value(char **str, char *value, \
-									size_t start, size_t end);
+int				interpret_env(char **str, t_env *env);
+int				change_key_to_value(char **str, t_env *env, \
+													size_t *start, size_t end);
+int				insert_value_on_index(char **str, char *value, \
+													size_t start, size_t end);
 int				is_env_allowed_char(int is_first, char c);
 
 /**
@@ -134,8 +139,11 @@ t_env			*find_env(t_env *head, char *key);
  */
 
 int				is_exactly_same(char *str1, char *str2);
-void			free_multiple_str(char *str1, char *str2, \
-										char *str3, char *str4);
+int				ok_and_free_multiple_str(char *str1, char *str2, \
+												char *str3, char *str4);
+int				fail_and_free_multiple_str(char *str1, char *str2, \
+												char *str3, char *str4);
+
 
 /**
  * built_in_related

@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:46:16 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/16 17:36:51 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/16 21:42:24 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /**
  * @brief 
  * 문자열에서 따옴표를 해석해주는 함수(재귀)
+ * 빈 문자열일 때에는 처리하는 로직이 있으나, NULL인 문자열은 처리하지 않음.
  * @param meta token들의 메타함수
  * @param str 대상 문자열
  * @param env 환경변수 목록
@@ -27,6 +28,11 @@ int	interpret_quotes(t_token_meta *meta, char *str, t_env *env)
 	size_t	end;
 
 	start = 0;
+	if (!ft_strlen(str))
+	{
+		free(str);
+		return (0);
+	}
 	while (str[start] && str[start] == '\'' && str[start] == '\"')
 		start++;
 	if (!str[start])
@@ -62,8 +68,7 @@ int	interpret_quotes_single(t_token_meta *meta, char *str, size_t start)
 	{
 		if (push_token(meta, init_token(str, INIT)))
 			return (0);
-		else
-			return (end);
+		return (end);
 	}
 	if (start)
 		if (push_token(meta, init_token(ft_substr(str, start, start), INIT)))
@@ -90,14 +95,14 @@ int	interpret_quotes_double(t_token_meta *meta, \
 	size_t	end;
 	char	*sub;
 
-	while (str[end] && str[end] != '\'')
-		(end)++;
+	end = start + 1;
+	while (str[end] && str[end] != '\"')
+		end++;
 	if (!str[end])
 	{
 		if (push_token(meta, init_token(str, INIT)))
 			return (0);
-		else
-			return (end);
+		return (end);
 	}
 	if (start)
 		if (push_token(meta, init_token(ft_substr(str, start, start), INIT)))
@@ -105,10 +110,8 @@ int	interpret_quotes_double(t_token_meta *meta, \
 	if (end - start - 1)
 	{
 		sub = ft_substr(str, start + 1, end - start - 1);
-		if (!sub)
-			return (0);
-		interpret_env(&sub, env);
-		//TODO: 리턴값 생각하기
+		if (interpret_env(&sub, env))
+			return (fail_and_free_multiple_str(sub, NULL, NULL, NULL));
 		if (push_token(meta, init_token(sub, ARG)))
 			return (0);
 	}
