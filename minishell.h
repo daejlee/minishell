@@ -138,6 +138,7 @@ int	ft_exit(void);
 int	ft_export(char *name, t_env *env);
 int	ft_pwd(void);
 int	ft_unset(char *name, t_env *env);
+int	get_pcs(t_token_meta *meta, t_env *env, char **envp);
 
 
 #endif
