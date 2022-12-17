@@ -99,6 +99,7 @@ int	exec_fork(t_pcs *p, int argc, char *argv[])
 		else
 		{
 			prep_fds(p, i, argc);
+
 			p->pids[i - 2] = fork();
 			if (p->pids[i - 2] == -1)
 				return (err_terminate(p));

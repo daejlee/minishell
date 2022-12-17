@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		buf = readline("minishell 0.0.2$ ");
 		//todo: buf null일 때 예외처리
-		meta = parse(env, buf);
+		//meta = parse(env, buf);
 		if (get_pcs(meta, env, envp))
 			return (g_exit_status);
 	}

@@ -21,7 +21,7 @@ typedef struct s_pcs
 
 void		swap_pfd(int **pfd1, int **pfd2);
 int			check_com_for_quote(char *com);
-void		prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta);
+void		prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta, int stdinout_storage[2]);
 void		execve_failed(t_pcs *p, char *sh_func);
 void		init_p(t_pcs *p);
 int			free_arr(char **com);
