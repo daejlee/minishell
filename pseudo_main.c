@@ -44,9 +44,13 @@ int	main(int argc, char **argv, char **envp)
 	push_token(meta, init_token("ls", ARG));
 	push_token(meta, init_token("|", PIPE));
 	push_token(meta, init_token("grep a", ARG));
+	push_token(meta, init_token("|", PIPE));
+	push_token(meta, init_token("wc -l", ARG));
+	push_token(meta, init_token("|", PIPE));
+	push_token(meta, init_token("echo a", ARG));
 	while (1)
 	{
-		buf = readline("minishell 0.0.2$ ");
+		//buf = readline("minishell 0.0.2$ ");
 		//todo: buf null일 때 예외처리
 		//meta = parse(env, buf);
 		if (get_pcs(meta, env, envp))

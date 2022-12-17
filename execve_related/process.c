@@ -153,25 +153,6 @@ void	init_p(t_pcs *p)
 	p->com = NULL;
 }
 
-static void	prep_temp(int input_fd, int output_fd, int closing_fd, t_pcs *p)
-{
-	close(closing_fd);
-	if (input_fd)
-	{
-		dup2(input_fd, 0);
-		close(input_fd);
-		if (p)
-			p->pfd[0] = 0;
-	}
-	if (output_fd != 1)
-	{
-		dup2(output_fd, 1);
-		close(output_fd);
-		if (p)
-			p->next_pfd[1] = 1;
-	}
-}
-
 static void	prep(int input_fd, int output_fd, int closing_fd, t_pcs *p)
 {
 	close(closing_fd);
@@ -252,9 +233,11 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta, int stdinout_sto
 		if (!i)
 			prep(0, p->next_pfd[1], 1, p); 
 		else if (i == pcs_cnt - 1)
-			prep(p->pfd[0], stdinout_storage[1], 1, NULL);
+		{
+			prep(p->pfd[0], stdinout_storage[1], 1, p);
+		}
 		else
-			prep(p->pfd[0], p->next_pfd[1], 1, p);
+			prep(p->pfd[0], p->next_pfd[1], p->pfd[1], p);
 	}
 }
 
@@ -397,11 +380,13 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	stdinout_storage[1] = dup(1); //stdout save. 4
 	while (i < pcs_cnt)
 	{
-		if (now->type == PIPE) //now == PIPE
+		if (now->type == PIPE && i == pcs_cnt - 1)
 		{
 			prep_fds(p, i, pcs_cnt, meta, stdinout_storage);
 			now = now->next;
 		}
+		else if (now->type == PIPE)
+			now = now->next;
 		else if (now->type != ARG) //now == I_REDIR
 			now = now->next->next;
 		else //now == ARG
