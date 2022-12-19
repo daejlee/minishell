@@ -234,7 +234,7 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta, int stdinout_sto
 			prep(0, p->next_pfd[1], 1, p); 
 		else if (i == pcs_cnt - 1)
 		{
-			prep(p->pfd[0], stdinout_storage[1], 1, p);
+			prep(p->pfd[0], stdinout_storage[1], 0, p);
 		}
 		else
 			prep(p->pfd[0], p->next_pfd[1], p->pfd[1], p);
