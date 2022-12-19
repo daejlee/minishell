@@ -206,27 +206,27 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta, int stdinout_sto
 		if (!i)
 			prep(p->infile_fd, p->next_pfd[1], 0, p);
 		else if (i == pcs_cnt - 1)
-			prep(p->pfd[0], p->outfile_fd, p->pfd[1], NULL);
+			prep(p->pfd[0], p->outfile_fd, p->pfd[1], p);
 		else
-			prep(p->pfd[0], p->next_pfd[1], 1, p);
+			prep(p->pfd[0], p->next_pfd[1], p->pfd[1], p);
 	}
 	else if (redir_flag == I_ONLY)
 	{
 		if (!i)
 			prep(p->infile_fd, p->next_pfd[1], 0, p);
 		else if (i == pcs_cnt - 1)
-			prep(p->pfd[0], 1, -1, NULL);
+			prep(p->pfd[0], stdinout_storage[1], 0, p);
 		else
-			prep(p->pfd[0], p->next_pfd[1], 1, p);
+			prep(p->pfd[0], p->next_pfd[1], p->pfd[1], p);
 	}
 	else if (redir_flag == O_ONLY)
 	{
 		if (!i)
-			prep(0, p->next_pfd[1], -1, p);
+			prep(0, p->next_pfd[1], 1, p);
 		else if (i == pcs_cnt - 1)
-			prep(p->pfd[0], p->outfile_fd, p->pfd[1], NULL);
+			prep(p->pfd[0], p->outfile_fd, p->pfd[1], p);
 		else
-			prep(p->pfd[0], p->next_pfd[1], 1, p);
+			prep(p->pfd[0], p->next_pfd[1], p->pfd[1], p);
 	}
 	else
 	{
@@ -387,11 +387,11 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		}
 		else if (now->type == PIPE)
 			now = now->next;
-		else if (now->type != ARG) //now == I_REDIR
+		else if (now->type != ARG) //now == I_REDIR OR O_REDIR
 			now = now->next->next;
 		else //now == ARG
 		{
-			if (now->next->type == PIPE) //NEXT == PIPE
+			if (now->next->type == PIPE || now->next->type == I_REDIR) //NEXT == PIPE OR I_REDIR
 			{
 				if (pipe(p->next_pfd) == -1)
 					return (err_terminate(p));
