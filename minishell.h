@@ -39,6 +39,7 @@ enum	e_token_type {
 	I_REDIR,
 	O_REDIR,
 	I_HRDOC,
+	LIMITER, // here_doc에 필요한 리미터입니다.
 	O_APPND
 };
 

@@ -22,7 +22,7 @@ int	get_pcs_cnt(t_token_meta *meta)
 	while (now != meta->head)
 	{
 		if (now->type == I_REDIR || now->type == O_REDIR
-			|| now->type == I_HRDOC || now->type == O_APPEND)
+			|| now->type == I_HRDOC || now->type == O_APPND)
 			now = now->next;
 		else if (now->type == ARG)
 			ret++;
@@ -351,6 +351,56 @@ void	exec_com(t_pcs *p, t_token *now, int i, t_env *env)
 	execve_failed(p, sh_func);
 }
 
+// cat << LIMITER 
+
+static int	here_doc_seg(t_pcs *p, t_token_meta *meta)
+{
+	t_token	*now;
+	char	*limiter;
+	int		here_doc_fd;
+	char	*ret;
+	char	*temp;
+	int		fst_flag;
+	char	buffer[10];
+	char	*prev_nl;
+
+	now = meta->head->next->next;
+	limiter = ft_strjoin(now->str, "\n");
+	here_doc_fd = open(HERE_DOC_INPUT_BUFFER, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	if (here_doc_fd == -1)
+		return (1);
+	ret = "";
+	prev_nl = NULL;
+	fst_flag = 1;
+	while (!ft_strnstr(ret, limiter, ft_strlen(ret)))
+	{
+		write(1, ">", 1);
+		while (1)
+		{
+			read(0, buffer, 10);
+			temp = ret;
+			ret = ft_strjoin(ret, buffer);
+			if (!fst_flag)
+				free(temp);
+			if (ft_strrchr(ret, '\n') && ft_strrchr(ret, '\n') != prev_nl)
+			{
+				*(ft_strrchr(ret, '\n') + 1) = '\0';
+				prev_nl = ft_strchr(ret, '\n');
+				break ;
+			}
+			fst_flag = 0;
+		}
+	}
+	*ft_strnstr(ret, limiter, ft_strlen(ret)) = '\0';
+	free (limiter);
+	write(here_doc_fd, ret, ft_strlen(ret));
+	close(here_doc_fd);
+	here_doc_fd = open(HERE_DOC_INPUT_BUFFER, O_RDONLY);
+	p->infile_fd = here_doc_fd;
+	free(ret);
+	return (0);
+}
+
 int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 {
 	int		i;
@@ -358,16 +408,6 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	int		pcs_cnt;
 	int		stdinout_storage[2];
 	t_token	*now;
-
-	// here_doc은 나중에
-	// if (p->here_doc_flag)
-	// {
-	// 	ret = here_doc(p, meta);
-	// 	if (ret)
-	// 		return (ret);
-	// 	else
-	// 		return (0);
-	// }
 
 	pcs_cnt = get_pcs_cnt(meta);
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (pcs_cnt));
@@ -391,7 +431,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 			now = now->next->next;
 		else //now == ARG
 		{
-			if (now->next->type == PIPE || now->next->type == I_REDIR) //NEXT == PIPE OR I_REDIR
+			if (now->next->type == PIPE || now->next->type == I_REDIR || now->next->type == I_HRDOC) //NEXT == PIPE OR I_REDIR
 			{
 				if (pipe(p->next_pfd) == -1)
 					return (err_terminate(p));
@@ -409,6 +449,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 			now = now->next;
 		}
 	}
+	unlink(HERE_DOC_INPUT_BUFFER);
 	return (wait_for_children(p, p->pids, pcs_cnt));
 }
 
@@ -425,11 +466,11 @@ int	get_pcs(t_token_meta *meta, t_env *env, char **envp)
 	if (now->type == I_REDIR)
 		p.infile_fd = open(now->next->str, O_RDONLY);
 	else if (now->type == I_HRDOC)
-		p.here_doc_flag = 1;
+		here_doc_seg(&p, meta);
 	if (p.infile_fd == -1)
 		perror("pipex error");
 	now = get_o_redir_location(meta);
-	if (now->type == O_APPEND)
+	if (now->type == O_APPND)
 		p.outfile_fd = open(now->next->str, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	else if (now->type == O_REDIR)
 		p.outfile_fd = open(now->next->str, O_WRONLY | O_TRUNC | O_CREAT, 0644);
