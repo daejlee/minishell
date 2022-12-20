@@ -233,10 +233,13 @@ static char	*get_canonical_curpath(char *curpath)
  * original : cd [-L|-P] [directory]
  * @return int 성공 시 0, 실패 시 -1
  */
-int	ft_cd(char *dir, char *env_home, char *env_cdpath, char *env_pwd)
+int	ft_cd(char *dir, t_env *env)
 {
 	char	*curpath;
 	char	*temp_free;
+	char	*env_home;
+	char	*env_cdpath;
+	char	*env_pwd;
 
 	if (!dir && (!env_home || env_home[0] == '\0'))	//1st
 		return (1);

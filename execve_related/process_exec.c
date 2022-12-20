@@ -72,6 +72,8 @@ void	exec_com(t_pcs *p, t_token *now, int i, t_env *env)
 	p->com = ft_split(now->str, ' ');
 	if (!p->com)
 		exit (err_terminate(p));
+	if (is_built_in(p->com))
+		exit (exec_built_in(p->com, env));
 	sh_func = get_sh_func(p->com, env);
 	if (!sh_func)
 	{
@@ -84,7 +86,7 @@ void	exec_com(t_pcs *p, t_token *now, int i, t_env *env)
 
 // cat << LIMITER 
 
-static int	here_doc_seg(t_pcs *p, t_token_meta *meta)
+int	here_doc_seg(t_pcs *p, t_token_meta *meta)
 {
 	t_token	*now;
 	char	*limiter;

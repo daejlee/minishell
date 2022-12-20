@@ -150,13 +150,16 @@ int				fail_and_free_multiple_str(char *str1, char *str2, \
  * built_in_related
  */
 
-int	ft_cd(char *dir, char *env_home, char *env_cdpath, char *env_pwd);
+int	is_built_in(char **com);
+int	exec_built_in(char **com, t_env *env);
+int	ft_cd(char *dir, t_env *env);
 int	ft_echo(char *buf, int n_option);
 int	ft_env(t_env *env);
 int	ft_exit(void);
 int	ft_export(char *name, t_env *env);
 int	ft_pwd(void);
 int	ft_unset(char *name, t_env *env);
+
 int	get_pcs(t_token_meta *meta, t_env *env, char **envp);
 
 
