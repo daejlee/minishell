@@ -80,12 +80,6 @@ int	wait_for_children(t_pcs *p, pid_t *pids, int temp)
 	int	status;
 
 	status = 0;
-	close(p->pfd[0]);
-	close(p->pfd[1]);
-	close(p->next_pfd[0]);
-	close(p->next_pfd[1]);
-	close(0);
-	close(1);
 	i = 0;
 	while (i < temp)
 		waitpid(pids[i++], &status, 0);
@@ -401,6 +395,18 @@ static int	here_doc_seg(t_pcs *p, t_token_meta *meta)
 	return (0);
 }
 
+void	reset_fds(t_pcs *p, int stdin_dup, int stdout_dup)
+{
+	close(p->pfd_arr[0][0]);
+	close(p->pfd_arr[0][1]);
+	close(p->pfd_arr[1][0]);
+	close(p->pfd_arr[1][1]);
+	dup2(stdin_dup, 0);
+	dup2(stdout_dup, 1);
+	close(stdin_dup);
+	close(stdout_dup);
+}
+
 int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 {
 	int		i;
@@ -450,6 +456,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		}
 	}
 	unlink(HERE_DOC_INPUT_BUFFER);
+	reset_fds(p, stdinout_storage[0], stdinout_storage[1]);
 	return (wait_for_children(p, p->pids, pcs_cnt));
 }
 
