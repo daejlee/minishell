@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/21 16:11:05 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/21 21:07:03 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ enum	e_built_in_code
 	UNSET,
 	ENV,
 	EXIT
+};
+
+enum	e_error_code
+{
+	MALLOC_FAIL,
+	SYNTAX_ERROR
 };
 
 typedef struct s_token
@@ -125,6 +131,12 @@ int				is_env_allowed_char(int is_first, char c);
 int				split_spaces(t_token_meta *meta, char *str);
 void			analyze_quotes(char c, \
 								size_t *single_quotes, size_t *double_quotes);
+
+/**
+ * utils/error.c
+ */
+
+int				print_error(enum e_error_code error_code, char c);
 
 /**
  * env_list.c

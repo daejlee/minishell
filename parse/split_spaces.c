@@ -6,12 +6,14 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/21 16:13:35 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/21 21:09:12 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	skip_quotes(char *str, size_t *end);
+/*
 int	split_spaces(t_token_meta *meta, char *str)
 {
 	size_t	start;
@@ -24,17 +26,47 @@ int	split_spaces(t_token_meta *meta, char *str)
 	{
 		if (str[end] && str[end] == ' ' && start == end)
 			set_start_end(&start, &end, start + 1, end + 1);
-		else if ((str[end] && str[end] != ' ') || \
-								single_quotes % 2 || double_quotes % 2)
+		else if (str[end] && (str[end] != ' ' || \
+								single_quotes % 2 || double_quotes % 2))
 		{
 			analyze_quotes(str[end], &single_quotes, &double_quotes);
 			set_start_end(NULL, &end, start, end + 1);
 		}
 		else
 		{
+			if (push_token(meta, init_token(ft_substr(str, start, end - start), INIT)))
+				return (1);
+			set_start_end(&start, NULL, end, end);
+		}
+	}
+	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
+		printf("error!\n");
+	return (0);
+}
+*/
+
+int	split_spaces(t_token_meta *meta, char *str)
+{
+	size_t	start;
+	size_t	end;
+
+	start = 0;
+	end = 0;
+	while (str[end] || start != end)
+	{
+		if (str[end] && str[end] == ' ' && start == end)
+			set_start_end(&start, &end, start + 1, end + 1);
+		else if (str[end] && str[end] != ' ')
+		{
+			if (skip_quotes(str, &end))
+				return (print_error(SYNTAX_ERROR, str[end - 1]));
+			set_start_end(NULL, &end, start, end + 1);
+		}
+		else
+		{
 			if (push_token(meta, \
 					init_token(ft_substr(str, start, end - start), INIT)))
-				return (1);
+				return (print_error(MALLOC_FAIL, 0));
 			set_start_end(&start, NULL, end, end);
 		}
 	}
@@ -73,4 +105,17 @@ void	analyze_quotes(char c, size_t *single_quotes, size_t *double_quotes)
 		*single_quotes = 0;
 		*double_quotes = 0;
 	}
+}
+
+int	skip_quotes(char *str, size_t *end)
+{
+	if (str[*end] == '\'')
+		while (str[++(*end)] && str[*end] == '\'')
+			;
+	if (str[*end] == '\"')
+		while (str[++(*end)] && str[*end] == '\"')
+			;
+	if (!str[*end])
+		return (1);
+	return (0);
 }
