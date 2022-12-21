@@ -119,7 +119,7 @@ static char	*get_p_comp(char *curpath)
 	dot_dot_adr = ft_strnstr(curpath, "..", ft_strlen(curpath));
 	if (curpath == dot_dot_adr)
 		return (dot_dot_adr);
-	dot_dot_adr -= 3;
+	dot_dot_adr--;
 	i = 0;
 	while (*(dot_dot_adr - i) != '/')
 		i++;
@@ -278,7 +278,7 @@ int	ft_cd(char *dir, t_env *env)
 	if (curpath[0] != '/')	//7th
 	{
 		temp_free = curpath;
-		if (env_pwd[ft_strlen(env_pwd)] != '/')
+		if (env_pwd[ft_strlen(env_pwd) - 1] != '/')
 			curpath = ft_strjoin_modified(env_pwd, curpath);
 		else
 			curpath = ft_strjoin(env_pwd, curpath);
@@ -286,9 +286,9 @@ int	ft_cd(char *dir, t_env *env)
 		if (!curpath)
 			return (-1);
 	}
-	curpath = get_canonical_curpath(curpath);	//8th
+	//curpath = get_canonical_curpath(curpath);	//8th
 	if (!curpath)
 		return (-1);
-	//trim_max_length(&curpath);	//9th, after implement PWD
+	trim_max_length(&curpath);	//9th, after implement PWD
 	return (chdir(curpath));	//10th
 }

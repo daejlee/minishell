@@ -34,7 +34,7 @@ int	exec_built_in(char **com, t_env *env)
 			g_exit_status = ft_echo(com[1], 0);
 	}
 	else if (built_in_code == CD)
-	 	g_exit_status = ft_cd(com[0], env);
+	 	g_exit_status = ft_cd(com[1], env);
 	else if (built_in_code == PWD)
 		g_exit_status = ft_pwd();
 	else if (built_in_code == EXPORT)
