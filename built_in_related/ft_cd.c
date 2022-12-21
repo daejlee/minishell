@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-char	*ft_strjoin_modified(char const *s1, char const *s2)
+static char	*ft_strjoin_modified(char const *s1, char const *s2)
 {
 	int				i;
 	unsigned int	s1_len;
@@ -57,11 +57,11 @@ static int	check_cdpath(char **curpath_adr, char *env_cdpath)
 		else
 		{
 			*curpath_adr = temp;
-			free_arr(splitted_cdpath);
+			//free_arr(splitted_cdpath);
 			return (0);
 		}
 	}
-	free_arr(splitted_cdpath);
+	//free_arr(splitted_cdpath);
 	temp = ft_strjoin("./", *curpath_adr);
 	if (opendir(temp))
 	{
@@ -158,6 +158,7 @@ static char	*process_dot_dots(char *curpath)
 		else
 			curpath = ft_strnstr(curpath, "..", ft_strlen(curpath)) + 2;
 	}
+	return (curpath);
 }
 
 static char	*trim_ret(char *curpath)
@@ -227,6 +228,23 @@ static char	*get_canonical_curpath(char *curpath)
 	return (ret);
 }
 
+static char	*get_env_val(char *key, t_env *env)
+{
+	t_env	*now;
+
+	now = env;
+	if (!ft_strncmp((now->key), key, ft_strlen(key) + 1))
+		return (now->value);
+	now = now->next;
+	while (now != env)
+	{
+		if (!ft_strncmp((now->key), key, ft_strlen(key) + 1))
+			return (now->value);
+		now = now->next;
+	}
+	return (NULL);
+}
+
 /**
  * @brief 
  * 빌트인 cd 함수입니다. 상대 경로 혹은 절대 경로만을 사용합니다. 옵션을 지원하지 않습니다.
@@ -241,6 +259,9 @@ int	ft_cd(char *dir, t_env *env)
 	char	*env_cdpath;
 	char	*env_pwd;
 
+	env_home = get_env_val("HOME", env);
+	env_cdpath = get_env_val("CDPATH", env);
+	env_pwd = get_env_val("PWD", env);
 	if (!dir && (!env_home || env_home[0] == '\0'))	//1st
 		return (1);
 	else if (!dir)	//2nd

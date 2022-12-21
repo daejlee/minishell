@@ -21,7 +21,7 @@ PARSE_DIR = parse/
 SRCS_PARSE = parse.c interpret_env.c interpret_quotes.c
 
 BUILT_IN_DIR = built_in_related/
-SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c built_in.c
+SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c built_in.c ft_cd.c
 
 EXECVE_DIR = execve_related/
 SRCS_EXECVE = process.c process_exec.c process_fd_utils.c process_utils_1.c process_utils_2.c
