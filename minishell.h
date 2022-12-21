@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/16 21:41:08 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/21 16:11:05 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,14 @@ int				insert_value_on_index(char **str, char *value, \
 int				is_env_allowed_char(int is_first, char c);
 
 /**
+ * parse/split_spaces.c
+ */
+
+int				split_spaces(t_token_meta *meta, char *str);
+void			analyze_quotes(char c, \
+								size_t *single_quotes, size_t *double_quotes);
+
+/**
  * env_list.c
  * env 관련 함수 실행을 위한 utils가 있는 파일.
  */
@@ -145,6 +153,15 @@ int				ok_and_free_multiple_str(char *str1, char *str2, \
 int				fail_and_free_multiple_str(char *str1, char *str2, \
 												char *str3, char *str4);
 
+/**
+ * number_utils.c
+ */
+
+void			initialize_numbers(size_t *num1, size_t *num2, \
+												size_t *num3, size_t *num4);
+
+void			set_start_end(size_t *start, size_t *end, \
+										size_t start_num, size_t end_num);
 
 /**
  * built_in_related

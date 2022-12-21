@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 
 	intialize(&env, envp);
 	meta = init_token_meta();
-	push_token(meta, init_token("cd .", ARG));
+	// push_token(meta, init_token("cd .", ARG));
 	// push_token(meta, init_token("cat", ARG));
 	// push_token(meta, init_token("<<", I_HRDOC));
 	// push_token(meta, init_token("a", LIMITER));
@@ -55,13 +55,17 @@ int	main(int argc, char **argv, char **envp)
 	// push_token(meta, init_token("wc -l", ARG));
 	// push_token(meta, init_token(">>", O_APPND));
 	// push_token(meta, init_token("outfile", ARG));
-	//while (1)
+	while (1)
 	{
-		//buf = readline("minishell 0.0.2$ ");
+		buf = readline("minishell 0.0.2$ ");
 		//todo: buf null일 때 예외처리
-		//meta = parse(env, buf);
-		if (get_pcs(meta, env, envp))
-			return (g_exit_status);
+		meta = parse(env, buf);
+		while (meta->size)
+		{
+			printf("%s\n", pop_token(meta)->str);
+		}
+		// if (get_pcs(meta, env, envp))
+		// 	return (g_exit_status);
 	}
 	return (0);
 }

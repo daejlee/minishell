@@ -6,11 +6,11 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:41:15 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/16 21:51:24 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/21 16:07:47 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /**
  * @brief 

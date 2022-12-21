@@ -6,7 +6,7 @@
 #    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2022/12/16 16:55:23 by hkong            ###   ########.fr        #
+#    Updated: 2022/12/21 16:16:20 by hkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,10 @@ CFLAGS = #-Wall -Wextra -Werror
 LDLN_FLAG = -lreadline -L/usr/lib/x86_64-linux-gnu -I/usr/include #-L/usr/local/Cellar/readline/8.2.1/lib -I/usr/local/Cellar/readline/8.2.1/include
 CC = cc
 
-SRCS = pseudo_main.c token_list.c string_utils.c env_list.c
+SRCS = pseudo_main.c
 
 PARSE_DIR = parse/
-SRCS_PARSE = parse.c interpret_env.c interpret_quotes.c
+SRCS_PARSE = parse.c interpret_env.c interpret_quotes.c split_spaces.c
 
 BUILT_IN_DIR = built_in_related/
 SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c built_in.c ft_cd.c
@@ -26,9 +26,12 @@ SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c bui
 EXECVE_DIR = execve_related/
 SRCS_EXECVE = process.c process_exec.c process_fd_utils.c process_utils_1.c process_utils_2.c
 
-OBJ_FILES = $(SRCS:%.c=%.o) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.o) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.o)
+UTILS_DIR = utils/
+SRCS_UTILS = env_list.c token_list.c string_utils.c number_utils.c
 
-TEST_SRCS = $(SRCS:%.c=%.c) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.c) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.c) $(SRCS_EXECVE:%.c=$(EXECVE_DIR)%.c)
+OBJ_FILES = $(SRCS:%.c=%.o) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.o) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.o) $(SRCS_UTILS:%.c=$(UTILS_DIR)%.o)
+
+TEST_SRCS = $(SRCS:%.c=%.c) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.c) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.c) $(SRCS_EXECVE:%.c=$(EXECVE_DIR)%.c) $(SRCS_UTILS:%.c=$(UTILS_DIR)%.o)
 
 LIBFT = ./libft_garage/libft.a
 LIBFT_DIR = ./libft_garage
