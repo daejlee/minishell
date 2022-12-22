@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/21 21:07:03 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/22 21:20:52 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@
 # endif
 
 enum	e_token_type {
-	INIT,
+	INIT = 1,
 	ARG, // ex) echo -n 이 있으면 [echo -n]이 통째로 ARG인 형식을 따르는 게 좋을 것 같습니다.
 	PIPE,
 	I_REDIR,
 	O_REDIR,
 	I_HRDOC,
 	LIMITER, // here_doc에 필요한 리미터입니다.
-	O_APPND
+	O_APPND,
+	BLANK
 };
 
 /*	구현해야 하는 쉘 빌트인 함수들을 열거형을 이용해 나열했습니다	*/
@@ -131,6 +132,13 @@ int				is_env_allowed_char(int is_first, char c);
 int				split_spaces(t_token_meta *meta, char *str);
 void			analyze_quotes(char c, \
 								size_t *single_quotes, size_t *double_quotes);
+
+/**
+ * parse/split_spaces.c
+ */
+
+int				split_operator(t_token_meta *meta);
+
 
 /**
  * utils/error.c

@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/21 21:09:12 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/22 21:46:52 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	split_spaces(t_token_meta *meta, char *str)
 		}
 		else
 		{
+			if (push_token(meta, init_token(ft_strdup(" "), BLANK)))
+				return (print_error(MALLOC_FAIL, 0));
 			if (push_token(meta, \
 					init_token(ft_substr(str, start, end - start), INIT)))
 				return (print_error(MALLOC_FAIL, 0));
@@ -110,10 +112,10 @@ void	analyze_quotes(char c, size_t *single_quotes, size_t *double_quotes)
 int	skip_quotes(char *str, size_t *end)
 {
 	if (str[*end] == '\'')
-		while (str[++(*end)] && str[*end] == '\'')
+		while (str[++(*end)] && str[*end] != '\'')
 			;
 	if (str[*end] == '\"')
-		while (str[++(*end)] && str[*end] == '\"')
+		while (str[++(*end)] && str[*end] != '\"')
 			;
 	if (!str[*end])
 		return (1);
