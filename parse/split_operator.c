@@ -12,12 +12,6 @@
 
 #include "../minishell.h"
 
-int					split_operator_in_substr(t_token_meta *meta, char *str);
-size_t				operator_index(char *str);
-enum e_token_type	operator_type(char *str);
-t_token				*operator_token(char *str, size_t *index);
-
-
 int	split_operator(t_token_meta *meta)
 {
 	t_token	*node;
@@ -59,7 +53,7 @@ int	split_operator_in_substr(t_token_meta *meta, char *str)
 	if (index)
 		if (push_token(meta, init_token(ft_substr(str, 0, index), INIT)))
 			return (fail_and_free_multiple_str(str, NULL, NULL, NULL));
-	if (push_token(meta, operator_token(str, &index)))
+	if (push_token(meta, create_operator_token(str, &index)))
 		return (fail_and_free_multiple_str(str, NULL, NULL, NULL));
 	if (index + 1 != ft_strlen(str))
 		if (split_operator_in_substr(meta, \
@@ -103,7 +97,7 @@ enum e_token_type	operator_type(char *str)
 	return (PIPE);
 }
 
-t_token	*operator_token(char *str, size_t *index)
+t_token	*create_operator_token(char *str, size_t *index)
 {
 	t_token				*node;
 	char				*node_str;

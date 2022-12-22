@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/22 21:20:52 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/22 21:54:57 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,66 +85,70 @@ typedef struct s_env
 }	t_env;
 
 /* 종료 상태를 일단 전역 변수로 선언해놓았음 */
-int				g_exit_status;
+int					g_exit_status;
 
 /**
  * token_list.c
  * t_token 리스트는 queue형태로 push/pop이 진행됨
  */
 
-t_token_meta	*init_token_meta(void);
-t_token			*init_token(char *str, enum e_token_type type);
-int				push_token(t_token_meta *meta, t_token *node);
-t_token			*pop_token(t_token_meta *meta);
-t_token_meta	*free_token_meta(t_token_meta *meta);
+t_token_meta		*init_token_meta(void);
+t_token				*init_token(char *str, enum e_token_type type);
+int					push_token(t_token_meta *meta, t_token *node);
+t_token				*pop_token(t_token_meta *meta);
+t_token_meta		*free_token_meta(t_token_meta *meta);
 
 /**
  * parse/parse.c
  */
 
-t_token_meta	*parse(t_env *env, char *str);
+t_token_meta		*parse(t_env *env, char *str);
 
 /**
  * parse/interpret_quotes.c
  */
 
-int				interpret_quotes(t_token_meta *meta, char *str, t_env *env);
-int				interpret_quotes_single(t_token_meta *meta, char *str, \
+int					interpret_quotes(t_token_meta *meta, char *str, t_env *env);
+int					interpret_quotes_single(t_token_meta *meta, char *str, \
 																size_t start);
-int				interpret_quotes_double(t_token_meta *meta, \
+int					interpret_quotes_double(t_token_meta *meta, \
 										t_env *env, char *str, size_t start);
 
 /**
  * parse/interpret_env.c
  */
 
-int				interpret_env(char **str, t_env *env);
-int				change_key_to_value(char **str, t_env *env, \
+int					interpret_env(char **str, t_env *env);
+int					change_key_to_value(char **str, t_env *env, \
 													size_t *start, size_t end);
-int				insert_value_on_index(char **str, char *value, \
+int					insert_value_on_index(char **str, char *value, \
 													size_t start, size_t end);
-int				is_env_allowed_char(int is_first, char c);
+int					is_env_allowed_char(int is_first, char c);
 
 /**
  * parse/split_spaces.c
  */
 
-int				split_spaces(t_token_meta *meta, char *str);
-void			analyze_quotes(char c, \
+int					split_spaces(t_token_meta *meta, char *str);
+void				analyze_quotes(char c, \
 								size_t *single_quotes, size_t *double_quotes);
 
 /**
  * parse/split_spaces.c
  */
 
-int				split_operator(t_token_meta *meta);
+int					split_operator(t_token_meta *meta);
+int					split_operator_in_substr(t_token_meta *meta, char *str);
+t_token				*create_operator_token(char *str, size_t *index);
+size_t				operator_index(char *str);
+enum e_token_type	operator_type(char *str);
 
 
 /**
  * utils/error.c
  */
 
-int				print_error(enum e_error_code error_code, char c);
+int					print_error(enum e_error_code error_code, char c);
 
 /**
  * env_list.c
@@ -158,29 +162,29 @@ int				print_error(enum e_error_code error_code, char c);
  * '='이 없다면, env에 저장되지 않는다.
  */
 
-t_env			*init_env(char *key, char *value);
-int				push_env(t_env **head, t_env	**node);
-int				delete_env(t_env *head, char *key);
-t_env			*find_env(t_env *head, char *key);
+t_env				*init_env(char *key, char *value);
+int					push_env(t_env **head, t_env	**node);
+int					delete_env(t_env *head, char *key);
+t_env				*find_env(t_env *head, char *key);
 
 /**
  * string_utils.c
  */
 
-int				is_exactly_same(char *str1, char *str2);
-int				ok_and_free_multiple_str(char *str1, char *str2, \
+int					is_exactly_same(char *str1, char *str2);
+int					ok_and_free_multiple_str(char *str1, char *str2, \
 												char *str3, char *str4);
-int				fail_and_free_multiple_str(char *str1, char *str2, \
+int					fail_and_free_multiple_str(char *str1, char *str2, \
 												char *str3, char *str4);
 
 /**
  * number_utils.c
  */
 
-void			initialize_numbers(size_t *num1, size_t *num2, \
+void				initialize_numbers(size_t *num1, size_t *num2, \
 												size_t *num3, size_t *num4);
 
-void			set_start_end(size_t *start, size_t *end, \
+void				set_start_end(size_t *start, size_t *end, \
 										size_t start_num, size_t end_num);
 
 /**
