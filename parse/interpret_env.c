@@ -6,11 +6,30 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:39:35 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/16 21:47:42 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/23 21:43:12 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	interpret_env(t_token_meta *meta, t_env *env)
+{
+	t_token	*node;
+	size_t	token_num;
+
+	token_num = meta->size;
+	while (token_num--)
+	{
+		node = pop_token(meta);
+		if (interpret_env_in_substr(&(node->str), env))
+		{
+			free_token(node);
+			return (print_error(MALLOC_FAIL, 0));
+		}
+		push_token(meta, node);
+	}
+	return (0);
+}
 
 /**
  * @brief 
@@ -19,7 +38,7 @@
  * @param env 환경변수 목록
  * @return int 성공 시 0, 실패 시 1
  */
-int	interpret_env(char **str, t_env *env)
+int	interpret_env_in_substr(char **str, t_env *env)
 {
 	size_t	start;
 	size_t	end;

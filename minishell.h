@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/23 20:29:51 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/23 21:41:13 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,8 @@ size_t				quote_index(char *str);
  * parse/interpret_env.c
  */
 
-int					interpret_env(char **str, t_env *env);
+int					interpret_env(t_token_meta *meta, t_env *env);
+int					interpret_env_in_substr(char **str, t_env *env);
 int					change_key_to_value(char **str, t_env *env, \
 													size_t *start, size_t end);
 int					insert_value_on_index(char **str, char *value, \

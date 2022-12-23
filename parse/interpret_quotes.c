@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:46:16 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/23 20:32:48 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/23 21:42:36 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ char	*interpret_quotes_double(t_token_meta *meta, \
 	node = init_token(ft_substr(str, start + 1, end - start - 1), ARG);
 	if (!node)
 		return (0);
-	if (interpret_env(&(node->str), env))
+	if (interpret_env_in_substr(&(node->str), env))
 	{
 		free_token(node);
 		return (0);

@@ -62,7 +62,7 @@ int	main(int argc, char **argv, char **envp)
 		meta = parse(env, buf);
 		while (meta->size)
 		{
-			printf("%s\n", pop_token(meta)->str);
+			printf("%s|\n", pop_token(meta)->str);
 		}
 		// if (get_pcs(meta, env, envp))
 		// 	return (g_exit_status);
