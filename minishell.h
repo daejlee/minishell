@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/22 21:54:57 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/23 20:29:51 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ enum	e_error_code
 
 typedef struct s_token
 {
+	char				*original_str;
 	char				*str;
 	enum e_token_type	type;
 	struct s_token		*prev;
@@ -88,14 +89,21 @@ typedef struct s_env
 int					g_exit_status;
 
 /**
- * token_list.c
+ * token.c
+ * t_token 리스트는 queue형태로 push/pop이 진행됨
+ */
+
+t_token				*init_token(char *str, enum e_token_type type);
+int					push_token(t_token_meta *meta, t_token *node);
+t_token				*pop_token(t_token_meta *meta);
+void				free_token(t_token *token);
+
+/**
+ * token_meta.c
  * t_token 리스트는 queue형태로 push/pop이 진행됨
  */
 
 t_token_meta		*init_token_meta(void);
-t_token				*init_token(char *str, enum e_token_type type);
-int					push_token(t_token_meta *meta, t_token *node);
-t_token				*pop_token(t_token_meta *meta);
 t_token_meta		*free_token_meta(t_token_meta *meta);
 
 /**
@@ -108,11 +116,15 @@ t_token_meta		*parse(t_env *env, char *str);
  * parse/interpret_quotes.c
  */
 
-int					interpret_quotes(t_token_meta *meta, char *str, t_env *env);
-int					interpret_quotes_single(t_token_meta *meta, char *str, \
+int					interpret_quotes(t_token_meta *meta, t_env *env);
+int					interpret_quotes_in_substr(t_token_meta *meta, \
+														char *str, t_env *env);
+char				*interpret_quotes_single(t_token_meta *meta, char *str, \
 																size_t start);
-int					interpret_quotes_double(t_token_meta *meta, \
+char				*interpret_quotes_double(t_token_meta *meta, \
 										t_env *env, char *str, size_t start);
+size_t				quote_index(char *str);
+
 
 /**
  * parse/interpret_env.c

@@ -23,7 +23,7 @@ int	split_operator(t_token_meta *meta)
 	{
 		node = pop_token(meta);
 		index = operator_index(node->str);
-		if (!index)
+		if (!index || node->type == ARG)
 		{
 			push_token(meta, node);
 			continue ;

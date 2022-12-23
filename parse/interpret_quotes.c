@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:46:16 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/16 21:55:01 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/23 20:32:48 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,66 @@
 
 /**
  * @brief 
+ * 공백으로 구분된 토큰들에서 따옴표가 있는 토큰들을 처리해주는 함수.
+ * 전제조건: 모든 토큰들 중에서 str이 NULL인 토큰은 없음.
+ * @param meta token들의 메타
+ * @param env 환경변수 목록
+ * @return int 성공 시 0, 실패 시 1
+ */
+int	interpret_quotes(t_token_meta *meta, t_env *env)
+{
+	t_token	*node;
+	size_t	token_num;
+	size_t	index;
+
+	token_num = meta->size;
+	while (token_num--)
+	{
+		node = pop_token(meta);
+		index = quote_index(node->str);
+		if (!index)
+		{
+			push_token(meta, node);
+			continue ;
+		}
+		if (interpret_quotes_in_substr(meta, node->str, env))
+		{
+			free(node);
+			return (print_error(MALLOC_FAIL, 0));
+		}
+		free(node);
+	}
+	return (0);
+}
+
+/**
+ * @brief 
  * 문자열에서 따옴표를 해석해주는 함수(재귀)
- * 빈 문자열일 때에는 처리하는 로직이 있으나, NULL인 문자열은 처리하지 않음.
+ * 전제조건: str은 NULL이 아님.
  * @param meta token들의 메타함수
  * @param str 대상 문자열
  * @param env 환경변수 목록
  * @return int 성공 시 0, 실패 시 1
  */
-int	interpret_quotes(t_token_meta *meta, char *str, t_env *env)
+int	interpret_quotes_in_substr(t_token_meta *meta, char *str, t_env *env)
 {
 	char	*next_str;
 	size_t	start;
-	size_t	end;
 
-	start = 0;
-	if (!ft_strlen(str))
-	{
-		free(str);
-		return (0);
-	}
-	while (str[start] && str[start] != '\'' && str[start] != '\"')
-		start++;
-	if (!str[start])
+	start = quote_index(str);
+	if (!start)
 		return (push_token(meta, init_token(str, INIT)));
-	end = start + 1;
+	start--;
 	if (str[start] == '\'')
-		end = interpret_quotes_single(meta, str, start);
+		next_str = interpret_quotes_single(meta, str, start);
 	else
-		end = interpret_quotes_double(meta, env, str, start);
-	next_str = ft_substr(str, end + 1, ft_strlen(str) - end - 1);
+		next_str = interpret_quotes_double(meta, env, str, start);
 	free(str);
 	if (!next_str)
 		return (1);
-	return (interpret_quotes(meta, next_str, env));
+	if (!ft_strlen(next_str))
+		return (ok_and_free_multiple_str(next_str, NULL, NULL, NULL));
+	return (interpret_quotes_in_substr(meta, next_str, env));
 }
 
 /**
@@ -55,29 +82,24 @@ int	interpret_quotes(t_token_meta *meta, char *str, t_env *env)
  * @param meta 
  * @param str 
  * @param start 처음 나타나는 single quote의 인덱스
- * @return int 실패 시 0, 성공 시 end의 인덱스를 반환합니다.
+ * @return char * 실패 시 NULL, 성공 시 따옴표 이후의 string을 반환합니다.
  */
-int	interpret_quotes_single(t_token_meta *meta, char *str, size_t start)
+char	*interpret_quotes_single(t_token_meta *meta, char *str, size_t start)
 {
 	size_t	end;
+	char	*next_str;
 
 	end = start + 1;
 	while (str[end] && str[end] != '\'')
 		end++;
-	if (!str[end])
-	{
-		if (push_token(meta, init_token(str, INIT)))
-			return (0);
-		return (end);
-	}
 	if (start)
 		if (push_token(meta, init_token(ft_substr(str, 0, start), INIT)))
 			return (0);
-	if (end - start - 1)
-		if (push_token(meta, \
+	if (push_token(meta, \
 				init_token(ft_substr(str, start + 1, end - start - 1), ARG)))
-			return (0);
-	return (end);
+		return (0);
+	next_str = ft_substr(str, end + 1, ft_strlen(str) - end - 1);
+	return (next_str);
 }
 
 /**
@@ -87,33 +109,49 @@ int	interpret_quotes_single(t_token_meta *meta, char *str, size_t start)
  * @param env
  * @param str 
  * @param start 처음 나타나는 double quote의 인덱스
- * @return int 실패 시 0, 성공 시 end의 인덱스를 반환합니다.
+ * @return char * 실패 시 NULL, 성공 시 따옴표 이후의 string을 반환합니다.
  */
-int	interpret_quotes_double(t_token_meta *meta, \
+char	*interpret_quotes_double(t_token_meta *meta, \
 											t_env *env, char *str, size_t start)
 {
+	t_token	*node;
 	size_t	end;
-	char	*sub;
+	char	*next_str;
 
 	end = start + 1;
 	while (str[end] && str[end] != '\"')
 		end++;
-	if (!str[end])
-	{
-		if (push_token(meta, init_token(str, INIT)))
-			return (0);
-		return (end);
-	}
 	if (start)
 		if (push_token(meta, init_token(ft_substr(str, 0, start), INIT)))
 			return (0);
-	if (end - start - 1)
+	node = init_token(ft_substr(str, start + 1, end - start - 1), ARG);
+	if (!node)
+		return (0);
+	if (interpret_env(&(node->str), env))
 	{
-		sub = ft_substr(str, start + 1, end - start - 1);
-		if (interpret_env(&sub, env))
-			return (fail_and_free_multiple_str(sub, NULL, NULL, NULL));
-		if (push_token(meta, init_token(sub, ARG)))
-			return (0);
+		free_token(node);
+		return (0);
 	}
-	return (end);
+	if (push_token(meta, node))
+		return (0);
+	next_str = ft_substr(str, end + 1, ft_strlen(str) - end - 1);
+	return (next_str);
+}
+
+/**
+ * @brief 
+ * 문자열에서 따옴표의 위치를 반환하는 함수입니다.
+ * @param str 
+ * @return size_t 없을 시 0, 있을 시 index + 1 반환
+ */
+size_t	quote_index(char *str)
+{
+	size_t	start;
+
+	start = 0;
+	while (str[start] && str[start] != '\'' && str[start] != '\"')
+		start++;
+	if (!str[start])
+		return (0);
+	return (start + 1);
 }
