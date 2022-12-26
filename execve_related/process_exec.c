@@ -161,6 +161,11 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 			now = now->next;
 		else if (now->type != ARG) //now == I_REDIR OR O_REDIR
 			now = now->next->next;
+		else if (now->type == ARG && !i && p->infile_fd == -1)
+		{
+			now = now->next;
+			i++;
+		}
 		else //now == ARG
 		{
 			if (now->next->type == PIPE || now->next->type == I_REDIR || now->next->type == I_HRDOC) //NEXT == PIPE OR I_REDIR
