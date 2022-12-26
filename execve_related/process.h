@@ -20,6 +20,7 @@ typedef struct s_pcs
 	int		here_doc_flag;
 	int		outfile_fd;
 	int		infile_fd;
+	int		temp_infile_fd;
 	int		pfd_arr[2][2];
 	int		*pfd;
 	int		*next_pfd;
@@ -33,7 +34,7 @@ typedef struct s_pcs
  */
 
 void		exec_com(t_pcs *p, t_token *now, int i, t_env *env);
-int			here_doc_seg(t_pcs *p, t_token_meta *meta);
+int			here_doc_seg(t_pcs *p, t_token *now);
 int			exec_fork(t_pcs *p, t_token_meta *meta, t_env *env);
 
 /**

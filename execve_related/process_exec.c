@@ -86,9 +86,8 @@ void	exec_com(t_pcs *p, t_token *now, int i, t_env *env)
 
 // cat << LIMITER 
 
-int	here_doc_seg(t_pcs *p, t_token_meta *meta)
+int	here_doc_seg(t_pcs *p, t_token *now)
 {
-	t_token	*now;
 	char	*limiter;
 	int		here_doc_fd;
 	char	*ret;
@@ -97,8 +96,8 @@ int	here_doc_seg(t_pcs *p, t_token_meta *meta)
 	char	buffer[10];
 	char	*prev_nl;
 
-	now = meta->head->next->next;
-	limiter = ft_strjoin(now->str, "\n");
+	limiter = ft_strjoin(now->next->str, "\n");
+	unlink(HERE_DOC_INPUT_BUFFER);
 	here_doc_fd = open(HERE_DOC_INPUT_BUFFER, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (here_doc_fd == -1)
 		return (1);
@@ -129,7 +128,7 @@ int	here_doc_seg(t_pcs *p, t_token_meta *meta)
 	write(here_doc_fd, ret, ft_strlen(ret));
 	close(here_doc_fd);
 	here_doc_fd = open(HERE_DOC_INPUT_BUFFER, O_RDONLY);
-	p->infile_fd = here_doc_fd;
+	p->temp_infile_fd = here_doc_fd;
 	free(ret);
 	return (0);
 }
