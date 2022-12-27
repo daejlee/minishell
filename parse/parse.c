@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 21:22:23 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/23 21:41:39 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/24 18:01:50 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ t_token_meta	*parse(t_env *env, char *str)
 
 	//? 들어오는 인자가 NULL일 때 / 빈 문자열일 때 확인.
 	result = init_token_meta();
-	split_spaces(result, str);
+	split_spaces_in_substr(result, str);
 	interpret_quotes(result, env);
 	split_operator(result);
 	interpret_env(result, env);
+	split_spaces(result, env);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/23 21:41:13 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/27 16:10:43 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,14 @@ int					is_env_allowed_char(int is_first, char c);
  * parse/split_spaces.c
  */
 
-int					split_spaces(t_token_meta *meta, char *str);
+int					split_spaces(t_token_meta *meta, t_env *env);
+int					split_spaces_in_substr(t_token_meta *meta, char *str);
 void				analyze_quotes(char c, \
 								size_t *single_quotes, size_t *double_quotes);
+int					skip_quotes(char *str, size_t *end);
 
 /**
- * parse/split_spaces.c
+ * parse/split_operator.c
  */
 
 int					split_operator(t_token_meta *meta);

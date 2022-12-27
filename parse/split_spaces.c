@@ -6,46 +6,38 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/23 22:06:22 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/27 16:07:45 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	skip_quotes(char *str, size_t *end);
-/*
-int	split_spaces(t_token_meta *meta, char *str)
+int	split_spaces(t_token_meta *meta, t_env *env)
 {
-	size_t	start;
-	size_t	end;
-	size_t	single_quotes;
-	size_t	double_quotes;
+	t_token	*node;
+	size_t	token_num;
+	size_t	index;
 
-	initialize_numbers(&start, &end, &single_quotes, &double_quotes);
-	while (str[end] || start != end)
+	token_num = meta->size;
+	while (token_num--)
 	{
-		if (str[end] && str[end] == ' ' && start == end)
-			set_start_end(&start, &end, start + 1, end + 1);
-		else if (str[end] && (str[end] != ' ' || \
-								single_quotes % 2 || double_quotes % 2))
+		node = pop_token(meta);
+		if (node->type != INIT)
 		{
-			analyze_quotes(str[end], &single_quotes, &double_quotes);
-			set_start_end(NULL, &end, start, end + 1);
+			push_token(meta, node);
+			continue ;
 		}
-		else
+		if (split_spaces_in_substr(meta, node->str))
 		{
-			if (push_token(meta, init_token(ft_substr(str, start, end - start), INIT)))
-				return (1);
-			set_start_end(&start, NULL, end, end);
+			free_token(node);
+			return (print_error(MALLOC_FAIL, 0));
 		}
+		free_token(node);
 	}
-	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-		printf("error!\n");
 	return (0);
 }
-*/
 
-int	split_spaces(t_token_meta *meta, char *str)
+int	split_spaces_in_substr(t_token_meta *meta, char *str)
 {
 	size_t	start;
 	size_t	end;
@@ -73,26 +65,6 @@ int	split_spaces(t_token_meta *meta, char *str)
 		}
 	}
 	return (0);
-}
-
-t_token	*old_lexical_analyzer(char *str)
-{
-	t_token	*token;
-
-	token = init_token(str, INIT);
-	if (!token)
-		return (NULL);
-	if (ft_strlen(str) == 1 && !ft_strncmp(str, "|", 1))
-		token->type = PIPE;
-	else if (ft_strlen(str) == 1 && !ft_strncmp(str, "<", 1))
-		token->type = I_REDIR;
-	else if (ft_strlen(str) == 1 && !ft_strncmp(str, ">", 1))
-		token->type = O_REDIR;
-	else if (ft_strlen(str) == 2 && !ft_strncmp(str, "<<", 2))
-		token->type = I_HRDOC;
-	else if (ft_strlen(str) == 2 && !ft_strncmp(str, ">>", 2))
-		token->type = O_APPND;
-	return (token);
 }
 
 void	analyze_quotes(char c, size_t *single_quotes, size_t *double_quotes)

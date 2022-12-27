@@ -55,6 +55,8 @@ int	main(int argc, char **argv, char **envp)
 	// push_token(meta, init_token("wc -l", ARG));
 	// push_token(meta, init_token(">>", O_APPND));
 	// push_token(meta, init_token("outfile", ARG));
+
+	t_token	*node;
 	while (1)
 	{
 		buf = readline("minishell 0.0.2$ ");
@@ -62,7 +64,8 @@ int	main(int argc, char **argv, char **envp)
 		meta = parse(env, buf);
 		while (meta->size)
 		{
-			printf("%s|\n", pop_token(meta)->str);
+			node = pop_token(meta);
+			printf("%s|%d\n", node->str, node->type);
 		}
 		// if (get_pcs(meta, env, envp))
 		// 	return (g_exit_status);

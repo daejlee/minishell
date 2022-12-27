@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:39:35 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/23 21:43:12 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/27 16:08:28 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ int	interpret_env(t_token_meta *meta, t_env *env)
 	while (token_num--)
 	{
 		node = pop_token(meta);
-		if (interpret_env_in_substr(&(node->str), env))
+		if (node->type == INIT && interpret_env_in_substr(&(node->str), env))
 		{
 			free_token(node);
 			return (print_error(MALLOC_FAIL, 0));
 		}
+		if (!ft_strlen(node->str))
+			node->type = ARG;
 		push_token(meta, node);
 	}
 	return (0);
