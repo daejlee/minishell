@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:46:16 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/24 21:34:03 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/27 16:19:29 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	interpret_quotes(t_token_meta *meta, t_env *env)
 	while (token_num--)
 	{
 		node = pop_token(meta);
+		if (!node)
+			return (1);
 		index = quote_index(node->str);
 		if (!index)
 		{

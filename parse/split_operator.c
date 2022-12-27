@@ -12,6 +12,12 @@
 
 #include "../minishell.h"
 
+/**
+ * @brief 
+ * meta에 있는 모든 INIT인 토큰들에서 pipe 및 redirection을 분리해주는 함수입니다. 
+ * @param meta 
+ * @return int 성공 시 0, 실패 시 1
+ */
 int	split_operator(t_token_meta *meta)
 {
 	t_token	*node;
@@ -22,8 +28,10 @@ int	split_operator(t_token_meta *meta)
 	while (token_num--)
 	{
 		node = pop_token(meta);
+		if (!node)
+			return (1);
 		index = operator_index(node->str);
-		if (!index || node->type == ARG)
+		if (!index || node->type != INIT)
 		{
 			push_token(meta, node);
 			continue ;
@@ -38,6 +46,13 @@ int	split_operator(t_token_meta *meta)
 	return (0);
 }
 
+/**
+ * @brief 
+ * string에서 pipe 및 redirection을 분리해주는 함수입니다.
+ * @param meta 
+ * @param str 
+ * @return int 성공 시 0, 실패 시 1
+ */
 int	split_operator_in_substr(t_token_meta *meta, char *str)
 {
 	size_t	index;
@@ -62,6 +77,12 @@ int	split_operator_in_substr(t_token_meta *meta, char *str)
 	return (ok_and_free_multiple_str(str, NULL, NULL, NULL));
 }
 
+/**
+ * @brief 
+ * string에서 pipe 및 redirection이 나타나는 index를 알려주는 함수입니다.
+ * @param str 
+ * @return size_t 없을 시 0, 있을 시 index + 1 반환
+ */
 size_t	operator_index(char *str)
 {
 	size_t	index;
@@ -80,6 +101,12 @@ size_t	operator_index(char *str)
 	return (0);
 }
 
+/**
+ * @brief 
+ * 해당 위치에 있는 pipe 및 redirecion의 type을 알려주는 함수입니다.
+ * @param str 
+ * @return enum e_token_type 
+ */
 enum e_token_type	operator_type(char *str)
 {
 	if (*str == '<')
@@ -97,6 +124,14 @@ enum e_token_type	operator_type(char *str)
 	return (PIPE);
 }
 
+/**
+ * @brief
+ * 문자열의 인덱스에 존재하는 pipe 및 redirecion의 타입에 맞추어 토큰을 생성해주고,
+ * 길이가 2인 redirecion의 경우 index값을 뒤로 미뤄주는 함수. 
+ * @param str 
+ * @param index 
+ * @return t_token* 실패 시 NULL
+ */
 t_token	*create_operator_token(char *str, size_t *index)
 {
 	t_token				*node;

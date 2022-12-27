@@ -6,12 +6,21 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:39:35 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/27 16:08:28 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/27 16:19:10 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/**
+ * @brief 
+ * meta에 있는 모든 토큰들에 있는 환경변수를 해석해주는 함수.
+ * 이 때 토큰의 타입은 INIT이어야 한다.
+ * 또한 해석 이후 비어 있는 토큰은 ARG로 타입을 변환해준다.
+ * @param meta 
+ * @param env 
+ * @return int 성공 시 0, 실패 시 1
+ */
 int	interpret_env(t_token_meta *meta, t_env *env)
 {
 	t_token	*node;
@@ -21,6 +30,8 @@ int	interpret_env(t_token_meta *meta, t_env *env)
 	while (token_num--)
 	{
 		node = pop_token(meta);
+		if (!node)
+			return (1);
 		if (node->type == INIT && interpret_env_in_substr(&(node->str), env))
 		{
 			free_token(node);
@@ -28,7 +39,7 @@ int	interpret_env(t_token_meta *meta, t_env *env)
 		}
 		if (!ft_strlen(node->str))
 			node->type = ARG;
-		push_token(meta, node);
+		free_token(node);
 	}
 	return (0);
 }

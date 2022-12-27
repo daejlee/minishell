@@ -6,12 +6,19 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/27 16:07:45 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/27 17:37:53 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/**
+ * @brief 
+ * meta에 있는 모든 INIT인 토큰들에서 공백을 분리해주는 함수입니다.
+ * @param meta 
+ * @param env 
+ * @return int 성공 시 0, 실패 시 1
+ */
 int	split_spaces(t_token_meta *meta, t_env *env)
 {
 	t_token	*node;
@@ -22,6 +29,8 @@ int	split_spaces(t_token_meta *meta, t_env *env)
 	while (token_num--)
 	{
 		node = pop_token(meta);
+		if (!node)
+			return (1);
 		if (node->type != INIT)
 		{
 			push_token(meta, node);
@@ -37,6 +46,13 @@ int	split_spaces(t_token_meta *meta, t_env *env)
 	return (0);
 }
 
+/**
+ * @brief 
+ * 문자열에서 공백을 기준으로 토큰을 생성해주는 함수입니다.
+ * @param meta 
+ * @param str 
+ * @return int 성공 시 0, 실패 시 1
+ */
 int	split_spaces_in_substr(t_token_meta *meta, char *str)
 {
 	size_t	start;
@@ -67,20 +83,14 @@ int	split_spaces_in_substr(t_token_meta *meta, char *str)
 	return (0);
 }
 
-void	analyze_quotes(char c, size_t *single_quotes, size_t *double_quotes)
-{
-	if (c == '\'')
-		(*single_quotes)++;
-	else if (c == '\"')
-		(*double_quotes)++;
-	if ((*single_quotes && *single_quotes % 2 == 0) \
-						|| (*double_quotes && *double_quotes % 2 == 0))
-	{
-		*single_quotes = 0;
-		*double_quotes = 0;
-	}
-}
-
+/**
+ * @brief 
+ * 따옴표 내부의 공백은 취급하지 않으므로,
+ * 따옴표 안에 있는 문자열은 전부 스킵하는 함수입니다.
+ * @param str 
+ * @param end 
+ * @return int 쌍이 맞지 않을 시 1, 성공 시 0
+ */
 int	skip_quotes(char *str, size_t *end)
 {
 	if (str[*end] == '\'')
