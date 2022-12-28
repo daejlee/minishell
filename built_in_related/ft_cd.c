@@ -262,11 +262,11 @@ int	ft_cd(char *dir, t_env *env)
 	env_home = get_env_val("HOME", env);
 	env_cdpath = get_env_val("CDPATH", env);
 	env_pwd = get_env_val("PWD", env);
-	if (!dir && (!env_home || env_home[0] == '\0'))	//1st
+	if (!dir && (!env_home || env_home[0] == '\0'))
 		return (1);
-	else if (!dir)	//2nd
+	else if (!dir)
 		dir = env_home;
-	if (dir[0] == '/')	//3rd
+	if (dir[0] == '/')
 		curpath = ft_strdup(dir);
 	else
 	{
@@ -275,7 +275,7 @@ int	ft_cd(char *dir, t_env *env)
 	}
 	if (!curpath)
 		return (-1);
-	if (curpath[0] != '/')	//7th
+	if (curpath[0] != '/')
 	{
 		temp_free = curpath;
 		if (env_pwd[ft_strlen(env_pwd) - 1] != '/')
@@ -286,9 +286,7 @@ int	ft_cd(char *dir, t_env *env)
 		if (!curpath)
 			return (-1);
 	}
-	//curpath = get_canonical_curpath(curpath);	//8th
 	if (!curpath)
 		return (-1);
-	trim_max_length(&curpath);	//9th, after implement PWD
-	return (chdir(curpath));	//10th
+	return (chdir(curpath));
 }
