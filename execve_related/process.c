@@ -15,7 +15,10 @@ int	get_pcs(t_token_meta *meta, t_env *env, char **envp)
 	while (now->type == I_REDIR || now->type == I_HRDOC)
 	{
 		if (now->type == I_HRDOC)
-			here_doc_seg(&p, now);
+		{
+			if (here_doc_seg(&p, now))
+				return (err_terminate(&p));
+		}
 		now = now->next->next;
 	}
 	i_last = now->prev->prev;

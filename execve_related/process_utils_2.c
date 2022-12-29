@@ -31,6 +31,8 @@ int	err_terminate(t_pcs *p)
 		close(p->next_pfd[0]);
 		close(p->next_pfd[1]);
 	}
+	if (p->pids)
+		free(p->pids);
 	close(0);
 	close(1);
 	if (p->here_doc_flag)
@@ -41,7 +43,6 @@ int	err_terminate(t_pcs *p)
 void	execve_failed(t_pcs *p, char *sh_func)
 {
 	err_terminate(p);
-	free(p->pids);
 	free_arr(p->com);
 	if (sh_func)
 		free(sh_func);
@@ -53,6 +54,7 @@ void	init_p(t_pcs *p)
 	p->here_doc_flag = 0;
 	p->outfile_fd = 1;
 	p->infile_fd = 0;
+	p->temp_infile_fd = 0;
 	p->pfd_arr[0][0] = 0;
 	p->pfd_arr[0][1] = 0;
 	p->pfd_arr[1][0] = 0;
@@ -60,6 +62,8 @@ void	init_p(t_pcs *p)
 	p->pfd = NULL;
 	p->next_pfd = NULL;
 	p->com = NULL;
+	p->envp = NULL;
+	p->pids = NULL;
 }
 
 int	check_redir(t_token_meta *meta)

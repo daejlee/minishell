@@ -97,10 +97,15 @@ int	here_doc_seg(t_pcs *p, t_token *now)
 	char	*prev_nl;
 
 	limiter = ft_strjoin(now->next->str, "\n");
+	if (!limiter)
+		return (1);
 	unlink(HERE_DOC_INPUT_BUFFER);
 	here_doc_fd = open(HERE_DOC_INPUT_BUFFER, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (here_doc_fd == -1)
+	{
+		free (limiter);
 		return (1);
+	}
 	ret = "";
 	prev_nl = NULL;
 	fst_flag = 1;
