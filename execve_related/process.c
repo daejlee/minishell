@@ -31,7 +31,9 @@ int	get_pcs(t_token_meta *meta, t_env *env, char **envp)
 		}
 		if (p.infile_fd == -1)
 		{
-			perror("pipex error");
+			write(2, "minishell: ", 12);
+			write(2, now->next->str, ft_strlen(now->next->str));
+			write(2, ": No such file or directory\n", 29);
 			break ;
 		}
 		now = now->next->next;

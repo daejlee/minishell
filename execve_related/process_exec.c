@@ -163,6 +163,8 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 			now = now->next->next;
 		else if (now->type == ARG && !i && p->infile_fd == -1)
 		{
+			g_exit_status = 1;
+			pcs_cnt--;
 			now = now->next;
 			i++;
 		}
@@ -188,5 +190,8 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	}
 	unlink(HERE_DOC_INPUT_BUFFER);
 	reset_fds(p, stdinout_storage[0], stdinout_storage[1]);
-	return (wait_for_children(p, p->pids, pcs_cnt));
+	if (!pcs_cnt)
+		return (g_exit_status);
+	else
+		return (wait_for_children(p, p->pids, pcs_cnt));
 }
