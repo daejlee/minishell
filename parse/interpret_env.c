@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:39:35 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/27 16:19:10 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/29 16:15:59 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	interpret_env(t_token_meta *meta, t_env *env)
 		}
 		if (!ft_strlen(node->str))
 			node->type = ARG;
-		free_token(node);
+		push_token(meta, node);
 	}
 	return (0);
 }
