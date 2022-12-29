@@ -42,23 +42,26 @@ int	main(int argc, char **argv, char **envp)
 	intialize(&env, envp);
 	meta = init_token_meta();
 	// push_token(meta, init_token("cd .", ARG));
-	push_token(meta, init_token("cat", ARG));
-	push_token(meta, init_token("<", I_REDIR));
-	push_token(meta, init_token("infile0", ARG));
-	push_token(meta, init_token("<<", I_HRDOC));
-	push_token(meta, init_token("limiter", LIMITER));
-	push_token(meta, init_token("<", I_REDIR));
-	push_token(meta, init_token("limiter1", LIMITER));
-	push_token(meta, init_token("|", PIPE));
+	// push_token(meta, init_token("cat", ARG));
+	// push_token(meta, init_token("<", I_REDIR));
+	// push_token(meta, init_token("infile0", ARG));
+	// push_token(meta, init_token("<<", I_HRDOC));
+	// push_token(meta, init_token("limiter", LIMITER));
+	// push_token(meta, init_token("<", I_REDIR));
+	// push_token(meta, init_token("limiter1", LIMITER));
+	// push_token(meta, init_token("|", PIPE));
+	// push_token(meta, init_token("ls -l", ARG));
+	// push_token(meta, init_token("|", PIPE));
+	// push_token(meta, init_token("wc -l", ARG));
+	// push_token(meta, init_token(">", O_REDIR));
+	// push_token(meta, init_token("outfile0", ARG));
+	// push_token(meta, init_token(">>", O_APPND));
+	// push_token(meta, init_token("outfile1", ARG));
+	// push_token(meta, init_token(">", O_REDIR));
+	// push_token(meta, init_token("outfile2", ARG));
 	push_token(meta, init_token("ls -l", ARG));
 	push_token(meta, init_token("|", PIPE));
-	push_token(meta, init_token("wc -l", ARG));
-	push_token(meta, init_token(">", O_REDIR));
-	push_token(meta, init_token("outfile0", ARG));
-	push_token(meta, init_token(">>", O_APPND));
-	push_token(meta, init_token("outfile1", ARG));
-	push_token(meta, init_token(">", O_REDIR));
-	push_token(meta, init_token("outfile2", ARG));
+	push_token(meta, init_token("not_existing", ARG));
 	while (1)
 	{
 		buf = readline("minishell 0.0.2$ ");
@@ -68,8 +71,7 @@ int	main(int argc, char **argv, char **envp)
 		// {
 		// 	printf("%s|\n", pop_token(meta)->str);
 		// }
-		if (get_pcs(meta, env, envp))
-			return (g_exit_status);
+		g_exit_status = get_pcs(meta, env, envp);
 	}
 	return (0);
 }

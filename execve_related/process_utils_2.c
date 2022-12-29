@@ -45,7 +45,6 @@ void	execve_failed(t_pcs *p, char *sh_func)
 	free_arr(p->com);
 	if (sh_func)
 		free(sh_func);
-	free(p);
 	exit (127);
 }
 
