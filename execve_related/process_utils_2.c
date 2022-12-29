@@ -16,7 +16,7 @@ int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)
 
 int	err_terminate(t_pcs *p)
 {
-	perror("pipex error");
+	perror("minishell error");
 	if (p->infile_fd != -1)
 		close(p->infile_fd);
 	if (p->outfile_fd != -1)
@@ -46,7 +46,7 @@ void	execve_failed(t_pcs *p, char *sh_func)
 	if (sh_func)
 		free(sh_func);
 	free(p);
-	exit (0);
+	exit (127);
 }
 
 void	init_p(t_pcs *p)
