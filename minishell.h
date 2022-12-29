@@ -47,7 +47,7 @@ enum	e_token_type {
 /*	구현해야 하는 쉘 빌트인 함수들을 열거형을 이용해 나열했습니다	*/
 enum	e_built_in_code
 {
-	ECHO,
+	ECHO = 1,
 	CD,
 	PWD,
 	EXPORT,

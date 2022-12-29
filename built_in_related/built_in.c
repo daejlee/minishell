@@ -29,21 +29,21 @@ int	exec_built_in(char **com, t_env *env)
 	if (built_in_code == ECHO)
 	{
 		if (!ft_strncmp("-n", com[1], 3))
-			g_exit_status = ft_echo(com[2], 1);
+			ret = ft_echo(com[2], 1);
 		else
-			g_exit_status = ft_echo(com[1], 0);
+			ret = ft_echo(com[1], 0);
 	}
 	else if (built_in_code == CD)
-	 	g_exit_status = ft_cd(com[1], env);
+	 	ret = ft_cd(com[1], env);
 	else if (built_in_code == PWD)
-		g_exit_status = ft_pwd();
+		ret = ft_pwd();
 	else if (built_in_code == EXPORT)
-		g_exit_status = ft_export(com[0], env);
+		ret = ft_export(com[0], env);
 	else if (built_in_code == UNSET)
-		g_exit_status = ft_unset(com[0], env);
+		ret = ft_unset(com[0], env);
 	else if (built_in_code == ENV)
-		g_exit_status = ft_env(env);
+		ret = ft_env(env);
 	else if (built_in_code == EXIT)
-		g_exit_status = ft_exit();
-	return (g_exit_status);
+		ret = ft_exit();
+	return (ret);
 }

@@ -1,17 +1,17 @@
 #include "../minishell.h"
 #include "process.h"
 
-int	wait_for_children(t_pcs *p, pid_t *pids, int temp)
+int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)
 {
 	int	i;
 	int	status;
 
 	status = 0;
 	i = 0;
-	while (i < temp)
+	while (i < pcs_cnt)
 		waitpid(pids[i++], &status, 0);
 	free(pids);
-	return (status);
+	return (WEXITSTATUS(status));
 }
 
 int	err_terminate(t_pcs *p)
