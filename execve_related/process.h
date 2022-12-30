@@ -26,6 +26,7 @@ typedef struct s_pcs
 	int		*next_pfd;
 	char	**com;
 	char	**envp;
+	int		stdinout_storage[2];
 	pid_t	*pids;
 }	t_pcs;
 

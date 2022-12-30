@@ -63,6 +63,8 @@ void	init_p(t_pcs *p)
 	p->next_pfd = NULL;
 	p->com = NULL;
 	p->envp = NULL;
+	p->stdinout_storage[0] = -1;
+	p->stdinout_storage[1] = -1;
 	p->pids = NULL;
 }
 
