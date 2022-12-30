@@ -44,6 +44,8 @@ int	get_pcs_cnt(t_token_meta *meta)
 	now = meta->head;
 	if (now->type == ARG)
 		ret++;
+	else
+		now = now->next;
 	now = now->next;
 	while (now != meta->head)
 	{
