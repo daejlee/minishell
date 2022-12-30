@@ -138,6 +138,12 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 
 	stdinout_storage[0] = dup(0); //stdin save. 3
 	stdinout_storage[1] = dup(1); //stdout save. 4
+
+	if (now->type == ARG && p->infile_fd == -1)
+	{
+		now = now->next;
+		pcs_cnt--;
+	}
 	while (i < pcs_cnt)
 	{
 		if (now->type == PIPE && i == pcs_cnt - 1)
@@ -149,21 +155,12 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 			now = now->next;
 		else if (now->type != ARG) //now == I_REDIR OR O_REDIR
 			now = now->next->next;
-		else if (now->type == ARG && !i && p->infile_fd == -1)
-		{
-			g_exit_status = 1;
-			pcs_cnt--;
-			now = now->next;
-			i++;
-		}
 		else //now == ARG
 		{
 			if (now->next->type == PIPE || now->next->type == I_REDIR || now->next->type == I_HRDOC) //NEXT == PIPE OR I_REDIR
 			{
 				if (pipe(p->next_pfd) == -1)
 					return (err_terminate(p));
-				if (p->infile_fd == -1 && !i) // infile_fd == -1 in fst loop
-					close(p->next_pfd[1]);
 				prep_fds(p, i, pcs_cnt, meta, stdinout_storage);
 			}
 			p->pids[i] = fork();
