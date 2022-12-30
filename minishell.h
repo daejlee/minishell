@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/30 19:48:49 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/30 21:38:30 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ enum	e_built_in_code
 enum	e_error_code
 {
 	MALLOC_FAIL,
-	SYNTAX_ERROR
+	SYNTAX_ERROR,
+	AMBIGUOUS_REDIR,
 };
 
 typedef struct s_token
@@ -168,12 +169,16 @@ void				modify_init_to_arg(t_token_meta *meta);
 int					union_args_to_one(t_token_meta *meta);
 int					delete_space_token(t_token_meta *meta);
 
+/**
+ * parse/syntax_error.c
+ */
+int					syntax_error(t_token_meta *meta);
 
 /**
  * utils/error.c
  */
 
-int					print_error(enum e_error_code error_code, char c);
+int					print_error(enum e_error_code error_code, char *str);
 
 /**
  * env_list.c

@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/30 15:28:11 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/30 21:29:48 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	split_spaces_in_substr(t_token_meta *meta, char *str)
 		else if (str[end] && str[end] != ' ')
 		{
 			if (skip_quotes(str, &end))
-				return (print_error(SYNTAX_ERROR, str[end - 1]));
+				return (print_error(SYNTAX_ERROR, str));
 			set_start_end(NULL, &end, start, end + 1);
 		}
 		else

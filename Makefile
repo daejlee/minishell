@@ -6,7 +6,7 @@
 #    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2022/12/30 16:34:07 by hkong            ###   ########.fr        #
+#    Updated: 2022/12/30 21:32:53 by hkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC = cc
 SRCS = pseudo_main.c
 
 PARSE_DIR = parse/
-SRCS_PARSE = parse.c interpret_env.c interpret_quotes.c split_spaces.c split_operator.c modify_arg.c
+SRCS_PARSE = parse.c interpret_env.c interpret_quotes.c split_spaces.c split_operator.c modify_arg.c syntax_error.c
 
 BUILT_IN_DIR = built_in_related/
 SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c built_in.c ft_cd.c
