@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/27 17:37:53 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/30 15:28:11 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	split_spaces(t_token_meta *meta, t_env *env)
 		node = pop_token(meta);
 		if (!node)
 			return (1);
-		if (node->type != INIT)
+		if (node->type != INIT || !has_space(node->str) \
+									|| has_heredoc_before(node))
 		{
 			push_token(meta, node);
 			continue ;
@@ -100,6 +101,46 @@ int	skip_quotes(char *str, size_t *end)
 		while (str[++(*end)] && str[*end] != '\"')
 			;
 	if (!str[*end])
+		return (1);
+	return (0);
+}
+
+/**
+ * @brief 
+ * 해당 문자열에 공백이 있는 지 찾는 함수
+ * @param str 
+ * @return int 공백이 있으면 1, 없으면 0
+ */
+int	has_space(char *str)
+{
+	size_t	index;
+
+	index = 0;
+	while (str[index])
+	{
+		if (str[index] == ' ')
+			return (1);
+		index++;
+	}
+	return (0);
+}
+
+/**
+ * @brief 
+ * 이전에 heredoc이 있다면 원본을 유지하기 위해 해석한 환경변수의 공백을 구분하지 않습니다.
+ * 따라서 현재 토큰의 이전에 I_HRDOC 타입의 토큰이 있는 지 확인하는 함수입니다.
+ * (공백은 건너뜀)
+ * @param token 
+ * @return int 있으면 1, 없으면 0
+ */
+int	has_heredoc_before(t_token *token)
+{
+	t_token	*node;
+
+	node = token;
+	while (node->prev->type == BLANK)
+		node = node->prev;
+	if (node->prev->type == I_HRDOC)
 		return (1);
 	return (0);
 }
