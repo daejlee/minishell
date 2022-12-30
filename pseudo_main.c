@@ -59,19 +59,21 @@ int	main(int argc, char **argv, char **envp)
 	// push_token(meta, init_token("outfile1", ARG));
 	// push_token(meta, init_token(">", O_REDIR));
 	// push_token(meta, init_token("outfile2", ARG));
-	push_token(meta, init_token("ls -l", ARG));
-	push_token(meta, init_token("|", PIPE));
-	push_token(meta, init_token("not_existing", ARG));
+	// push_token(meta, init_token("ls -l", ARG));
+	// push_token(meta, init_token("|", PIPE));
+	// push_token(meta, init_token("not_existing", ARG));
 	while (1)
 	{
 		buf = readline("minishell 0.0.2$ ");
 		//todo: buf null일 때 예외처리
-		// meta = parse(env, buf);
-		// while (meta->size)
-		// {
-		// 	printf("%s|\n", pop_token(meta)->str);
-		// }
-		g_exit_status = get_pcs(meta, env, envp);
+		meta = parse(env, buf);
+		t_token	*node;
+		while (meta->size)
+		{
+			node = pop_token(meta);
+			printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
+		}
+		// g_exit_status = get_pcs(meta, env, envp);
 	}
 	return (0);
 }
