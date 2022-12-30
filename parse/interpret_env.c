@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:39:35 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/30 20:09:12 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/30 20:57:04 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	interpret_env(t_token_meta *meta, t_env *env)
 		{
 			if (!ft_strlen(node->str))
 				node->type = EMPTY;
-			if (node->str[ft_strlen(node->str) - 1] == '$' && node->next->type == ARG)
+			if (token_num && node->str[ft_strlen(node->str) - 1] == '$' && node->next->type == ARG)
 			{
 				node->str[ft_strlen(node->str) - 1] = '\0';
 				node->origin_str[ft_strlen(node->origin_str) - 1] = '\0';
