@@ -74,12 +74,20 @@ int	check_redir(t_token_meta *meta)
 
 	input_flag = 0;
 	output_flag = 0;
-	now = meta->head->next;
+	now = meta->head;
 	if (now->type == I_REDIR || now->type == I_HRDOC)
 		input_flag = 1;
-	now = meta->head->prev->prev;
 	if (now->type == O_REDIR || now->type == O_APPND)
 		output_flag = 1;
+	now = now->next;
+	while (now != meta->head)
+	{
+		if (now->type == I_REDIR || now->type == I_HRDOC)
+			input_flag = 1;
+		if (now->type == O_REDIR || now->type == O_APPND)
+			output_flag = 1;
+		now = now->next;
+	}
 	if (input_flag && output_flag)
 		return (I_O_BOTH);
 	else if (input_flag)
