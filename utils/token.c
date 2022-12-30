@@ -30,7 +30,7 @@ t_token	*init_token(char *str, enum e_token_type type)
 		free(str);
 		return (NULL);
 	}
-	token->original_str = str;
+	token->origin_str = str;
 	token->str = ft_strdup(str);
 	token->type = type;
 	token->prev = NULL;
@@ -102,16 +102,38 @@ t_token	*pop_token(t_token_meta *meta)
 	return (node);
 }
 
+/**
+ * @brief 
+ * token 노드의 값들을 free 해주는 함수입니다.
+ * @param token free할 토큰
+ */
 void	free_token(t_token *token)
 {
 	if (token)
 	{
 		if (token->str)
 			free(token->str);
-		if (token->original_str)
-			free(token->original_str);
+		if (token->origin_str)
+			free(token->origin_str);
 		token->prev = NULL;
 		token->next = NULL;
 		free(token);
 	}
+}
+
+/**
+ * @brief 
+ * token의 origin_str의 값을 해당 string으로 바꿔주는 함수입니다.
+ * @param token
+ * @param str 새 origin_str
+ * @return 성공 시 0, 실패 시 1
+ */
+int	set_token_origin(t_token *token, char *str)
+{
+	if (!token || !str)
+		return (fail_and_free_multiple_str(str, NULL, NULL, NULL));
+	if (token->origin_str)
+		free(token->origin_str);
+	token->origin_str = str;
+	return (0);
 }

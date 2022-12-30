@@ -64,7 +64,7 @@ enum	e_error_code
 
 typedef struct s_token
 {
-	char				*original_str;
+	char				*origin_str;
 	char				*str;
 	enum e_token_type	type;
 	struct s_token		*prev;
@@ -97,6 +97,7 @@ t_token				*init_token(char *str, enum e_token_type type);
 int					push_token(t_token_meta *meta, t_token *node);
 t_token				*pop_token(t_token_meta *meta);
 void				free_token(t_token *token);
+int					set_token_origin(t_token *token, char *str);
 
 /**
  * token_meta.c
