@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/30 15:14:15 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/30 19:48:49 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ enum	e_token_type {
 	I_HRDOC,
 	LIMITER, // here_doc에 필요한 리미터입니다.
 	O_APPND,
-	BLANK
+	BLANK,
+	EMPTY
 };
 
 /*	구현해야 하는 쉘 빌트인 함수들을 열거형을 이용해 나열했습니다	*/
@@ -158,6 +159,14 @@ int					split_operator_in_substr(t_token_meta *meta, char *str);
 t_token				*create_operator_token(char *str, size_t *index);
 size_t				operator_index(char *str);
 enum e_token_type	operator_type(char *str);
+
+/**
+ * parse/modify_arg.c
+ */
+
+void				modify_init_to_arg(t_token_meta *meta);
+int					union_args_to_one(t_token_meta *meta);
+int					delete_space_token(t_token_meta *meta);
 
 
 /**
