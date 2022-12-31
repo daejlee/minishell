@@ -221,7 +221,7 @@ void				set_start_end(size_t *start, size_t *end, \
  * built_in_related
  */
 
-int	is_built_in(char **com);
+int	is_built_in(char *com);
 int	exec_built_in(char **com, t_env *env);
 int	ft_cd(char *dir, t_env *env);
 int	exec_ft_echo(char **com);

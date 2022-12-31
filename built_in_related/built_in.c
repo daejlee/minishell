@@ -17,21 +17,51 @@ int	is_echo(char *buf)
 	return (0);
 }
 
-int	is_built_in(char **com)
+int	is_pwd(char *buf)
 {
-	if (!is_echo(com[0]))
+	if (ft_strlen(buf) != 3)
+		return (1);
+	if (!ft_strncmp(buf, "pwd", 3))
+		return (0);
+	if (buf[0] - 'p' && buf[0] - 'P')
+		return (1);
+	if (buf[1] - 'w' && buf[1] - 'W')
+		return (1);
+	if (buf[2] - 'd' && buf[2] - 'D')
+		return (1);
+	return (0);
+}
+
+int	is_env(char *buf)
+{
+	if (ft_strlen(buf) != 3)
+		return (1);
+	if (!ft_strncmp(buf, "env", 3))
+		return (0);
+	if (buf[0] - 'e' && buf[0] - 'E')
+		return (1);
+	if (buf[1] - 'n' && buf[1] - 'N')
+		return (1);
+	if (buf[2] - 'v' && buf[2] - 'V')
+		return (1);
+	return (0);
+}
+
+int	is_built_in(char *com)
+{
+	if (!is_echo(com))
 		return (ECHO);
-	else if (!ft_strncmp(com[0], "cd", 2))
+	else if (!ft_strncmp(com, "cd", 2))
 		return (CD);
-	else if (!ft_strncmp(com[0], "pwd", 3))
+	else if (!is_pwd(com))
 		return (PWD);
-	else if (!ft_strncmp(com[0], "export", 6))
+	else if (!ft_strncmp(com, "export", 6))
 		return (EXPORT);
-	else if (!ft_strncmp(com[0], "unset", 5))
+	else if (!ft_strncmp(com, "unset", 5))
 		return (UNSET);
-	else if (!ft_strncmp(com[0], "env", 3))
+	else if (!is_env(com))
 		return (ENV);
-	else if (!ft_strncmp(com[0], "exit", 4))
+	else if (!ft_strncmp(com, "exit", 4))
 		return (EXIT);
 	else
 		return (0);
@@ -42,7 +72,7 @@ int	exec_built_in(char **com, t_env *env)
 	int	ret;
 	int	built_in_code;
 
-	built_in_code = is_built_in(com);
+	built_in_code = is_built_in(com[0]);
 	if (built_in_code == ECHO)
 		ret = exec_ft_echo(com);
 	else if (built_in_code == CD)
