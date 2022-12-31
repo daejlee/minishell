@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 21:22:23 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/30 21:34:29 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/30 21:50:14 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ t_token_meta	*parse(t_env *env, char *str)
 	union_args_to_one(result);
 	delete_space_token(result);
 	syntax_error(result);
+	//todo: EMPTY 토큰 처리 및 릭 잡기 및 에러 끝내기 그리고 시그널 처리
 	return (result);
 }

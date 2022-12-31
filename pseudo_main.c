@@ -64,7 +64,7 @@ int	main(int argc, char **argv, char **envp)
 	// push_token(meta, init_token("not_existing", ARG));
 	while (1)
 	{
-		buf = readline("minishell 0.0.2$ ");
+		buf = readline("minishell 0.1.3$ ");
 		//todo: buf null일 때 예외처리
 		meta = parse(env, buf);
 		t_token	*node;
