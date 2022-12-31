@@ -224,6 +224,7 @@ void				set_start_end(size_t *start, size_t *end, \
 int	is_built_in(char **com);
 int	exec_built_in(char **com, t_env *env);
 int	ft_cd(char *dir, t_env *env);
+int	exec_ft_echo(char **com);
 int	ft_echo(char *buf, int n_option);
 int	ft_env(t_env *env);
 int	ft_exit(void);

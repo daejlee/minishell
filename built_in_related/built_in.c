@@ -1,8 +1,25 @@
 #include "../minishell.h"
 
+int	is_echo(char *buf)
+{
+	if (ft_strlen(buf) != 4)
+		return (1);
+	if (!ft_strncmp(buf, "echo", 4))
+		return (0);
+	if (buf[0] - 'e' && buf[0] - 'E')
+		return (1);
+	if (buf[1] - 'c' && buf[1] - 'C')
+		return (1);
+	if (buf[2] - 'h' && buf[2] - 'H')
+		return (1);
+	if (buf[3] - 'o' && buf[3] - 'O')
+		return (1);
+	return (0);
+}
+
 int	is_built_in(char **com)
 {
-	if (!ft_strncmp(com[0], "echo", 4))
+	if (!is_echo(com[0]))
 		return (ECHO);
 	else if (!ft_strncmp(com[0], "cd", 2))
 		return (CD);
@@ -27,12 +44,7 @@ int	exec_built_in(char **com, t_env *env)
 
 	built_in_code = is_built_in(com);
 	if (built_in_code == ECHO)
-	{
-		if (!ft_strncmp("-n", com[1], 3))
-			ret = ft_echo(com[2], 1);
-		else
-			ret = ft_echo(com[1], 0);
-	}
+		ret = exec_ft_echo(com);
 	else if (built_in_code == CD)
 	 	ret = ft_cd(com[1], env);
 	else if (built_in_code == PWD)
