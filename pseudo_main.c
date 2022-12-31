@@ -27,6 +27,20 @@ int	intialize(t_env **env, char **envp)
 	return (0);
 }
 
+void	signal_process(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+		return ;
+	}
+	if (sig == SIGQUIT)
+		return ;
+}
+
 /*
 ex) minishell $ cat temp.txt | grep 'a'
 scanner -> /cat/ /temp.txt/ /|/ /grep/ /'a'/로 분리 후 링크드 리스트로 저장
@@ -40,6 +54,8 @@ int	main(int argc, char **argv, char **envp)
 	t_env			*env;
 
 	intialize(&env, envp);
+	signal(SIGINT, signal_process);
+	signal(SIGQUIT, signal_process);
 	meta = init_token_meta();
 	// push_token(meta, init_token("cd .", ARG));
 	// push_token(meta, init_token("cat", ARG));
@@ -65,15 +81,23 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		buf = readline("minishell 0.1.3$ ");
-		//todo: buf null일 때 예외처리
-		meta = parse(env, buf);
-		t_token	*node;
-		while (meta->size)
+		if (buf)
 		{
-			node = pop_token(meta);
-			printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
+			add_history(buf);
+			meta = parse(env, buf);
+			t_token	*node;
+			while (meta->size)
+			{
+				node = pop_token(meta);
+				printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
+			}
+			// g_exit_status = get_pcs(meta, env, envp);
 		}
-		// g_exit_status = get_pcs(meta, env, envp);
+		else
+		{
+			printf("exit\n");
+			return (0);
+		}
 	}
 	return (0);
 }
