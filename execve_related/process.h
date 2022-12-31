@@ -34,7 +34,7 @@ typedef struct s_pcs
  * process_exec.c
  */
 
-void		exec_com(t_pcs *p, t_token *now, int i, t_env *env);
+void		exec_com(t_pcs *p, t_token *now, t_env *env);
 int			here_doc_seg(t_pcs *p, t_token *now);
 int			exec_fork(t_pcs *p, t_token_meta *meta, t_env *env);
 
