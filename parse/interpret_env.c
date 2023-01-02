@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:39:35 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/02 21:22:20 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/02 22:06:08 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int	interpret_env(t_token_meta *meta, t_env *env)
 				free_token(node);
 				return (print_error(MALLOC_FAIL, 0));
 			}
-			check_set_env_node(node, token_num);
+			if (check_set_env_node(node, token_num))
+			{
+				free_token(node);
+				return (0);
+			}
 		}
 		push_token(meta, node);
 	}
@@ -52,18 +56,22 @@ int	interpret_env(t_token_meta *meta, t_env *env)
  * 비어있을 시, EMPTY타입 지정해주고,
  * 마지막이 $이면서 다음에 따옴표가 있을 시 $을 삭제해줍니다.
  * @param node 
- * @param token_num 
+ * @param token_num
+ * @return string이 $이면서 $가 삭제되어야 할 때엔 1을 리턴한다.
  */
-void	check_set_env_node(t_token *node, size_t token_num)
+int	check_set_env_node(t_token *node, size_t token_num)
 {
 	if (!ft_strlen(node->str))
 		node->type = EMPTY;
 	else if (token_num && node->str[ft_strlen(node->str) - 1] == '$' \
 						&& node->next->type == ARG || node->next->type == EMPTY)
 	{
+		if (ft_strlen(node->str) == 1)
+			return (1);
 		node->str[ft_strlen(node->str) - 1] = '\0';
 		node->origin_str[ft_strlen(node->origin_str) - 1] = '\0';
 	}
+	return (0);
 }
 
 /**

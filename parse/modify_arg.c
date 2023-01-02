@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:23:23 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/30 19:48:57 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/02 22:09:45 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	modify_init_to_arg(t_token_meta *meta)
 	}
 }
 
+//todo: empty도 합쳐야 함!!
 int	union_args_to_one(t_token_meta *meta)
 {
 	size_t	token_num;

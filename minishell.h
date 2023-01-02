@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/02 21:22:46 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/02 22:04:24 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ size_t				quote_index(char *str);
  */
 
 int					interpret_env(t_token_meta *meta, t_env *env);
-void				check_set_env_node(t_token *node, size_t token_num);
+int					check_set_env_node(t_token *node, size_t token_num);
 int					interpret_env_in_substr(char **str, t_env *env);
 int					change_key_to_value(char **str, t_env *env, \
 													size_t *start, size_t end);
