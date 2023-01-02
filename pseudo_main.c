@@ -27,20 +27,6 @@ int	intialize(t_env **env, char **envp)
 	return (0);
 }
 
-void	signal_process(int sig)
-{
-	if (sig == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 1);
-		rl_redisplay();
-		return ;
-	}
-	if (sig == SIGQUIT)
-		return ;
-}
-
 /*
 ex) minishell $ cat temp.txt | grep 'a'
 scanner -> /cat/ /temp.txt/ /|/ /grep/ /'a'/로 분리 후 링크드 리스트로 저장
@@ -55,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 
 	intialize(&env, envp);
 	signal(SIGINT, signal_process);
-	signal(SIGQUIT, signal_process);
+	signal(SIGQUIT, SIG_IGN);
 	meta = init_token_meta();
 	// push_token(meta, init_token("cd .", ARG));
 	// push_token(meta, init_token("cat", ARG));
@@ -85,13 +71,13 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(buf);
 			meta = parse(env, buf);
-			t_token	*node;
-			while (meta->size)
-			{
-				node = pop_token(meta);
-				printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
-			}
-			// g_exit_status = get_pcs(meta, env, envp);
+			// t_token	*node;
+			// while (meta->size)
+			// {
+			// 	node = pop_token(meta);
+			// 	printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
+			// }
+			g_exit_status = get_pcs(meta, env, envp);
 		}
 		else
 		{

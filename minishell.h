@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/30 21:38:30 by hkong            ###   ########.fr       */
+/*   Updated: 2022/12/31 17:08:24 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,13 @@ int					delete_space_token(t_token_meta *meta);
  * parse/syntax_error.c
  */
 int					syntax_error(t_token_meta *meta);
+
+/**
+ * utils/signal.c
+ */
+
+void				signal_process(int sig);
+
 
 /**
  * utils/error.c
