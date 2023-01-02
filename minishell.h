@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/31 17:08:24 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/02 21:22:46 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ enum	e_error_code
 	MALLOC_FAIL,
 	SYNTAX_ERROR,
 	AMBIGUOUS_REDIR,
+	UNEXPECTED
 };
 
 typedef struct s_token
@@ -134,12 +135,12 @@ size_t				quote_index(char *str);
  */
 
 int					interpret_env(t_token_meta *meta, t_env *env);
+void				check_set_env_node(t_token *node, size_t token_num);
 int					interpret_env_in_substr(char **str, t_env *env);
 int					change_key_to_value(char **str, t_env *env, \
 													size_t *start, size_t end);
 int					insert_value_on_index(char **str, char *value, \
 													size_t start, size_t end);
-int					is_env_allowed_char(int is_first, char c);
 
 /**
  * parse/split_spaces.c
@@ -213,6 +214,7 @@ int					ok_and_free_multiple_str(char *str1, char *str2, \
 												char *str3, char *str4);
 int					fail_and_free_multiple_str(char *str1, char *str2, \
 												char *str3, char *str4);
+int					is_env_allowed_char(int is_first, char c);
 
 /**
  * number_utils.c

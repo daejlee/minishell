@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:39:35 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/30 20:57:04 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/02 21:22:20 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,39 @@ int	interpret_env(t_token_meta *meta, t_env *env)
 	{
 		node = pop_token(meta);
 		if (!node)
-			return (1);
-		if (node->type == INIT && interpret_env_in_substr(&(node->str), env))
+			return (print_error(UNEXPECTED, 0));
+		if (node->type == INIT)
 		{
-			free_token(node);
-			return (print_error(MALLOC_FAIL, 0));
-		}
-		if (node->type != ARG)
-		{
-			if (!ft_strlen(node->str))
-				node->type = EMPTY;
-			if (token_num && node->str[ft_strlen(node->str) - 1] == '$' && node->next->type == ARG)
+			if (interpret_env_in_substr(&(node->str), env))
 			{
-				node->str[ft_strlen(node->str) - 1] = '\0';
-				node->origin_str[ft_strlen(node->origin_str) - 1] = '\0';
+				free_token(node);
+				return (print_error(MALLOC_FAIL, 0));
 			}
+			check_set_env_node(node, token_num);
 		}
 		push_token(meta, node);
 	}
 	return (0);
+}
+
+/**
+ * @brief 
+ * env 해석을 마친 노드에 후처리를 해주는 함수입니다.
+ * 비어있을 시, EMPTY타입 지정해주고,
+ * 마지막이 $이면서 다음에 따옴표가 있을 시 $을 삭제해줍니다.
+ * @param node 
+ * @param token_num 
+ */
+void	check_set_env_node(t_token *node, size_t token_num)
+{
+	if (!ft_strlen(node->str))
+		node->type = EMPTY;
+	else if (token_num && node->str[ft_strlen(node->str) - 1] == '$' \
+						&& node->next->type == ARG || node->next->type == EMPTY)
+	{
+		node->str[ft_strlen(node->str) - 1] = '\0';
+		node->origin_str[ft_strlen(node->origin_str) - 1] = '\0';
+	}
 }
 
 /**
@@ -137,33 +151,12 @@ int	insert_value_on_index(char **str, char *value, size_t start, size_t end)
 		return (1);
 	front = ft_substr(*str, 0, start);
 	back = ft_substr(*str, end, ft_strlen(*str) - end);
+	free(*str);
 	result_tmp = ft_strjoin(front, value);
 	result = ft_strjoin(result_tmp, back);
 	if (!(front && back && result_tmp && result))
 		return (fail_and_free_multiple_str(front, back, result_tmp, result));
-	ok_and_free_multiple_str(front, back, result_tmp, *str);
+	ok_and_free_multiple_str(front, back, result_tmp, NULL);
 	*str = result;
-	return (0);
-}
-
-/**
- * @brief 
- * env key에 허용되는 char인지 확인해주는 함수
- * @param is_first 맨 처음에는 숫자가 올 수 없고, ?이 올 수 있기에 확인을 위해 사용한다.
- * @param c 확인하고자 하는 char
- * @return int 올바른 값이면 1 아니면 0
- */
-int	is_env_allowed_char(int is_first, char c)
-{
-	if (c == '_')
-		return (1);
-	if (c >= 'a' && c <= 'z')
-		return (1);
-	if (c >= 'A' && c <= 'Z')
-		return (1);
-	if (!is_first && c >= '0' && c <= '9')
-		return (1);
-	if (is_first && c == '?')
-		return (1);
 	return (0);
 }

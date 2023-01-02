@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:57:38 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/30 21:39:16 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/02 18:36:32 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@ int	print_error(enum e_error_code error_code, char *str)
 		printf("syntax error near unexpected token \'%s\'\n", str);
 	else if (error_code == AMBIGUOUS_REDIR)
 		printf ("%s: ambiguous redirect\n", str);
+	else if (error_code == UNEXPECTED)
+		printf ("unexpected behavior\n", str);
 	return (1);
 }

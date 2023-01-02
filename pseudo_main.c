@@ -71,13 +71,13 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(buf);
 			meta = parse(env, buf);
-			// t_token	*node;
-			// while (meta->size)
-			// {
-			// 	node = pop_token(meta);
-			// 	printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
-			// }
-			g_exit_status = get_pcs(meta, env, envp);
+			t_token	*node;
+			while (meta->size)
+			{
+				node = pop_token(meta);
+				printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
+			}
+			//g_exit_status = get_pcs(meta, env, envp);
 		}
 		else
 		{

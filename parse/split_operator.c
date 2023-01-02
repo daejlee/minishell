@@ -29,13 +29,14 @@ int	split_operator(t_token_meta *meta)
 	{
 		node = pop_token(meta);
 		if (!node)
-			return (1);
+			return (print_error(UNEXPECTED, 0));
 		index = operator_index(node->str);
 		if (!index || node->type != INIT)
 		{
 			push_token(meta, node);
 			continue ;
 		}
+		free(node->origin_str);
 		if (split_operator_in_substr(meta, node->str))
 		{	
 			free(node);
@@ -59,11 +60,7 @@ int	split_operator_in_substr(t_token_meta *meta, char *str)
 
 	index = operator_index(str);
 	if (!index)
-	{
-		if (push_token(meta, init_token(str, INIT)))
-			return (fail_and_free_multiple_str(str, NULL, NULL, NULL));
-		return (0);
-	}
+		return (push_token(meta, init_token(str, INIT)));
 	index--;
 	if (index)
 		if (push_token(meta, init_token(ft_substr(str, 0, index), INIT)))

@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:46:16 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/27 16:19:29 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/02 20:42:28 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ int	interpret_quotes(t_token_meta *meta, t_env *env)
 	{
 		node = pop_token(meta);
 		if (!node)
-			return (1);
+			return (print_error(UNEXPECTED, 0));
 		index = quote_index(node->str);
 		if (!index)
 		{
 			push_token(meta, node);
 			continue ;
 		}
+		free(node->origin_str);
 		if (interpret_quotes_in_substr(meta, node->str, env))
 		{
 			free(node);
@@ -97,7 +98,12 @@ char	*interpret_quotes_single(t_token_meta *meta, char *str, size_t start)
 	if (start)
 		if (push_token(meta, init_token(ft_substr(str, 0, start), INIT)))
 			return (0);
-	if (push_token(meta, \
+	if (!(end - start - 1))
+	{
+		if (push_token(meta, init_token(ft_strdup(""), EMPTY)))
+			return (0);
+	}
+	else if (push_token(meta, \
 				init_token(ft_substr(str, start + 1, end - start - 1), ARG)))
 		return (0);
 	next_str = ft_substr(str, end + 1, ft_strlen(str) - end - 1);
@@ -134,6 +140,8 @@ char	*interpret_quotes_double(t_token_meta *meta, \
 		free_token(node);
 		return (0);
 	}
+	if (!ft_strlen(node->str))
+		node->type = EMPTY;
 	if (push_token(meta, node))
 		return (0);
 	next_str = ft_substr(str, end + 1, ft_strlen(str) - end - 1);
