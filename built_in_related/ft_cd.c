@@ -75,159 +75,6 @@ static int	check_cdpath(char **curpath_adr, char *env_cdpath)
 	}
 }
 
-static char	*delete_dot_slash(char *curpath)
-{
-	char	*temp;
-	int		i;
-	int		k;
-
-	i = 0;
-	while (ft_strnstr(curpath, "./", ft_strlen(curpath)))
-	{
-		temp = ft_strnstr(curpath, "./", 2);
-		*temp = ' ';
-		*(temp + 1) = ' ';
-		i += 2;
-	}
-	temp = (char *)malloc(ft_strlen(curpath) - i);
-	if (!temp)
-	{
-		free(curpath);
-		return (NULL);
-	}
-	i = 0;
-	k = 0;
-	while (k < ft_strlen(curpath))
-	{
-		if (curpath[i] != ' ')
-		{
-			temp[i] = curpath[k];
-			i++;
-		}
-		k++;
-	}
-	free(curpath);
-	return (temp);
-}
-
-static char	*get_p_comp(char *curpath)
-{
-	char	*dot_dot_adr;
-	char	*ret;
-	int		i;
-
-	dot_dot_adr = ft_strnstr(curpath, "..", ft_strlen(curpath));
-	if (curpath == dot_dot_adr)
-		return (dot_dot_adr);
-	dot_dot_adr--;
-	i = 0;
-	while (*(dot_dot_adr - i) != '/')
-		i++;
-	i--;
-	ret = ft_substr((dot_dot_adr - i), 0, i);
-	if (!ret)
-		return (NULL);
-	return (ret);
-}
-
-static char	*process_dot_dots(char *curpath)
-{
-	char	*p_comp;
-	char	*temp;
-
-	while (ft_strnstr(curpath, "..", ft_strlen(curpath)))
-	{
-		p_comp = get_p_comp(curpath);
-		if (!p_comp)
-			return (NULL);
-		else if (p_comp == curpath)
-			curpath += 3;
-		else if (p_comp[0] != '/' || p_comp[0] != '.' || p_comp[1] == '.')
-		{
-			temp = ft_strdup(curpath);
-			if (!temp)
-				return (NULL);
-			*(ft_strnstr(temp, "..", ft_strlen(temp)) - 1) = '\0';
-			if (!opendir(temp))
-			{
-				free(temp);
-				return (NULL);
-			}
-			free(temp);
-		}
-		else
-			curpath = ft_strnstr(curpath, "..", ft_strlen(curpath)) + 2;
-	}
-	return (curpath);
-}
-
-static char	*trim_ret(char *curpath)
-{
-	char	*ret;
-	char	*start_adr;
-	int		i;
-	int		k;
-
-	i = 0;
-	while (ft_strnstr(curpath, "//", ft_strlen(curpath)))
-	{
-		start_adr = ft_strnstr(curpath, "//", ft_strlen(curpath)) + 1;
-		while (*(start_adr + i) == '/')
-		{
-			*(start_adr + i) = ' ';
-			i++;
-		}
-	}
-	ret = (char *)malloc(ft_strlen(curpath) - i);
-	if (!ret)
-	{
-		free(curpath);
-		return (NULL);
-	}
-	i = 0;
-	k = 0;
-	while (k < ft_strlen(curpath))
-	{
-		if (curpath[k] != ' ')
-		{
-			ret[i] = curpath[k];
-			i++;
-		}
-		k++;
-	}
-	free(curpath);
-	return (ret);
-}
-
-static char	*get_canonical_curpath(char *curpath)
-{
-	char	*ret;
-	char	*free_temp;
-
-	ret = delete_dot_slash(curpath);	//a
-	if (!ret)
-	{
-		free(curpath);
-		return (NULL);
-	}
-	free_temp = ret;
-	ret = process_dot_dots(ret);	//b
-	if (!ret)
-	{
-		free(free_temp);
-		free(curpath);
-		return (NULL);
-	}
-	free_temp = ret;
-	ret = trim_ret(ret);	//c
-	if (!ret)
-	{
-		free(free_temp);
-		free(curpath);
-	}
-	return (ret);
-}
-
 static char	*get_env_val(char *key, t_env *env)
 {
 	t_env	*now;
@@ -258,10 +105,16 @@ int	ft_cd(char *dir, t_env *env)
 	char	*env_home;
 	char	*env_cdpath;
 	char	*env_pwd;
+	t_env	*node;
+	int		ret;
 
 	env_home = get_env_val("HOME", env);
 	env_cdpath = get_env_val("CDPATH", env);
 	env_pwd = get_env_val("PWD", env);
+
+	node = find_env(env, "OLDPWD");
+	if (node)
+		(*node).value = env_pwd;
 	if (!dir && (!env_home || env_home[0] == '\0'))
 		return (1);
 	else if (!dir)
@@ -288,5 +141,8 @@ int	ft_cd(char *dir, t_env *env)
 	}
 	if (!curpath)
 		return (-1);
-	return (chdir(curpath));
+	ret = chdir(curpath);
+	node = find_env(env, "PWD");
+	(*node).value = getcwd(NULL, 0);
+	return (ret);
 }

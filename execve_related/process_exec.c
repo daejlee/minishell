@@ -63,14 +63,17 @@ static char	*get_sh_func(char **com, t_env *env)
 	return (sh_func);
 }
 
-void	exec_com(t_pcs *p, t_token *now, int i, t_env *env)
+void	exec_com(t_pcs *p, t_token *now, t_env *env)
 {
 	char	*sh_func;
 
+	if (is_built_in(p->com[0]))
+	{
+		g_exit_status = exec_built_in(p->com, env);
+		return ;
+	}
 	if (now->type == PIPE)
 		close(p->next_pfd[0]);
-	if (is_built_in(p->com))
-		exit (exec_built_in(p->com, env));
 	sh_func = get_sh_func(p->com, env);
 	if (!sh_func)
 	{
@@ -107,7 +110,9 @@ int	here_doc_seg(t_pcs *p, t_token *now)
 			free(temp);
 		fst_flag = 0;
 	}
-	*ft_strnstr(ret, limiter, ft_strlen(ret)) = '\0';
+	temp = ft_strnstr(ret, limiter, ft_strlen(ret));
+	*temp = '\n';
+	*(temp + 1) = '\0';
 	write(here_doc_fd, ret, ft_strlen(ret));
 	close(here_doc_fd);
 	here_doc_fd = open(HERE_DOC_INPUT_BUFFER, O_RDONLY);
@@ -204,6 +209,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 {
 	int		i;
 	int		pcs_cnt;
+	int		ret;
 	t_token	*now;
 
 	pcs_cnt = get_pcs_cnt(meta);
@@ -237,19 +243,30 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 			return (err_terminate(p));
 		now = prep_fd_n_move(now, i, pcs_cnt, meta, p);
 		//ARG ~ 다음 파이프 까지
-		p->pids[i] = fork();
-		if (p->pids[i] == -1)
-			return (err_terminate(p));
-		else if (!p->pids[i])
-			exec_com(p, now, i, env);
-		swap_pfd(&p->next_pfd, &p->pfd);
+		if (!is_built_in(p->com[0]))
+		{
+			p->pids[i] = fork();
+			if (p->pids[i] == -1)
+				return (err_terminate(p));
+			else if (!p->pids[i])
+				exec_com(p, now, env);
+		}
+		else
+		{
+			p->pids[i] = -1;
+			exec_com(p, now, env);
+		}
 		i++;
+		swap_pfd(&p->next_pfd, &p->pfd);
 		now = now->next; //파이프에서 다음으로 넘어감.
 	}
 	unlink(HERE_DOC_INPUT_BUFFER);
-	reset_fds(p, p->stdinout_storage[0], p->stdinout_storage[1]);
+	ret = wait_for_children(p, p->pids, pcs_cnt);
+	// reset_fds(p, p->stdinout_storage[0], p->stdinout_storage[1]);
+	dup2(p->stdinout_storage[0], 0);
+	dup2(p->stdinout_storage[1], 1);
 	if (!pcs_cnt)
 		return (g_exit_status);
 	else
-		return (wait_for_children(p, p->pids, pcs_cnt));
+		return (ret);
 }
