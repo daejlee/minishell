@@ -212,6 +212,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	int		pcs_cnt;
 	int		ret;
 	t_token	*now;
+	int		temp_flag;
 
 	pcs_cnt = get_pcs_cnt(meta);
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (pcs_cnt));
@@ -238,12 +239,27 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	}
 	while (i < pcs_cnt)
 	{
+		temp_flag = 0;
+		while (now->type == I_REDIR || now->type == I_HRDOC || now->type == O_REDIR || now->type == O_APPND)
+			now = now->next->next;
+		if (now->type == PIPE)
+		{
+			now = now->next;
+			temp_flag = 1;
+		}
 		if (p->com)
 			free_arr(p->com);
 		p->com = get_com(now, meta);
 		if (!p->com)
 			return (err_terminate(p));
 		now = prep_fd_n_move(now, i, pcs_cnt, meta, p);
+		if (temp_flag)
+		{
+			temp_flag = open(EMPTY_BUFFER, O_RDONLY | O_CREAT, 0644);
+			if (!temp_flag)
+				return (err_terminate(p));
+			dup2(temp_flag, 0);
+		}
 		//ARG ~ 다음 파이프 까지
 		if (!is_built_in(p->com[0]))
 		{
@@ -263,6 +279,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		now = now->next; //파이프에서 다음으로 넘어감.
 	}
 	unlink(HERE_DOC_INPUT_BUFFER);
+	unlink(EMPTY_BUFFER);
 	ret = wait_for_children(p, p->pids, pcs_cnt);
 	reset_fds(p, p->stdinout_storage[0], p->stdinout_storage[1], meta);
 	if (!pcs_cnt)
