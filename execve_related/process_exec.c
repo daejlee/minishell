@@ -186,6 +186,13 @@ char	**get_com(t_token *now, t_token_meta *meta)
 	char	**ret;
 
 	ret = NULL;
+	if (now->type != ARG) //now == I_REDIR OR O_REDIR
+		now = now->next->next;
+	else //now == ARG
+	{
+		ret = get_trimmed_com(now, meta);
+		return (ret);
+	}
 	while (now->type != PIPE && now != meta->head) // 범위 전체를 모두 훑으며 커맨드 생성
 	{
 		if (now->type != ARG) //now == I_REDIR OR O_REDIR
@@ -196,8 +203,6 @@ char	**get_com(t_token *now, t_token_meta *meta)
 			return (ret);
 		}
 	}
-	if (now == meta->head && now->type == ARG)
-		ret = get_trimmed_com(now, meta);
 	return (ret);
 }
 

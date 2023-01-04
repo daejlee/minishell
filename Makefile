@@ -12,7 +12,7 @@
 
 NAME = minishell
 CFLAGS = #-Wall -Wextra -Werror
-LDLN_FLAG = -lreadline -L/usr/lib/x86_64-linux-gnu -I/usr/include #-L/usr/local/Cellar/readline/8.2.1/lib -I/usr/local/Cellar/readline/8.2.1/include
+LDLN_FLAG = -lreadline -L/Users/daejlee/.brew/opt/readline/lib -I/Users/daejlee/.brew/opt/readline/include #-L/usr/local/Cellar/readline/8.2.1/lib -I/usr/local/Cellar/readline/8.2.1/include
 CC = cc
 
 SRCS = pseudo_main.c
@@ -39,11 +39,11 @@ LIBFT_DIR = ./libft_garage
 all : $(NAME)
 
 $(NAME) : $(OBJ_FILES) $(LIBFT)
-	cc -o $(NAME) -g $(TEST_SRCS) ./libft_garage/libft/*.c ./libft_garage/ft_printf/*.c ./libft_garage/gnl/*.c $(LDLN_FLAG)
+	cc $(TEST_SRCS) -o $(NAME) $(LDLN_FLAG) -lft -L$(LIBFT_DIR)
 #	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) -lft -L$(LIBFT_DIR)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -g $(CFLAGS) -c $< -o $@ $(LDLN_FLAG)
 
 $(LIBFT) :
 	cd $(LIBFT_DIR); $(MAKE)

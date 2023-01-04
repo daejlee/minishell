@@ -4,6 +4,7 @@
 		"readline.h": "c",
 		"history.h": "c",
 		"libft.h": "c",
-		"process.h": "c"
+		"process.h": "c",
+		"chrono": "c"
 	}
 }
