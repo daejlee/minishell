@@ -48,6 +48,8 @@ int	get_pcs_cnt(t_token_meta *meta)
 		now = now->next;
 		while (now->type != PIPE || now != meta->head)
 		{
+			if (now->type == PIPE)
+				break ;
 			while (now->type >= I_REDIR && now->type <= O_APPND)
 				now = now->next->next;
 			while (now->type == ARG && now != meta->head)
@@ -55,7 +57,7 @@ int	get_pcs_cnt(t_token_meta *meta)
 		}
 	}
 	else
-		now = now->next->next;
+		now = now->next;
 	while (now != meta->head)
 	{
 		if (now->type == ARG)
@@ -64,6 +66,8 @@ int	get_pcs_cnt(t_token_meta *meta)
 			now = now->next;
 			while (now->type != PIPE || now != meta->head)
 			{
+				if (now->type == PIPE)
+					break ;
 				while (now->type >= I_REDIR && now->type <= O_APPND)
 					now = now->next->next;
 				while (now->type == ARG && now != meta->head)
@@ -71,7 +75,7 @@ int	get_pcs_cnt(t_token_meta *meta)
 			}
 		}
 		else
-			now = now->next->next;
+			now = now->next;
 	}
 	return (ret);
 }
