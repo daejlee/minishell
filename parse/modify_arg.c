@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:23:23 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 19:38:17 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/04 21:19:10 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	modify_init_to_arg(t_token_meta *meta)
 	size_t	token_num;
 	t_token	*node;
 
-	if (!meta)
-		return (print_error(UNEXPECTED, 0));
 	token_num = meta->size;
 	node = meta->head;
 	while (token_num--)
@@ -50,8 +48,6 @@ int	union_args_to_one(t_token_meta *meta)
 	t_token	*node;
 	t_token	*new_node;
 
-	if (!meta)
-		return (print_error(UNEXPECTED, 0));
 	token_num = meta->size;
 	while (token_num--)
 	{
@@ -80,7 +76,6 @@ int	union_args_to_one(t_token_meta *meta)
  */
 t_token	*create_union_token(size_t *num, t_token_meta *meta, t_token *node)
 {
-	t_token	*result;
 	char	*str;
 	char	*origin_str;
 
@@ -93,17 +88,19 @@ t_token	*create_union_token(size_t *num, t_token_meta *meta, t_token *node)
 	{
 		free_token(node);
 		node = pop_token(meta);
+		if (!node)
+			return (NULL);
 		(*num)--;
 		if (set_two_string(&str, ft_strjoin(str, node->str), \
 						&origin_str, ft_strjoin(origin_str, node->origin_str)))
 			return (NULL);
 	}
 	free_token(node);
-	result = init_token(str, ARG);
-	if (!result)
-		return (ok_and_free_multiple_str(str, origin_str, NULL, NULL));
-	set_token_origin(result, origin_str);
-	return (result);
+	node = init_token(str, ARG);
+	if (!node)
+		return (ok_and_free_multiple_str(origin_str, NULL, NULL, NULL));
+	set_token_origin(node, origin_str);
+	return (node);
 }
 
 /**
@@ -117,8 +114,6 @@ int	delete_space_token(t_token_meta *meta)
 	size_t	token_num;
 	t_token	*node;
 
-	if (!meta)
-		return (print_error(UNEXPECTED, 0));
 	token_num = meta->size;
 	while (token_num--)
 	{
@@ -126,6 +121,31 @@ int	delete_space_token(t_token_meta *meta)
 		if (!node)
 			return (print_error(UNEXPECTED, 0));
 		if (node->type == BLANK)
+			free_token(node);
+		else
+			push_token(meta, node);
+	}
+	return (0);
+}
+
+/**
+ * @brief 
+ * 더 이상 의미가 없는 empty token을 제거해주는 함수
+ * @param meta 
+ * @return int 성공 시 0, 실패 시 1
+ */
+int	delete_empty_token(t_token_meta *meta)
+{
+	size_t	token_num;
+	t_token	*node;
+
+	token_num = meta->size;
+	while (token_num--)
+	{
+		node = pop_token(meta);
+		if (!node)
+			return (print_error(UNEXPECTED, 0));
+		if (node->type == EMPTY)
 			free_token(node);
 		else
 			push_token(meta, node);

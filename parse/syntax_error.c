@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:01:41 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 18:09:53 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/04 21:21:33 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ int	syntax_error(t_token_meta *meta)
 		if (node->type == I_REDIR || node->type == I_HRDOC || \
 					node->type == O_REDIR || node->type == O_APPND)
 		{
+			if (!token_num)
+				return (print_error(SYNTAX_ERROR, "newline"));
 			if (node->next->type == EMPTY)
 				return (print_error(AMBIGUOUS_REDIR, node->next->origin_str));
 			if (node->next->type != ARG)
 				return (print_error(SYNTAX_ERROR, node->next->str));
-			if (!token_num)
-				return (print_error(SYNTAX_ERROR, "newline"));
 		}
 		node = node->next;
 	}
