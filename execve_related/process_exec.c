@@ -93,7 +93,7 @@ int	here_doc_seg(t_pcs *p, t_token *now)
 	int		fst_flag;
 	char	*buf;
 
-	limiter = now->next->str;
+	limiter = now->next->origin_str;
 	unlink(HERE_DOC_INPUT_BUFFER);
 	here_doc_fd = open(HERE_DOC_INPUT_BUFFER, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (here_doc_fd == -1)
@@ -214,6 +214,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	t_token	*now;
 	int		temp_flag;
 
+	// ls | $hi | $hi | ls | $hi | echo hello
 	pcs_cnt = get_pcs_cnt(meta);
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (pcs_cnt));
 	if (!p->pids)
