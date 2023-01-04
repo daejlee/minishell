@@ -33,9 +33,7 @@ SRCS_EXECVE = process.c process_exec.c process_fd_utils.c process_utils_1.c proc
 UTILS_DIR = utils/
 SRCS_UTILS = env_list.c token.c token_meta.c string_utils.c number_utils.c error.c signal.c
 
-OBJ_FILES = $(SRCS:%.c=%.o) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.o) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.o) $(SRCS_UTILS:%.c=$(UTILS_DIR)%.o)
-
-TEST_SRCS = $(SRCS:%.c=%.c) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.c) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.c) $(SRCS_EXECVE:%.c=$(EXECVE_DIR)%.c) $(SRCS_UTILS:%.c=$(UTILS_DIR)%.o)
+OBJ_FILES = $(SRCS:%.c=%.o) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.o) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.o) $(SRCS_UTILS:%.c=$(UTILS_DIR)%.o) $(SRCS_EXECVE:%.c=$(EXECVE_DIR)%.o)
 
 LIBFT = ./libft/libft.a
 LIBFT_DIR = ./libft
