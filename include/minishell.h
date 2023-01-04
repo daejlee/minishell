@@ -25,8 +25,7 @@
 # include <sys/stat.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "./libft_garage/libft/libft.h"
-# include "./libft_garage/ft_printf/ft_printf.h"
+# include "../libft/libft.h"
 
 # ifndef PATH_MAX
 #  define PATH_MAX	1024
@@ -87,6 +86,30 @@ typedef struct s_env
 	struct s_env	*prev;
 	struct s_env	*next;
 }	t_env;
+
+enum	e_redir_flag
+{
+	I_ONLY,
+	O_ONLY,
+	I_O_BOTH,
+	NONE
+};
+
+typedef struct s_pcs
+{
+	int		here_doc_flag;
+	int		outfile_fd;
+	int		infile_fd;
+	int		temp_infile_fd;
+	int		pfd_arr[2][2];
+	int		*pfd;
+	int		*next_pfd;
+	char	**com;
+	char	**envp;
+	int		stdinout_storage[2];
+	pid_t	*pids;
+}	t_pcs;
+
 
 /* 종료 상태를 일단 전역 변수로 선언해놓았음 */
 int					g_exit_status;
@@ -240,8 +263,7 @@ int	ft_exit(void);
 int	ft_export(char *name, t_env *env);
 int	ft_pwd(void);
 int	ft_unset(char *name, t_env *env);
-
-int	get_pcs(t_token_meta *meta, t_env *env, char **envp);
+int			get_pcs(t_token_meta *meta, t_env *env, char **envp);
 
 
 #endif

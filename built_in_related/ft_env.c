@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 
 /**
  * @brief 
@@ -14,12 +14,12 @@ int	ft_env(t_env *env)
 	head = env;
 	now = head;
 	if (now->value)
-		ft_printf("%s=%s\n", now->key, now->value);
+		printf("%s=%s\n", now->key, now->value);
 	now = now->next;
 	while (now != head)
 	{
 		if (now->value)
-			ft_printf("%s=%s\n", now->key, now->value);
+			printf("%s=%s\n", now->key, now->value);
 		now = now->next;
 	}
 	return (0);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 /**
  * @brief 
@@ -64,7 +64,7 @@ int	check_set_env_node(t_token *node, size_t token_num)
 	if (!ft_strlen(node->str))
 		node->type = EMPTY;
 	else if (token_num && node->str[ft_strlen(node->str) - 1] == '$' \
-						&& node->next->type == ARG || node->next->type == EMPTY)
+						&& (node->next->type == ARG || node->next->type == EMPTY))
 	{
 		if (ft_strlen(node->str) == 1)
 			return (1);

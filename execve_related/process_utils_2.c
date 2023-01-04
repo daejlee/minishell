@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 #include "process.h"
 
 int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 int	print_error(enum e_error_code error_code, char *str)
 {
@@ -22,6 +22,6 @@ int	print_error(enum e_error_code error_code, char *str)
 	else if (error_code == AMBIGUOUS_REDIR)
 		printf ("%s: ambiguous redirect\n", str);
 	else if (error_code == UNEXPECTED)
-		printf ("unexpected behavior\n", str);
+		printf ("unexpected behavior\n");
 	return (1);
 }

@@ -11,9 +11,13 @@
 # **************************************************************************** #
 
 NAME = minishell
-CFLAGS = #-Wall -Wextra -Werror
-LDLN_FLAG = -lreadline -L/Users/daejlee/.brew/opt/readline/lib -I/Users/daejlee/.brew/opt/readline/include #-L/usr/local/Cellar/readline/8.2.1/lib -I/usr/local/Cellar/readline/8.2.1/include
+
 CC = cc
+CFLAGS = -g #-Wall -Wextra -Werror
+RM = rm -f
+
+INCLUDE = -I./include -I/Users/hkong/.brew/opt/readline/include
+LIBRARY = -lreadline -L/Users/hkong/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
 
 SRCS = pseudo_main.c
 
@@ -33,28 +37,25 @@ OBJ_FILES = $(SRCS:%.c=%.o) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.o) $(SRCS_PARSE
 
 TEST_SRCS = $(SRCS:%.c=%.c) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.c) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.c) $(SRCS_EXECVE:%.c=$(EXECVE_DIR)%.c) $(SRCS_UTILS:%.c=$(UTILS_DIR)%.o)
 
-LIBFT = ./libft_garage/libft.a
-LIBFT_DIR = ./libft_garage
+LIBFT = ./libft/libft.a
+LIBFT_DIR = ./libft
 
 all : $(NAME)
 
-$(NAME) : $(OBJ_FILES) $(LIBFT)
-	cc $(TEST_SRCS) -o $(NAME) $(LDLN_FLAG) -lft -L$(LIBFT_DIR)
-#	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) -lft -L$(LIBFT_DIR)
+$(NAME) : $(OBJ_FILES)
+	$(MAKE) all -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS)$(LIBRARY) -o $@ $^
 
 %.o: %.c
-	$(CC) -g $(CFLAGS) -c $< -o $@ $(LDLN_FLAG)
-
-$(LIBFT) :
-	cd $(LIBFT_DIR); $(MAKE)
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean :
-	make -C libft_garage/ clean
-	rm -f $(OBJ_FILES) $(BONUS_OBJ)
+	$(MAKE) clean -C $(LIBFT_DIR)
+	$(RM) $(OBJ_FILES)
 
-fclean :
-	make -C libft_garage/ fclean
-	rm -f $(OBJ_FILES) $(BONUS_OBJ) $(NAME)
+fclean : clean
+	$(MAKE) fclean -C $(LIBFT_DIR)
+	$(RM) $(NAME)
 
 re :
 	$(MAKE) fclean

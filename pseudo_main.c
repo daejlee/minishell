@@ -1,7 +1,5 @@
 #include "minishell.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "process.h"
 
 /* 시작 전 각종 초기화가 이뤄지는 부분 */
 int	intialize(t_env **env, char **envp)
@@ -81,7 +79,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 		{
-			printf("exit\n");
+			printf("\bexit\n");
 			return (0);
 		}
 	}

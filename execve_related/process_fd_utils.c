@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 #include "process.h"
 
 void	swap_pfd(int **pfd1, int **pfd2)

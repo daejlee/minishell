@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	modify_init_to_arg(t_token_meta *meta)
 {
@@ -41,11 +41,12 @@ int	union_args_to_one(t_token_meta *meta)
 	while (token_num--)
 	{
 		node = pop_token(meta);
-		if (token_num && node->type == ARG && node->next->type == ARG)
+		printf("%d %d\n", (node->type == ARG || node->type == EMPTY), (node->next->type == ARG || node->next->type == EMPTY));
+		if (token_num && (node->type == ARG || node->type == EMPTY) && (node->next->type == ARG || node->next->type == EMPTY))
 		{
 			new_str = ft_strdup(node->str);
 			new_origin_str = ft_strdup(node->origin_str);
-			while (token_num && node->next->type == ARG)
+			while (token_num && (node->next->type == ARG || node->next->type == EMPTY))
 			{
 				free_token(node);
 				if (!new_str || !new_origin_str)

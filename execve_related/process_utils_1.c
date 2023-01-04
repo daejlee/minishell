@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 #include "process.h"
 
 t_token	*get_i_redir_location(t_token_meta *meta)

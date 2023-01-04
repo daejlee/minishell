@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	signal_process(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("\b\b  \n");
+		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		rl_redisplay();

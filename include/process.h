@@ -5,30 +5,15 @@
 #ifndef PROCESS_H
 # define PROCESS_H
 # include <unistd.h>
-# include "../minishell.h"
+# include "minishell.h"
 
-enum	e_redir_flag
-{
-	I_ONLY,
-	O_ONLY,
-	I_O_BOTH,
-	NONE
-};
+/**
+ * process.c
+ */
 
-typedef struct s_pcs
-{
-	int		here_doc_flag;
-	int		outfile_fd;
-	int		infile_fd;
-	int		temp_infile_fd;
-	int		pfd_arr[2][2];
-	int		*pfd;
-	int		*next_pfd;
-	char	**com;
-	char	**envp;
-	int		stdinout_storage[2];
-	pid_t	*pids;
-}	t_pcs;
+int			get_pcs(t_token_meta *meta, t_env *env, char **envp);
+t_token		*get_last_redir(t_token *head);
+
 
 /**
  * process_exec.c

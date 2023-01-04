@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	initialize_numbers(size_t *num1, size_t *num2, \
 												size_t *num3, size_t *num4)

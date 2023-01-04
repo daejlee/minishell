@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 #include "process.h"
 
 static char	**get_sh_path(t_env *env)

@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "minishell.h"
 #include "process.h"
 
 t_token	*get_last_redir(t_token *head)
