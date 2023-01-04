@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:24:23 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/02 21:22:24 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/04 19:25:25 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,30 @@ int	fail_and_free_multiple_str(char *str1, char *str2, char *str3, char *str4)
 	if (str4)
 		free(str4);
 	return (1);
+}
+
+/**
+ * @brief 
+ * str1, str2를 free해준 뒤, 새로운 new_str1, new_str2를 대입해주는 함수.
+ * @return 성공 시 0, 실패 시 1
+ */
+int	set_two_string(char **str1, char *new_str1, char **str2, char *new_str2)
+{
+	if (*str1)
+		free(*str1);
+	if (*str2)
+		free(*str2);
+	if (!new_str1 || !new_str2)
+	{
+		if (new_str1)
+			free(new_str1);
+		if (new_str2)
+			free(new_str2);
+		return (1);
+	}
+	*str1 = new_str1;
+	*str2 = new_str2;
+	return (0);
 }
 
 /**

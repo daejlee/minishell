@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 18:02:19 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/04 19:19:48 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ int					ok_and_free_multiple_str(char *str1, char *str2, \
 int					fail_and_free_multiple_str(char *str1, char *str2, \
 												char *str3, char *str4);
 int					is_env_allowed_char(int is_first, char c);
+int					set_two_string(char **str1, char *new_str1, \
+										char **str2, char *new_str2);
 
 /**
  * number_utils.c
@@ -180,7 +182,6 @@ int					is_env_allowed_char(int is_first, char c);
 
 void				initialize_numbers(size_t *num1, size_t *num2, \
 												size_t *num3, size_t *num4);
-
 void				set_start_end(size_t *start, size_t *end, \
 										size_t start_num, size_t end_num);
 

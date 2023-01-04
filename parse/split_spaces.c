@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 18:10:49 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/04 18:20:39 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	split_spaces(t_token_meta *meta, t_env *env)
 	{
 		node = pop_token(meta);
 		if (!node)
-			return (1);
+			return (print_error(UNEXPECTED, 0));
 		if (node->type != INIT || !has_space(node->str) \
 									|| has_heredoc_before(node))
 		{
@@ -58,9 +58,8 @@ int	split_spaces_in_substr(t_token_meta *meta, char *str)
 {
 	size_t	start;
 	size_t	end;
-	size_t	flag;
 
-	initialize_numbers(&start, &end, &flag, NULL);
+	initialize_numbers(&start, &end, NULL, NULL);
 	while (str[end] || start != end)
 	{
 		if (str[end] && str[end] == ' ' && start == end)
@@ -73,7 +72,7 @@ int	split_spaces_in_substr(t_token_meta *meta, char *str)
 		}
 		else
 		{
-			if (flag++ && push_token(meta, init_token(ft_strdup(" "), BLANK)))
+			if (push_token(meta, init_token(ft_strdup(" "), BLANK)))
 				return (print_error(MALLOC_FAIL, 0));
 			if (push_token(meta, \
 					init_token(ft_substr(str, start, end - start), INIT)))

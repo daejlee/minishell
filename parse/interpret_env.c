@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:39:35 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 18:09:48 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/04 18:17:34 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	check_set_env_node(t_token *node, size_t token_num)
 	if (!ft_strlen(node->str))
 		node->type = EMPTY;
 	else if (token_num && node->str[ft_strlen(node->str) - 1] == '$' \
-						&& (node->next->type == ARG || node->next->type == EMPTY))
+					&& (node->next->type == ARG || node->next->type == EMPTY))
 	{
 		if (ft_strlen(node->str) == 1)
 			return (1);
