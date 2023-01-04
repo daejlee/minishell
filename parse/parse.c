@@ -6,12 +6,13 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 21:22:23 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 21:53:39 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/04 22:03:45 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
+//todo: 릭 잡기, 일관된 에러 처리 확인, 시그널 처리
 /**
  * @brief 
  * parsing 메인 함수
@@ -22,7 +23,6 @@
 t_token_meta	*parse(t_env *env, char *str)
 {
 	t_token_meta	*meta;
-	t_token			*node;
 
 	meta = init_token_meta();
 	if (!meta)
@@ -30,24 +30,11 @@ t_token_meta	*parse(t_env *env, char *str)
 		print_error(MALLOC_FAIL, 0);
 		return (NULL);
 	}
-	if (split_spaces_in_substr(meta, str))
+	if (split_spaces_in_substr(meta, str) || interpret_quotes(meta, env) \
+		|| split_operator(meta) || interpret_env(meta, env) \
+		|| split_spaces(meta, env) || modify_init_to_arg(meta) \
+		|| union_args_to_one(meta) || delete_space_token(meta) \
+		|| syntax_error(meta) || modify_arg_to_limiter(meta))
 		return (free_token_meta(meta));
-	if (interpret_quotes(meta, env))
-		return (free_token_meta(meta));
-	if (split_operator(meta))
-		return (free_token_meta(meta));
-	if (interpret_env(meta, env))
-		return (free_token_meta(meta));
-	if (split_spaces(meta, env))
-		return (free_token_meta(meta));
-	if (modify_init_to_arg(meta))
-		return (free_token_meta(meta));
-	if (union_args_to_one(meta))
-		return (free_token_meta(meta));
-	if (delete_space_token(meta))
-		return (free_token_meta(meta));
-	syntax_error(meta);
-	modify_arg_to_limiter(meta);
-	//todo: EMPTY 토큰 처리 및 릭 잡기 및 에러 끝내기 그리고 시그널 처리
 	return (meta);
 }
