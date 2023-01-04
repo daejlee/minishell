@@ -128,18 +128,14 @@ t_token	*prep_fd_n_move(t_token *now, int i, int pcs_cnt, t_token_meta *meta, t_
 	while (now->type != PIPE && now != meta->head)
 		now = now->next;
 	if (now->type == PIPE && i == pcs_cnt - 1)
-	{
-		prep_fds(p, i, pcs_cnt, meta, p->stdinout_storage);
 		now = now->next;
-	}
 	else if (now->type == PIPE)
 	{
 		if (pipe(p->next_pfd) == -1)
 			return (err_terminate(p));
-		prep_fds(p, i, pcs_cnt, meta, p->stdinout_storage);
 	}
-	else //now == meta->head 즉, 마지막.
-		prep_fds(p, i, pcs_cnt, meta, p->stdinout_storage);
+	//else: now == meta->head 즉, 마지막.
+	prep_fds(p, i, pcs_cnt, meta, p->stdinout_storage);
 	return (now);
 }
 
@@ -223,7 +219,8 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	now = meta->head;
 	if (p->infile_fd == -1)
 	{
-		now = now->next;
+		while (now->type == ARG)
+			now = now->next;
 		pcs_cnt--;
 		while (now->type != PIPE && now != meta->head)
 		{
@@ -262,9 +259,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	}
 	unlink(HERE_DOC_INPUT_BUFFER);
 	ret = wait_for_children(p, p->pids, pcs_cnt);
-	// reset_fds(p, p->stdinout_storage[0], p->stdinout_storage[1]);
-	dup2(p->stdinout_storage[0], 0);
-	dup2(p->stdinout_storage[1], 1);
+	reset_fds(p, p->stdinout_storage[0], p->stdinout_storage[1], meta);
 	if (!pcs_cnt)
 		return (g_exit_status);
 	else

@@ -50,7 +50,7 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta, int stdinout_sto
 		if (pcs_cnt == 1)
 			prep(p->infile_fd, 1, -1, p);
 		else if (i == pcs_cnt - 1)
-			prep(p->pfd[0], 1, 0, p);
+			prep(p->pfd[0], stdinout_storage[1], 0, p);
 		else if (!i)
 			prep(p->infile_fd, p->next_pfd[1], 0, p);
 		else
@@ -72,7 +72,7 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta, int stdinout_sto
 		if (pcs_cnt == 1)
 			return ;
 		else if (i == pcs_cnt - 1)
-			prep(p->pfd[0], 1, 0, p);
+			prep(p->pfd[0], stdinout_storage[1], 0, p);
 		else if (!i)
 			prep(0, p->next_pfd[1], 1, p); 
 		else
@@ -80,14 +80,11 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta, int stdinout_sto
 	}
 }
 
-void	reset_fds(t_pcs *p, int stdin_dup, int stdout_dup)
+void	reset_fds(t_pcs *p, int stdin_dup, int stdout_dup, t_token_meta *meta)
 {
-	close(p->pfd_arr[0][0]);
-	close(p->pfd_arr[0][1]);
-	close(p->pfd_arr[1][0]);
-	close(p->pfd_arr[1][1]);
+	if (check_redir(meta) == I_O_BOTH || check_redir(meta) == O_ONLY)
+		dup2(stdout_dup, 1);
 	dup2(stdin_dup, 0);
-	dup2(stdout_dup, 1);
 	close(stdin_dup);
 	close(stdout_dup);
 }
