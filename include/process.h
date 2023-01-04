@@ -2,6 +2,10 @@
 # define HERE_DOC_INPUT_BUFFER "here_doc_input_buffer"
 #endif
 
+#ifndef EMPTY_BUFFER
+# define EMPTY_BUFFER "empty_buffer"
+#endif
+
 #ifndef PROCESS_H
 # define PROCESS_H
 # include <unistd.h>

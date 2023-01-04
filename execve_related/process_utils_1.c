@@ -46,26 +46,32 @@ int	get_pcs_cnt(t_token_meta *meta)
 	{
 		ret++;
 		now = now->next;
-		while (now->type >= I_REDIR && now->type <= O_APPND)
-			now = now->next->next;
-		while (now->type == ARG && now != meta->head)
-			now = now->next;
+		while (now->type != PIPE || now != meta->head)
+		{
+			while (now->type >= I_REDIR && now->type <= O_APPND)
+				now = now->next->next;
+			while (now->type == ARG && now != meta->head)
+				now = now->next;
+		}
 	}
 	else
 		now = now->next->next;
 	while (now != meta->head)
 	{
-		if (now->type >= I_REDIR && now->type <= O_APPND)
-			now = now->next->next;
-		else if (now->type == ARG)
+		if (now->type == ARG)
 		{
 			ret++;
 			now = now->next;
-			while (now->type == ARG && now != meta->head)
-				now = now->next;
+			while (now->type != PIPE || now != meta->head)
+			{
+				while (now->type >= I_REDIR && now->type <= O_APPND)
+					now = now->next->next;
+				while (now->type == ARG && now != meta->head)
+					now = now->next;
+			}
 		}
 		else
-			now = now->next;
+			now = now->next->next;
 	}
 	return (ret);
 }

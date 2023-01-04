@@ -16,8 +16,8 @@ CC = cc
 CFLAGS = -g #-Wall -Wextra -Werror
 RM = rm -f
 
-INCLUDE = -I./include -I/Users/hkong/.brew/opt/readline/include
-LIBRARY = -lreadline -L/Users/hkong/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
+INCLUDE = -I./include -I/Users/daejlee/.brew/opt/readline/include
+LIBRARY = -lreadline -L/Users/daejlee/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
 
 SRCS = pseudo_main.c
 
@@ -42,7 +42,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ_FILES)
 	$(MAKE) all -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS)$(LIBRARY) -o $@ $^
+	$(CC) $(CFLAGS) $(LIBRARY) -o $@ $^
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
