@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 16:23:23 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 21:19:10 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/04 21:53:17 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,25 +130,24 @@ int	delete_space_token(t_token_meta *meta)
 
 /**
  * @brief 
- * 더 이상 의미가 없는 empty token을 제거해주는 함수
+ * here_doc 다음에 나오는 토큰을 limiter로 설정한다.
  * @param meta 
  * @return int 성공 시 0, 실패 시 1
  */
-int	delete_empty_token(t_token_meta *meta)
+int	modify_arg_to_limiter(t_token_meta *meta)
 {
 	size_t	token_num;
 	t_token	*node;
 
 	token_num = meta->size;
+	node = meta->head;
 	while (token_num--)
 	{
-		node = pop_token(meta);
 		if (!node)
 			return (print_error(UNEXPECTED, 0));
-		if (node->type == EMPTY)
-			free_token(node);
-		else
-			push_token(meta, node);
+		if (token_num && node->type == I_HRDOC)
+			node->next->type = LIMITER;
+		node = node->next;
 	}
 	return (0);
 }
