@@ -6,11 +6,11 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:01:41 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/30 21:42:03 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/04 18:09:53 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parse.h"
 
 int	syntax_error(t_token_meta *meta)
 {
