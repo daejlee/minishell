@@ -16,7 +16,6 @@ int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)
 
 int	err_terminate(t_pcs *p)
 {
-	perror("minishell error");
 	if (p->infile_fd != -1)
 		close(p->infile_fd);
 	if (p->outfile_fd != -1)
@@ -37,12 +36,16 @@ int	err_terminate(t_pcs *p)
 	close(1);
 	if (p->here_doc_flag)
 		unlink(HERE_DOC_INPUT_BUFFER);
+	unlink(EMPTY_BUFFER);
 	return (1);
 }
 
 void	execve_failed(t_pcs *p, char *sh_func)
 {
 	err_terminate(p);
+	write(2, "minishell: ", 12);
+	write(2, sh_func, ft_strlen(sh_func));
+	write(2, ": command not found\n", 21);
 	free_arr(p->com);
 	if (sh_func)
 		free(sh_func);

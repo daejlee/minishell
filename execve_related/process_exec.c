@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "process.h"
 
-static char	**get_sh_path(t_env *env)
+static char	**get_sh_path(t_env *env, int *no_path_flag)
 {
 	unsigned int	i;
 	char			**sh_paths;
@@ -33,10 +33,11 @@ static char	**get_sh_path(t_env *env)
 		else
 			now = now->next;
 	}
-	return (NULL);
+	*no_path_flag = 1;
+	return (no_path_flag);
 }
 
-static char	*get_sh_func(char **com, t_env *env)
+static char	*get_sh_func(char **com, t_env *env, int *no_path_flag)
 {
 	char			*sh_func;
 	char			**sh_paths;
@@ -45,8 +46,10 @@ static char	*get_sh_func(char **com, t_env *env)
 	i = 0;
 	if (!access((const char *)com[0], X_OK))
 		return (com[0]);
-	sh_paths = get_sh_path(env);
+	sh_paths = get_sh_path(env, no_path_flag);
 	if (!sh_paths)
+		return (NULL);
+	if (*no_path_flag)
 		return (NULL);
 	while (sh_paths[i])
 	{
@@ -58,7 +61,7 @@ static char	*get_sh_func(char **com, t_env *env)
 		}
 		free(sh_func);
 	}
-	sh_func = ft_strjoin_modified(sh_paths[0], com[0]);
+	sh_func = com[0];
 	free_arr(sh_paths);
 	return (sh_func);
 }
@@ -66,6 +69,7 @@ static char	*get_sh_func(char **com, t_env *env)
 void	exec_com(t_pcs *p, t_token *now, t_env *env)
 {
 	char	*sh_func;
+	int		no_path_flag;
 
 	if (is_built_in(p->com[0]))
 	{
@@ -74,7 +78,13 @@ void	exec_com(t_pcs *p, t_token *now, t_env *env)
 	}
 	if (now->type == PIPE)
 		close(p->next_pfd[0]);
-	sh_func = get_sh_func(p->com, env);
+	no_path_flag = 0;
+	sh_func = get_sh_func(p->com, env, &no_path_flag);
+	if (no_path_flag)
+	{
+		execve_failed(p, p->com[0]);
+		return ;
+	}
 	if (!sh_func)
 	{
 		free_arr(p->com);
@@ -214,7 +224,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	t_token	*now;
 	int		temp_flag;
 
-	// ls | $hi | $hi | ls | $hi | echo hello
+	// ls | $hi
 	pcs_cnt = get_pcs_cnt(meta);
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (pcs_cnt));
 	if (!p->pids)
@@ -243,6 +253,13 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		temp_flag = 0;
 		while (now->type == I_REDIR || now->type == I_HRDOC || now->type == O_REDIR || now->type == O_APPND)
 			now = now->next->next;
+		if (now->type == EMPTY && now->next != meta->head)
+			now = now->next;
+		else if (now->type == EMPTY)
+		{
+			prep_fd_n_move(now, i, pcs_cnt, meta, p);
+			break ;
+		}
 		if (now->type == PIPE)
 		{
 			now = now->next;
