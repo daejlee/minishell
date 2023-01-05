@@ -51,17 +51,17 @@ int	is_built_in(char *com)
 {
 	if (!is_echo(com))
 		return (ECHO);
-	else if (!ft_strncmp(com, "cd", 2))
+	else if (!ft_strncmp(com, "cd", 3))
 		return (CD);
 	else if (!is_pwd(com))
 		return (PWD);
-	else if (!ft_strncmp(com, "export", 6))
+	else if (!ft_strncmp(com, "export", 7))
 		return (EXPORT);
-	else if (!ft_strncmp(com, "unset", 5))
+	else if (!ft_strncmp(com, "unset", 6))
 		return (UNSET);
 	else if (!is_env(com))
 		return (ENV);
-	else if (!ft_strncmp(com, "exit", 4))
+	else if (!ft_strncmp(com, "exit", 5))
 		return (EXIT);
 	else
 		return (0);
