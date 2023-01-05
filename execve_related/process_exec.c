@@ -224,7 +224,6 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	t_token	*now;
 	int		temp_flag;
 
-	// ls | $hi
 	pcs_cnt = get_pcs_cnt(meta);
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (pcs_cnt));
 	if (!p->pids)
