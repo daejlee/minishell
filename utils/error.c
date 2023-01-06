@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:57:38 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/02 18:36:32 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 16:12:31 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,24 @@ int	print_error(enum e_error_code error_code, char *str)
 		printf ("%s: ambiguous redirect\n", str);
 	else if (error_code == UNEXPECTED)
 		printf ("unexpected behavior\n");
+	return (1);
+}
+
+/**
+ * @brief 
+ * 따옴표의 짝이 맞지 않는 경우, syntax error를 출력합니다.
+ * @param str 
+ * @param end 
+ * @return int 1
+ */
+int	quote_syntax_error(char *str, size_t end)
+{
+	char	*error_str;
+
+	error_str = ft_substr(str, end, ft_strlen(str) - end);
+	if (!error_str)
+		return (print_error(MALLOC_FAIL, 0));
+	print_error(SYNTAX_ERROR, error_str);
+	free(error_str);
 	return (1);
 }

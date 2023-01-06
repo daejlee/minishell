@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 14:15:26 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 16:12:39 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,25 +84,6 @@ int	split_spaces_in_substr(t_token_meta *meta, char *str)
 
 /**
  * @brief 
- * 따옴표의 짝이 맞지 않는 경우, syntax error를 출력합니다.
- * @param str 
- * @param end 
- * @return int 1
- */
-int	quote_syntax_error(char *str, size_t end)
-{
-	char	*error_str;
-
-	error_str = ft_substr(str, end, ft_strlen(str) - end);
-	if (!error_str)
-		return (print_error(MALLOC_FAIL, 0));
-	print_error(SYNTAX_ERROR, error_str);
-	free(error_str);
-	return (1);
-}
-
-/**
- * @brief 
  * 따옴표 내부의 공백은 취급하지 않으므로,
  * 따옴표 안에 있는 문자열은 전부 스킵하는 함수입니다.
  * @param str 
@@ -143,5 +124,25 @@ int	has_heredoc_before(t_token *token)
 		node = node->prev;
 	if (node->prev->type == I_HRDOC)
 		return (1);
+	return (0);
+}
+
+/**
+ * @brief 
+ * 해당 문자열에 공백이 있는 지 찾는 함수
+ * @param str 
+ * @return int 공백이 있으면 1, 없으면 0
+ */
+int	has_space(char *str)
+{
+	size_t	index;
+
+	index = 0;
+	while (str[index])
+	{
+		if (str[index] == ' ')
+			return (1);
+		index++;
+	}
 	return (0);
 }

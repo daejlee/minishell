@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 14:10:42 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 16:12:54 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void				signal_process(int sig);
  */
 
 int					print_error(enum e_error_code error_code, char *str);
-
+int					quote_syntax_error(char *str, size_t end);
 /**
  * env_list.c
  * env 관련 함수 실행을 위한 utils가 있는 파일.
@@ -175,7 +175,7 @@ int					fail_and_free_multiple_str(char *str1, char *str2, \
 int					is_env_allowed_char(int is_first, char c);
 int					set_two_string(char **str1, char *new_str1, \
 										char **str2, char *new_str2);
-int					has_space(char *str);
+
 /**
  * number_utils.c
  */
