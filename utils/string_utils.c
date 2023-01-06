@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 17:24:23 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 14:10:19 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 16:12:36 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,25 +107,5 @@ int	is_env_allowed_char(int is_first, char c)
 		return (1);
 	if (is_first && c == '?')
 		return (1);
-	return (0);
-}
-
-/**
- * @brief 
- * 해당 문자열에 공백이 있는 지 찾는 함수
- * @param str 
- * @return int 공백이 있으면 1, 없으면 0
- */
-int	has_space(char *str)
-{
-	size_t	index;
-
-	index = 0;
-	while (str[index])
-	{
-		if (str[index] == ' ')
-			return (1);
-		index++;
-	}
 	return (0);
 }
