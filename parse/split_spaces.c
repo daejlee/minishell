@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 18:20:39 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 13:52:34 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	split_spaces(t_token_meta *meta, t_env *env)
 		if (split_spaces_in_substr(meta, node->str))
 		{
 			free_token(node);
-			return (print_error(MALLOC_FAIL, 0));
+			return (1);
 		}
 		free_token(node);
 	}

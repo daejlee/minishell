@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:01:41 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 13:01:12 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 13:54:00 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	syntax_error(t_token_meta *meta)
 	node = meta->head;
 	while (token_num--)
 	{
+		if (!node)
+			return (print_error(UNEXPECTED, 0));
 		if (node->type == PIPE)
 			if (syntax_error_pipe(meta, token_num, node))
 				return (1);
