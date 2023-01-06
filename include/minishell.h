@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 16:12:54 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 16:30:59 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <signal.h>
 # include <string.h>
 # include <dirent.h>
+# include <termios.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/errno.h>
