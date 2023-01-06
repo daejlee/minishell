@@ -18,8 +18,6 @@ int	intialize(t_env **env, char **envp)
 			return (print_error(MALLOC_FAIL, 0));
 		if (push_env(env, init_env(temp[0], temp[1])))
 			return (print_error(MALLOC_FAIL, 0));
-		free(temp[0]);
-		free(temp[1]);
 		free(temp);
 		i++;
 	}

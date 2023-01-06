@@ -20,16 +20,8 @@ int	err_terminate(t_pcs *p)
 		close(p->infile_fd);
 	if (p->outfile_fd != -1)
 		close(p->outfile_fd);
-	if (p->pfd)
-	{
-		close(p->pfd[0]);
-		close(p->pfd[1]);
-	}
-	if (p->next_pfd)
-	{
-		close(p->next_pfd[0]);
-		close(p->next_pfd[1]);
-	}
+	if (p->pfd_arr)
+		//free pfdarr;
 	if (p->pids)
 		free(p->pids);
 	close(0);
@@ -58,12 +50,7 @@ void	init_p(t_pcs *p)
 	p->outfile_fd = 1;
 	p->infile_fd = 0;
 	p->temp_infile_fd = 0;
-	p->pfd_arr[0][0] = 0;
-	p->pfd_arr[0][1] = 0;
-	p->pfd_arr[1][0] = 0;
-	p->pfd_arr[1][1] = 0;
-	p->pfd = NULL;
-	p->next_pfd = NULL;
+	p->pfd_arr = NULL;
 	p->com = NULL;
 	p->envp = NULL;
 	p->stdinout_storage[0] = -1;

@@ -74,8 +74,6 @@ void	exec_com(t_pcs *p, t_token *now, t_env *env)
 		g_exit_status = exec_built_in(p->com, env);
 		return ;
 	}
-	if (now->type == PIPE)
-		close(p->next_pfd[0]);
 	no_path_flag = 0;
 	sh_func = get_sh_func(p->com, env, &no_path_flag);
 	if (no_path_flag)
@@ -137,11 +135,6 @@ t_token	*prep_fd_n_move(t_token *now, int i, int pcs_cnt, t_token_meta *meta, t_
 		now = now->next;
 	if (now->type == PIPE && i == pcs_cnt - 1)
 		now = now->next;
-	else if (now->type == PIPE)
-	{
-		if (pipe(p->next_pfd) == -1)
-			return (err_terminate(p));
-	}
 	//else: now == meta->head 즉, 마지막.
 	prep_fds(p, i, pcs_cnt, meta, p->stdinout_storage);
 	return (now);
@@ -214,6 +207,20 @@ char	**get_com(t_token *now, t_token_meta *meta)
 	return (ret);
 }
 
+int	get_pipes(t_pcs *p, int pcs_cnt)
+{
+	int	i;
+
+	i = 0;
+	while (i < pcs_cnt)
+	{
+		p->pfd_arr[i] = (int *)malloc(sizeof(int[2]));
+		pipe(p->pfd_arr[i]);
+		i++;
+	}
+	return (0);
+}
+
 int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 {
 	int		i;
@@ -225,6 +232,11 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	pcs_cnt = get_pcs_cnt(meta);
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (pcs_cnt));
 	if (!p->pids)
+		return (err_terminate(p));
+	p->pfd_arr = (int **)malloc(sizeof (int *) * (pcs_cnt));
+	if (!p->pfd_arr)
+		return (err_terminate(p));
+	if (get_pipes(p, pcs_cnt))
 		return (err_terminate(p));
 	p->stdinout_storage[0] = dup(0); //stdin save. 3
 	p->stdinout_storage[1] = dup(1); //stdout save. 4
@@ -282,7 +294,11 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 			if (p->pids[i] == -1)
 				return (err_terminate(p));
 			else if (!p->pids[i])
+			{
+				if (i && p->pfd_arr[i - 1][1] != 1)
+					close(p->pfd_arr[i - 1][1]);
 				exec_com(p, now, env);
+			}
 		}
 		else
 		{
@@ -290,13 +306,13 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 			exec_com(p, now, env);
 		}
 		i++;
-		swap_pfd(&p->next_pfd, &p->pfd);
 		now = now->next; //파이프에서 다음으로 넘어감.
 	}
 	unlink(HERE_DOC_INPUT_BUFFER);
 	unlink(EMPTY_BUFFER);
-	ret = wait_for_children(p, p->pids, pcs_cnt);
-	reset_fds(p, p->stdinout_storage[0], p->stdinout_storage[1], meta);
+	reset_fds(p, p->stdinout_storage[0], p->stdinout_storage[1], meta, pcs_cnt);
+	//ret = wait_for_children(p, p->pids, pcs_cnt);
+	//reset_fds(p, p->stdinout_storage[0], p->stdinout_storage[1], meta, pcs_cnt);
 	if (!pcs_cnt)
 		return (g_exit_status);
 	else

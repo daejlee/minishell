@@ -33,7 +33,7 @@ int			exec_fork(t_pcs *p, t_token_meta *meta, t_env *env);
 
 void		swap_pfd(int **pfd1, int **pfd2);
 void		prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta, int stdinout_storage[2]);
-void		reset_fds(t_pcs *p, int stdin_dup, int stdout_dup, t_token_meta *meta);
+void		reset_fds(t_pcs *p, int stdin_dup, int stdout_dup, t_token_meta *meta, int pcs_cnt);
 
 /**
  * process_utils_1.c

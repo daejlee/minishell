@@ -101,9 +101,7 @@ typedef struct s_pcs
 	int		outfile_fd;
 	int		infile_fd;
 	int		temp_infile_fd;
-	int		pfd_arr[2][2];
-	int		*pfd;
-	int		*next_pfd;
+	int		**pfd_arr;
 	char	**com;
 	char	**envp;
 	int		stdinout_storage[2];

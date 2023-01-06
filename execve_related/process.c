@@ -93,7 +93,5 @@ int	get_pcs(t_token_meta *meta, t_env *env, char **envp)
 			return (err_terminate(&p));
 		now = now->next;
 	}
-	p.pfd = p.pfd_arr[0];
-	p.next_pfd = p.pfd_arr[1];
 	return (exec_fork(&p, meta, env));
 }
