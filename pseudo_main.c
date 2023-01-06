@@ -10,19 +10,19 @@ int	intialize(t_env **env, char **envp)
 	t_env	*now;
 
 	*env = NULL;
-	temp = ft_split(envp[0], '=');
-	now = init_env(temp[0], temp[1]);
-	push_env(env, &now);
-	i = 1;
+	i = 0;
 	while (envp[i])
 	{
-		//free_double_arr(temp);
 		temp = ft_split(envp[i], '=');
-		now = init_env(temp[0], temp[1]);
-		push_env(env, &now);
+		if (!temp)
+			return (print_error(MALLOC_FAIL, 0));
+		if (push_env(env, init_env(temp[0], temp[1])))
+			return (print_error(MALLOC_FAIL, 0));
+		free(temp[0]);
+		free(temp[1]);
+		free(temp);
 		i++;
 	}
-	//free_double_arr(temp);
 	return (0);
 }
 
@@ -72,12 +72,14 @@ int	main(int argc, char **argv, char **envp)
 			meta = parse(env, buf);
 			if (!meta)
 				continue ;
-			t_token	*node;
-			while (meta->size)
+			t_token *node;
+			node = meta->head;
+			for (int i = 0; i < meta->size; i++)
 			{
-				node = pop_token(meta);
 				printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
+				node = node->next;
 			}
+			free_token_meta(meta);
 			// g_exit_status = get_pcs(meta, env, envp);
 		}
 		else

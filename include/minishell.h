@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 19:19:48 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 13:35:05 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int					print_error(enum e_error_code error_code, char *str);
  */
 
 t_env				*init_env(char *key, char *value);
-int					push_env(t_env **head, t_env	**node);
+int					push_env(t_env **head, t_env *node);
 int					delete_env(t_env *head, char *key);
 t_env				*find_env(t_env *head, char *key);
 

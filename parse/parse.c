@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 21:22:23 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 13:02:35 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 13:42:52 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,17 @@ t_token_meta	*parse(t_env *env, char *str)
 		print_error(MALLOC_FAIL, 0);
 		return (NULL);
 	}
-	if (split_spaces_in_substr(meta, str) || interpret_quotes(meta, env) \
-		|| split_operator(meta) || interpret_env(meta, env) \
-		|| split_spaces(meta, env) || modify_init_to_arg(meta) \
-		|| union_args_to_one(meta) || delete_space_token(meta) \
-		|| syntax_error(meta) || delete_empty_token(meta) \
-		|| modify_arg_to_limiter(meta))
+	if (split_spaces_in_substr(meta, str))
+	{
+		free(str);
+		return (free_token_meta(meta));
+	}
+	free(str);
+	if (interpret_quotes(meta, env) || split_operator(meta) \
+		|| interpret_env(meta, env) || split_spaces(meta, env) \
+		|| modify_init_to_arg(meta) || union_args_to_one(meta) \
+		|| delete_space_token(meta) || syntax_error(meta) \
+		|| modify_arg_to_limiter(meta) || delete_empty_token(meta))
 		return (free_token_meta(meta));
 	return (meta);
 }
