@@ -3,7 +3,7 @@
 #include "parse.h"
 
 /* 시작 전 각종 초기화가 이뤄지는 부분 */
-int	intialize(t_env **env, char **envp)
+int	set_env(t_env **env, char **envp)
 {
 	int		i;
 	char	**temp;
@@ -18,12 +18,21 @@ int	intialize(t_env **env, char **envp)
 			return (print_error(MALLOC_FAIL, 0));
 		if (push_env(env, init_env(temp[0], temp[1])))
 			return (print_error(MALLOC_FAIL, 0));
-		free(temp[0]);
-		free(temp[1]);
 		free(temp);
 		i++;
 	}
 	return (0);
+}
+
+int	terminal_init(void)
+{
+	struct termios	new_terminal;
+
+	tcgetattr(0, &new_terminal);
+	new_terminal.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &new_terminal);
+	signal(SIGINT, signal_process);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 /*
@@ -37,11 +46,12 @@ int	main(int argc, char **argv, char **envp)
 	char			*buf;
 	t_token_meta	*meta;
 	t_env			*env;
+	struct termios	terminal;
 
-	intialize(&env, envp);
-	signal(SIGINT, signal_process);
-	signal(SIGQUIT, SIG_IGN);
-	meta = init_token_meta();
+	tcgetattr(0, &terminal);
+	terminal_init();
+	set_env(&env, envp);
+	meta = NULL;
 	// push_token(meta, init_token("cd .", ARG));
 	// push_token(meta, init_token("cat", ARG));
 	// push_token(meta, init_token("<", I_REDIR));
@@ -68,10 +78,11 @@ int	main(int argc, char **argv, char **envp)
 		buf = readline("minishell 0.1.3$ ");
 		if (buf)
 		{
-			add_history(buf);
+			if (ft_strlen(buf))
+				add_history(buf);
 			meta = parse(env, buf);
-			// if (!meta)
-			// 	continue ;
+			if (!meta)
+				continue ;
 			// t_token *node;
 			// node = meta->head;
 			// for (int i = 0; i < meta->size; i++)
@@ -79,14 +90,15 @@ int	main(int argc, char **argv, char **envp)
 			// 	printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
 			// 	node = node->next;
 			// }
-			// free_token_meta(meta);
 			g_exit_status = get_pcs(meta, env, envp);
+			free_token_meta(meta);
 		}
 		else
 		{
-			printf("\bexit\n");
-			return (0);
+			printf("exit\n");
+			break ;
 		}
 	}
+	tcsetattr(0, TCSANOW, &terminal);
 	return (0);
 }

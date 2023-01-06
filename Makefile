@@ -6,7 +6,7 @@
 #    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2023/01/06 12:44:59 by hkong            ###   ########.fr        #
+#    Updated: 2023/01/06 16:31:31 by hkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ CC = cc
 CFLAGS = -g #-Wall -Wextra -Werror
 RM = rm -f
 
-INCLUDE = -I./include -I/Users/daejlee/.brew/opt/readline/include
-LIBRARY = -lreadline -L/Users/daejlee/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
+INCLUDE = -I./include -I/Users/hkong/.brew/opt/readline/include
+LIBRARY = -lreadline -L/Users/hkong/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
 
 SRCS = pseudo_main.c
 
