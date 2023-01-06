@@ -11,7 +11,7 @@ int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)
 	while (i < pcs_cnt)
 		waitpid(pids[i++], &status, 0);
 	free(pids);
-	return (WB_EXITSTATUS(status));
+	return (WEXITSTATUS(status));
 }
 
 int	err_terminate(t_pcs *p)
