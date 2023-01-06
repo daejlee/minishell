@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:46:16 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 18:09:48 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 13:15:24 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,6 @@ char	*interpret_quotes_double(t_token_meta *meta, \
 		free_token(node);
 		return (0);
 	}
-	if (!ft_strlen(node->str))
-		node->type = EMPTY;
 	if (push_token(meta, node))
 		return (0);
 	next_str = ft_substr(str, end + 1, ft_strlen(str) - end - 1);

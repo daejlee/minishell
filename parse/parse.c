@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 21:22:23 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 22:03:45 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 13:02:35 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ t_token_meta	*parse(t_env *env, char *str)
 		|| split_operator(meta) || interpret_env(meta, env) \
 		|| split_spaces(meta, env) || modify_init_to_arg(meta) \
 		|| union_args_to_one(meta) || delete_space_token(meta) \
-		|| syntax_error(meta) || modify_arg_to_limiter(meta))
+		|| syntax_error(meta) || delete_empty_token(meta) \
+		|| modify_arg_to_limiter(meta))
 		return (free_token_meta(meta));
 	return (meta);
 }

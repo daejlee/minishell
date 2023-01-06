@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 21:01:41 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 21:47:57 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 13:01:12 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,7 @@ int	syntax_error_pipe(t_token_meta *meta, size_t token_num, t_token *node)
 		return (print_error(SYNTAX_ERROR, node->str));
 	else if (!token_num)
 		return (print_error(SYNTAX_ERROR, "newline"));
+	else if (node->next->type == PIPE)
+		return (print_error(SYNTAX_ERROR, node->next->str));
 	return (0);
 }

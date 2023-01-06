@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 18:01:57 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/04 21:53:12 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 13:24:45 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,22 @@ enum e_token_type	operator_type(char *str);
  */
 
 int					modify_init_to_arg(t_token_meta *meta);
-int					union_args_to_one(t_token_meta *meta);
 int					delete_space_token(t_token_meta *meta);
+int					delete_empty_token(t_token_meta *meta);
 int					modify_arg_to_limiter(t_token_meta *meta);
+
+/**
+ * parse/union_arg.c
+ */
+
+int					union_args_to_one(t_token_meta *meta);
 t_token				*create_union_token(size_t *num, \
 										t_token_meta *meta, t_token *node);
 
 /**
  * parse/syntax_error.c
  */
+
 int					syntax_error(t_token_meta *meta);
 int					syntax_error_redir(size_t token_num, t_token *node, \
 													enum e_token_type type);

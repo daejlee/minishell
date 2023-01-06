@@ -70,6 +70,8 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(buf);
 			meta = parse(env, buf);
+			if (!meta)
+				continue ;
 			t_token	*node;
 			while (meta->size)
 			{
