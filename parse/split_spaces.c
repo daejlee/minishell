@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 13:52:34 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 14:15:26 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,38 @@ int	split_spaces_in_substr(t_token_meta *meta, char *str)
 		else if (str[end] && str[end] != ' ')
 		{
 			if (skip_quotes(str, &end))
-				return (print_error(SYNTAX_ERROR, str));
+				return (quote_syntax_error(str, end));
 			set_start_end(NULL, &end, start, end + 1);
 		}
 		else
 		{
-			if (push_token(meta, init_token(ft_strdup(" "), BLANK)))
-				return (print_error(MALLOC_FAIL, 0));
-			if (push_token(meta, \
+			if (push_token(meta, init_token(ft_strdup(" "), BLANK)) || \
+				push_token(meta, \
 					init_token(ft_substr(str, start, end - start), INIT)))
 				return (print_error(MALLOC_FAIL, 0));
 			set_start_end(&start, NULL, end, end);
 		}
 	}
 	return (0);
+}
+
+/**
+ * @brief 
+ * 따옴표의 짝이 맞지 않는 경우, syntax error를 출력합니다.
+ * @param str 
+ * @param end 
+ * @return int 1
+ */
+int	quote_syntax_error(char *str, size_t end)
+{
+	char	*error_str;
+
+	error_str = ft_substr(str, end, ft_strlen(str) - end);
+	if (!error_str)
+		return (print_error(MALLOC_FAIL, 0));
+	print_error(SYNTAX_ERROR, error_str);
+	free(error_str);
+	return (1);
 }
 
 /**
@@ -93,34 +111,18 @@ int	split_spaces_in_substr(t_token_meta *meta, char *str)
  */
 int	skip_quotes(char *str, size_t *end)
 {
-	if (str[*end] == '\'')
-		while (str[++(*end)] && str[*end] != '\'')
-			;
-	if (str[*end] == '\"')
-		while (str[++(*end)] && str[*end] != '\"')
-			;
-	if (!str[*end])
-		return (1);
-	return (0);
-}
-
-/**
- * @brief 
- * 해당 문자열에 공백이 있는 지 찾는 함수
- * @param str 
- * @return int 공백이 있으면 1, 없으면 0
- */
-int	has_space(char *str)
-{
 	size_t	index;
 
-	index = 0;
-	while (str[index])
-	{
-		if (str[index] == ' ')
-			return (1);
-		index++;
-	}
+	index = *end;
+	if (str[index] == '\'')
+		while (str[++index] && str[index] != '\'')
+			;
+	if (str[index] == '\"')
+		while (str[++index] && str[index] != '\"')
+			;
+	if (!str[index])
+		return (1);
+	*end = index;
 	return (0);
 }
 

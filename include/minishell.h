@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 13:35:05 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/06 14:10:42 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int					fail_and_free_multiple_str(char *str1, char *str2, \
 int					is_env_allowed_char(int is_first, char c);
 int					set_two_string(char **str1, char *new_str1, \
 										char **str2, char *new_str2);
-
+int					has_space(char *str);
 /**
  * number_utils.c
  */
