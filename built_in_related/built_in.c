@@ -50,19 +50,19 @@ int	is_env(char *buf)
 int	is_built_in(char *com)
 {
 	if (!is_echo(com))
-		return (ECHO);
+		return (B_ECHO);
 	else if (!ft_strncmp(com, "cd", 3))
-		return (CD);
+		return (B_CD);
 	else if (!is_pwd(com))
-		return (PWD);
+		return (B_PWD);
 	else if (!ft_strncmp(com, "export", 7))
-		return (EXPORT);
+		return (B_EXPORT);
 	else if (!ft_strncmp(com, "unset", 6))
-		return (UNSET);
+		return (B_UNSET);
 	else if (!is_env(com))
-		return (ENV);
+		return (B_ENV);
 	else if (!ft_strncmp(com, "exit", 5))
-		return (EXIT);
+		return (B_EXIT);
 	else
 		return (0);
 }
@@ -73,19 +73,19 @@ int	exec_built_in(char **com, t_env *env)
 	int	built_in_code;
 
 	built_in_code = is_built_in(com[0]);
-	if (built_in_code == ECHO)
+	if (built_in_code == B_ECHO)
 		ret = exec_ft_echo(com);
-	else if (built_in_code == CD)
+	else if (built_in_code == B_CD)
 	 	ret = ft_cd(com[1], env);
-	else if (built_in_code == PWD)
+	else if (built_in_code == B_PWD)
 		ret = ft_pwd();
-	else if (built_in_code == EXPORT)
+	else if (built_in_code == B_EXPORT)
 		ret = ft_export(com[0], env);
-	else if (built_in_code == UNSET)
+	else if (built_in_code == B_UNSET)
 		ret = ft_unset(com[0], env);
-	else if (built_in_code == ENV)
+	else if (built_in_code == B_ENV)
 		ret = ft_env(env);
-	else if (built_in_code == EXIT)
+	else if (built_in_code == B_EXIT)
 		ret = ft_exit();
 	return (ret);
 }

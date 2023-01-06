@@ -44,8 +44,6 @@ static char	*get_sh_func(char **com, t_env *env, int *no_path_flag)
 	unsigned int	i;
 
 	i = 0;
-	if (!access((const char *)com[0], X_OK))
-		return (com[0]);
 	sh_paths = get_sh_path(env, no_path_flag);
 	if (!sh_paths)
 		return (NULL);

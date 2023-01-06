@@ -70,17 +70,17 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(buf);
 			meta = parse(env, buf);
-			if (!meta)
-				continue ;
-			t_token *node;
-			node = meta->head;
-			for (int i = 0; i < meta->size; i++)
-			{
-				printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
-				node = node->next;
-			}
-			free_token_meta(meta);
-			// g_exit_status = get_pcs(meta, env, envp);
+			// if (!meta)
+			// 	continue ;
+			// t_token *node;
+			// node = meta->head;
+			// for (int i = 0; i < meta->size; i++)
+			// {
+			// 	printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
+			// 	node = node->next;
+			// }
+			// free_token_meta(meta);
+			g_exit_status = get_pcs(meta, env, envp);
 		}
 		else
 		{

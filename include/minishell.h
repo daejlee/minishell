@@ -47,13 +47,13 @@ enum	e_token_type {
 /*	구현해야 하는 쉘 빌트인 함수들을 열거형을 이용해 나열했습니다	*/
 enum	e_built_in_code
 {
-	ECHO = 1,
-	CD,
-	PWD,
-	EXPORT,
-	UNSET,
-	ENV,
-	EXIT
+	B_ECHO = 1,
+	B_CD,
+	B_PWD,
+	B_EXPORT,
+	B_UNSET,
+	B_ENV,
+	B_EXIT
 };
 
 enum	e_error_code
