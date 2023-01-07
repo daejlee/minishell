@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 16:12:39 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/07 15:30:21 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,15 @@ int	split_spaces(t_token_meta *meta, t_env *env)
 	size_t	token_num;
 	size_t	index;
 
+	index = 0;
 	token_num = meta->size;
-	while (token_num--)
+	while (index++ < token_num)
 	{
 		node = pop_token(meta);
 		if (!node)
 			return (print_error(UNEXPECTED, 0));
 		if (node->type != INIT || !has_space(node->str) \
-									|| has_heredoc_before(node))
+									|| has_heredoc_before(node, index))
 		{
 			push_token(meta, node);
 			continue ;
@@ -115,12 +116,14 @@ int	skip_quotes(char *str, size_t *end)
  * @param token 
  * @return int 있으면 1, 없으면 0
  */
-int	has_heredoc_before(t_token *token)
+int	has_heredoc_before(t_token *token, size_t index)
 {
 	t_token	*node;
 
 	node = token;
-	while (node->prev->type == BLANK)
+	if (index == 0)
+		return (0);
+	while ((index-- - 1) && node->prev->type == BLANK)
 		node = node->prev;
 	if (node->prev->type == I_HRDOC)
 		return (1);

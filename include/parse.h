@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 18:01:57 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 16:13:03 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/07 15:27:04 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int					insert_value_on_index(char **str, char *value, \
 int					split_spaces(t_token_meta *meta, t_env *env);
 int					split_spaces_in_substr(t_token_meta *meta, char *str);
 int					skip_quotes(char *str, size_t *end);
-int					has_heredoc_before(t_token *token);
+int					has_heredoc_before(t_token *token, size_t index);
 int					has_space(char *str);
 
 /**
