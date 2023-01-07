@@ -35,9 +35,18 @@ int	err_terminate(t_pcs *p)
 void	execve_failed(t_pcs *p, char *sh_func)
 {
 	err_terminate(p);
-	write(2, "minishell: ", 12);
-	write(2, sh_func, ft_strlen(sh_func));
-	write(2, ": command not found\n", 21);
+	if (!access(sh_func, F_OK))
+	{
+		write(2, "minishell: ", 12);
+		write(2, sh_func, ft_strlen(sh_func));
+		write(2, ": Permission denied\n", 21);
+	}
+	else
+	{
+		write(2, "minishell: ", 12);
+		write(2, sh_func, ft_strlen(sh_func));
+		write(2, ": command not found\n", 21);
+	}
 	free_arr(p->com);
 	if (sh_func)
 		free(sh_func);
