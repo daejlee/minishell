@@ -88,4 +88,6 @@ void	reset_fds(t_pcs *p, int stdin_dup, int stdout_dup, t_token_meta *meta, int 
 	}
 	dup2(stdout_dup, 1);
 	dup2(stdin_dup, 0);
+	close(stdout_dup);
+	close(stdin_dup);
 }

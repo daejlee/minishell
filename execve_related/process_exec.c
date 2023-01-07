@@ -228,6 +228,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	int		ret;
 	t_token	*now;
 	int		temp_flag;
+	int		temp;
 
 	pcs_cnt = get_pcs_cnt(meta);
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (pcs_cnt));
@@ -240,6 +241,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		return (err_terminate(p));
 	p->stdinout_storage[0] = dup(0); //stdin save. 3
 	p->stdinout_storage[1] = dup(1); //stdout save. 4
+	temp = dup(1);
 
 	i = 0;
 	now = meta->head;
@@ -311,8 +313,17 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	}
 	unlink(HERE_DOC_INPUT_BUFFER);
 	unlink(EMPTY_BUFFER);
+	i = 0;
+	while (i < pcs_cnt)
+	{
+		close(p->pfd_arr[i][0]);
+		close(p->pfd_arr[i][1]);
+		i++;
+	}
+	close(0);
+	close(1);
 	ret = wait_for_children(p, p->pids, pcs_cnt);
-	reset_fds(p, p->stdinout_storage[0], p->stdinout_storage[1], meta, pcs_cnt);
+	reset_fds(p, p->stdinout_storage[0], temp, meta, pcs_cnt);
 	if (!pcs_cnt)
 		return (g_exit_status);
 	else
