@@ -83,15 +83,16 @@ int	main(int argc, char **argv, char **envp)
 			meta = parse(env, buf);
 			if (!meta)
 				continue ;
-			t_token *node;
-			node = meta->head;
-			for (int i = 0; i < meta->size; i++)
-			{
-				printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
-				node = node->next;
-			}
-			//g_exit_status = get_pcs(meta, env, envp);
-			free_token_meta(meta);
+			// t_token *node;
+			// node = meta->head;
+			// for (int i = 0; i < meta->size; i++)
+			// {
+			// 	printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
+			// 	node = node->next;
+			// }
+			g_exit_status = get_pcs(meta, env, envp);
+			// free_token_meta(meta); 현솔님 ㅜ  free_token에서 token->str이 할당되지 않았을 때도 프리를 시도하는 현상이 발생합니다
+			// 제가 고치려다가 파싱부 건드리면 안될 것 같아 일단 주석처리 해놔써용~
 		}
 		else
 		{

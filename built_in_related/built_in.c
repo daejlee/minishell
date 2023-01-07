@@ -80,9 +80,9 @@ int	exec_built_in(char **com, t_env *env)
 	else if (built_in_code == B_PWD)
 		ret = ft_pwd();
 	else if (built_in_code == B_EXPORT)
-		ret = ft_export(com[0], env);
+		ret = ft_export(com[1], env);
 	else if (built_in_code == B_UNSET)
-		ret = ft_unset(com[0], env);
+		ret = ft_unset(com[1], env);
 	else if (built_in_code == B_ENV)
 		ret = ft_env(env);
 	else if (built_in_code == B_EXIT)

@@ -21,7 +21,7 @@ static char	**get_sh_path(t_env *env, int *no_path_flag)
 	now = now->next;
 	while (now != env)
 	{
-		if (!ft_strncmp("PATH", now->key, 4))
+		if (!ft_strncmp("PATH", now->key, 4) && now->value)
 		{
 			sh_paths = ft_split(now->value, ':');
 			if (!sh_paths)
@@ -295,8 +295,9 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 				return (err_terminate(p));
 			else if (!p->pids[i])
 			{
-				if (i && p->pfd_arr[i - 1][1] != 1)
+				if (i)
 					close(p->pfd_arr[i - 1][1]);
+				close(p->pfd_arr[i][0]);
 				exec_com(p, now, env);
 			}
 		}
@@ -310,9 +311,8 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	}
 	unlink(HERE_DOC_INPUT_BUFFER);
 	unlink(EMPTY_BUFFER);
+	ret = wait_for_children(p, p->pids, pcs_cnt);
 	reset_fds(p, p->stdinout_storage[0], p->stdinout_storage[1], meta, pcs_cnt);
-	//ret = wait_for_children(p, p->pids, pcs_cnt);
-	//reset_fds(p, p->stdinout_storage[0], p->stdinout_storage[1], meta, pcs_cnt);
 	if (!pcs_cnt)
 		return (g_exit_status);
 	else

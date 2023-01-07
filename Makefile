@@ -16,8 +16,8 @@ CC = cc
 CFLAGS = -g #-Wall -Wextra -Werror
 RM = rm -f
 
-INCLUDE = -I./include -I/Users/hkong/.brew/opt/readline/include
-LIBRARY = -lreadline -L/Users/hkong/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
+INCLUDE = -I./include -I/usr/local/opt/readline/include
+LIBRARY = -lreadline -L//usr/local/opt/readline/lib -lft -L$(LIBFT_DIR)
 
 SRCS = pseudo_main.c
 
