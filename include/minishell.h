@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/09 16:46:37 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/09 21:51:41 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void				signal_process(int sig);
 void				signal_default(void);
 void				signal_execute(void);
 void				signal_ignore(void);
+void	test1(int sig);
 
 /**
  * utils/terminal.c

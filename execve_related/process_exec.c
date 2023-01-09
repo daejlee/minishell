@@ -281,7 +281,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 				return (err_terminate(p));
 			dup2(temp_flag, 0);
 		}
-		signal_ignore();
+		signal_execute();
 		if (!is_built_in(p->com[0]))
 		{
 			p->pids[i] = fork();
@@ -292,7 +292,6 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 				if (i)
 					close(p->pfd_arr[i - 1][1]);
 				close(p->pfd_arr[i][0]);
-				signal_execute();
 				exec_com(p, now, env);
 			}
 		}
@@ -303,6 +302,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		}
 		i++;
 		now = now->next;
+		signal_ignore();
 	}
 	unlink(HERE_DOC_INPUT_BUFFER);
 	unlink(EMPTY_BUFFER);

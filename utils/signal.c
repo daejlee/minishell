@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:38 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/09 16:39:29 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/09 22:26:39 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ void	signal_default(void)
 
 void	signal_execute(void)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	struct sigaction action;
+
+	action.sa_handler = test1;
+	sigaction(SIGINT, &action, NULL);
+	sigaction(SIGQUIT, &action, NULL);
 }
 
 void	signal_ignore(void)
@@ -39,5 +42,20 @@ void	signal_process(int sig)
 			exit(1);
 		rl_replace_line("", 1);
 		rl_redisplay();
+	}
+}
+
+//!heredoc SIGINT일 때 quit하기.
+//!quit, enter 안먹히는 거 체크하기
+
+void	test1(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(2, "\n", 1);
+	}
+	if (sig == SIGQUIT)
+	{
+		write(2, "Quit: 3\n", 8);
 	}
 }
