@@ -135,8 +135,7 @@ t_token	*prep_fd_n_move(t_token *now, int i, int pcs_cnt, t_token_meta *meta, t_
 		now = now->next;
 	if (now->type == PIPE && i == pcs_cnt - 1)
 		now = now->next;
-	//else: now == meta->head 즉, 마지막.
-	prep_fds(p, i, pcs_cnt, meta, p->stdinout_storage);
+	prep_fds(p, i, pcs_cnt, meta);
 	return (now);
 }
 
@@ -148,7 +147,7 @@ char	**get_trimmed_com(t_token *now, t_token_meta *meta)
 	int		i;
 
 	temp = now;
-	slot_cnt = 1; //마지막 null 슬롯
+	slot_cnt = 1;
 	if (now == meta->head)
 	{
 		now = now->next;
@@ -158,7 +157,7 @@ char	**get_trimmed_com(t_token *now, t_token_meta *meta)
 	{
 		if (now->type == ARG)
 			slot_cnt++;
-		else //redir
+		else
 			now = now->next;
 		now = now->next;
 	}
@@ -174,7 +173,7 @@ char	**get_trimmed_com(t_token *now, t_token_meta *meta)
 			ret[i] = now->str;
 			i++;
 		}
-		else //redir
+		else
 			now = now->next;
 		now = now->next;
 	}
@@ -187,18 +186,18 @@ char	**get_com(t_token *now, t_token_meta *meta)
 	char	**ret;
 
 	ret = NULL;
-	if (now->type != ARG) //now == I_REDIR OR O_REDIR
+	if (now->type != ARG)
 		now = now->next->next;
-	else //now == ARG
+	else
 	{
 		ret = get_trimmed_com(now, meta);
 		return (ret);
 	}
-	while (now->type != PIPE && now != meta->head) // 범위 전체를 모두 훑으며 커맨드 생성
+	while (now->type != PIPE && now != meta->head)
 	{
-		if (now->type != ARG) //now == I_REDIR OR O_REDIR
+		if (now->type != ARG)
 			now = now->next->next;
-		else //now == ARG
+		else
 		{
 			ret = get_trimmed_com(now, meta);
 			return (ret);
@@ -239,8 +238,8 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		return (err_terminate(p));
 	if (get_pipes(p, pcs_cnt))
 		return (err_terminate(p));
-	p->stdinout_storage[0] = dup(0); //stdin save. 3
-	p->stdinout_storage[1] = dup(1); //stdout save. 4
+	p->stdinout_storage[0] = dup(0);
+	p->stdinout_storage[1] = dup(1);
 	temp = dup(1);
 
 	i = 0;
@@ -252,7 +251,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		pcs_cnt--;
 		while (now->type != PIPE && now != meta->head)
 		{
-			if (now->type != ARG) //now == I_REDIR OR O_REDIR
+			if (now->type != ARG)
 				now = now->next->next;
 			else
 				break ;
@@ -289,7 +288,6 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 				return (err_terminate(p));
 			dup2(temp_flag, 0);
 		}
-		//ARG ~ 다음 파이프 까지
 		if (!is_built_in(p->com[0]))
 		{
 			p->pids[i] = fork();
@@ -309,7 +307,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 			exec_com(p, now, env);
 		}
 		i++;
-		now = now->next; //파이프에서 다음으로 넘어감.
+		now = now->next;
 	}
 	unlink(HERE_DOC_INPUT_BUFFER);
 	unlink(EMPTY_BUFFER);
@@ -323,7 +321,8 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	close(0);
 	close(1);
 	ret = wait_for_children(p, p->pids, pcs_cnt);
-	reset_fds(p, p->stdinout_storage[0], temp, meta, pcs_cnt);
+	p->stdinout_storage[1] = temp;
+	reset_fds(p, p->stdinout_storage, meta, pcs_cnt);
 	if (!pcs_cnt)
 		return (g_exit_status);
 	else

@@ -16,8 +16,8 @@ CC = cc
 CFLAGS = -g #-Wall -Wextra -Werror
 RM = rm -f
 
-INCLUDE = -I./include -I/Users/hkong/.brew/opt/readline/include
-LIBRARY = -lreadline -L/Users/hkong/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
+INCLUDE = -I./include -I/Users/daejlee/.brew/opt/readline/include
+LIBRARY = -lreadline -L/Users/daejlee/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
 
 SRCS = pseudo_main.c
 
@@ -28,7 +28,7 @@ BUILT_IN_DIR = built_in_related/
 SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c built_in.c ft_cd.c
 
 EXECVE_DIR = execve_related/
-SRCS_EXECVE = process.c process_exec.c process_fd_utils.c process_utils_1.c process_utils_2.c
+SRCS_EXECVE = process.c process_redir.c process_exec.c process_fd_utils.c process_utils_1.c process_utils_2.c process_utils_3.c
 
 UTILS_DIR = utils/
 SRCS_UTILS = env_list.c token.c token_meta.c string_utils.c number_utils.c error.c signal.c terminal.c

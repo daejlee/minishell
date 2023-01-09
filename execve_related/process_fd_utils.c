@@ -25,58 +25,72 @@ static void	prep(int input_fd, int output_fd, int closing_fd, t_pcs *p)
 	}
 }
 
-void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta, int stdinout_storage[2])
+static void	prep_i_o(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
+{
+	if (pcs_cnt == 1)
+		prep(p->infile_fd, p->outfile_fd, -1, p);
+	else if (i == pcs_cnt - 1)
+		prep(p->pfd_arr[i - 1][0], p->outfile_fd, p->pfd_arr[i - 1][1], NULL);
+	else if (!i)
+		prep(p->infile_fd, p->pfd_arr[i][1], 0, p);
+	else
+		prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
+}
+
+static void	prep_i(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
+{
+	if (pcs_cnt == 1)
+		prep(p->infile_fd, 1, -1, p);
+	else if (i == pcs_cnt - 1)
+		prep(p->pfd_arr[i - 1][0], p->stdinout_storage[1], 0, NULL);
+	else if (!i)
+		prep(p->infile_fd, p->pfd_arr[i][1], 0, p);
+	else
+		prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
+}
+
+static void	prep_o(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
+{
+	if (pcs_cnt == 1)
+		prep(0, p->outfile_fd, -1, p);
+	else if (i == pcs_cnt - 1)
+		prep(p->pfd_arr[i - 1][0], p->outfile_fd, p->pfd_arr[i - 1][1],
+			NULL);
+	else if (!i)
+		prep(0, p->pfd_arr[i][1], 1, p);
+	else
+		prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
+}
+
+static void	prep_no_redir(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
+{
+	if (pcs_cnt == 1)
+		return ;
+	else if (i == pcs_cnt - 1)
+		prep(p->pfd_arr[i - 1][0], p->stdinout_storage[1], -1, NULL);
+	else if (!i)
+		prep(0, p->pfd_arr[i][1], 1, p);
+	else
+		prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], -1, p);
+}
+
+void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
 {
 	int	redir_flag;
 
 	redir_flag = check_redir(meta);
 	if (redir_flag == I_O_BOTH)
-	{
-		if (pcs_cnt == 1)
-			prep(p->infile_fd, p->outfile_fd, -1, p);
-		else if (i == pcs_cnt - 1)
-			prep(p->pfd_arr[i - 1][0], p->outfile_fd, p->pfd_arr[i - 1][1], NULL);
-		else if (!i)
-			prep(p->infile_fd, p->pfd_arr[i][1], 0, p); 
-		else
-			prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
-	}
+		prep_i_o(p, i, pcs_cnt, meta);
 	else if (redir_flag == I_ONLY)
-	{
-		if (pcs_cnt == 1)
-			prep(p->infile_fd, 1, -1, p);
-		else if (i == pcs_cnt - 1)
-			prep(p->pfd_arr[i - 1][0], stdinout_storage[1], 0, NULL);
-		else if (!i)
-			prep(p->infile_fd, p->pfd_arr[i][1], 0, p); 
-		else
-			prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
-	}
+		prep_i(p, i, pcs_cnt, meta);
 	else if (redir_flag == O_ONLY)
-	{
-		if (pcs_cnt == 1)
-			prep(0, p->outfile_fd, -1, p);
-		else if (i == pcs_cnt - 1)
-			prep(p->pfd_arr[i - 1][0], p->outfile_fd, p->pfd_arr[i - 1][1], NULL);
-		else if (!i)
-			prep(0, p->pfd_arr[i][1], 1, p); 
-		else
-			prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
-	}
+		prep_o(p, i, pcs_cnt, meta);
 	else
-	{
-		if (pcs_cnt == 1)
-			return ;
-		else if (i == pcs_cnt - 1)
-			prep(p->pfd_arr[i - 1][0], stdinout_storage[1], -1, NULL);
-		else if (!i)
-			prep(0, p->pfd_arr[i][1], 1, p); 
-		else
-			prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], -1, p);
-	}
+		prep_no_redir(p, i, pcs_cnt, meta);
 }
 
-void	reset_fds(t_pcs *p, int stdin_dup, int stdout_dup, t_token_meta *meta, int pcs_cnt)
+void	reset_fds(t_pcs *p, int stdinout_storage[2], t_token_meta *meta,
+	int pcs_cnt)
 {
 	int	i;
 
@@ -87,8 +101,8 @@ void	reset_fds(t_pcs *p, int stdin_dup, int stdout_dup, t_token_meta *meta, int 
 		close(p->pfd_arr[i][1]);
 		i++;
 	}
-	dup2(stdout_dup, 1);
-	dup2(stdin_dup, 0);
-	close(stdout_dup);
-	close(stdin_dup);
+	dup2(stdinout_storage[1], 1);
+	dup2(stdinout_storage[0], 0);
+	close(stdinout_storage[1]);
+	close(stdinout_storage[0]);
 }

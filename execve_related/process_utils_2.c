@@ -14,24 +14,6 @@ int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)
 	return (WEXITSTATUS(status));
 }
 
-int	err_terminate(t_pcs *p)
-{
-	if (p->infile_fd != -1)
-		close(p->infile_fd);
-	if (p->outfile_fd != -1)
-		close(p->outfile_fd);
-	if (p->pfd_arr)
-		//free pfdarr;
-	if (p->pids)
-		free(p->pids);
-	close(0);
-	close(1);
-	if (p->here_doc_flag)
-		unlink(HERE_DOC_INPUT_BUFFER);
-	unlink(EMPTY_BUFFER);
-	return (1);
-}
-
 void	execve_failed(t_pcs *p, char *sh_func)
 {
 	err_terminate(p);
@@ -47,7 +29,6 @@ void	execve_failed(t_pcs *p, char *sh_func)
 		write(2, sh_func, ft_strlen(sh_func));
 		write(2, ": command not found\n", 21);
 	}
-	
 	free(p->com);
 	if (sh_func)
 		free(sh_func);
@@ -66,6 +47,18 @@ void	init_p(t_pcs *p)
 	p->stdinout_storage[0] = -1;
 	p->stdinout_storage[1] = -1;
 	p->pids = NULL;
+}
+
+static int	check_redir_seg(int input_flag, int output_flag)
+{
+	if (input_flag && output_flag)
+		return (I_O_BOTH);
+	else if (input_flag)
+		return (I_ONLY);
+	else if (output_flag)
+		return (O_ONLY);
+	else
+		return (NONE);
 }
 
 int	check_redir(t_token_meta *meta)
@@ -90,12 +83,5 @@ int	check_redir(t_token_meta *meta)
 			output_flag = 1;
 		now = now->next;
 	}
-	if (input_flag && output_flag)
-		return (I_O_BOTH);
-	else if (input_flag)
-		return (I_ONLY);
-	else if (output_flag)
-		return (O_ONLY);
-	else
-		return (NONE);
+	return (check_redir_seg(input_flag, output_flag));
 }
