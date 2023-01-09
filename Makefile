@@ -6,7 +6,7 @@
 #    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2023/01/09 13:32:33 by hkong            ###   ########.fr        #
+#    Updated: 2023/01/09 15:00:16 by hkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,8 @@ LIBFT = ./libft/libft.a
 LIBFT_DIR = ./libft
 
 all : $(NAME)
+
+debug: $(NAME)
 
 $(NAME) : $(OBJ_FILES)
 	$(MAKE) all -C $(LIBFT_DIR)
