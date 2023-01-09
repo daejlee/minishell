@@ -192,7 +192,7 @@ int	is_built_in(char *com);
 int	exec_built_in(char **com, t_env *env);
 int	ft_cd(char *dir, t_env *env);
 int	exec_ft_echo(char **com);
-int	ft_echo(char *buf, int n_option);
+int	ft_echo(char *buf, int n_flag);
 int	ft_env(t_env *env);
 int	ft_exit(void);
 int	ft_export(char *name, t_env *env);

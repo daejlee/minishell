@@ -29,7 +29,7 @@ static char	*ft_strjoin_modified(char const *s1, char const *s2)
 	return (res);
 }
 
-int	get_n_option(char **com)
+int	get_n_option(char **com, int *n_flag_adr)
 {
 	int	i;
 	int	k;
@@ -42,20 +42,29 @@ int	get_n_option(char **com)
 			k = 2;
 			while (com[i][k])
 			{
+				//echo -nnnkn -nnnnn a
 				if (com[i][k] != 'n')
 					return (i);
 				k++;
 			}
+			*n_flag_adr = 1;
 			i++;
 		}
 		if (i == 1)
+		{
+			*n_flag_adr = 0;
 			return (0);
+		}
 		return (i);
 	}
 	else
 	{
 		if (!ft_strncmp(com[1], "-n", 3))
+		{
+			*n_flag_adr = 1;
 			return (1);
+		}
+		*n_flag_adr = 0;
 		return (0);
 	}
 }
@@ -92,14 +101,16 @@ int	exec_ft_echo(char **com)
 {
 	char	*buf;
 	int		n_option;
+	int		n_flag;
 
 	if (!com[1])
 		return (ft_echo("", 0));
-	n_option = get_n_option(com);
+	n_flag = 0;
+	n_option = get_n_option(com, &n_flag);
 	buf = get_echo_buf(com, n_option);
 	if (!buf)
 		return (-1);
-	return (ft_echo(buf, n_option));
+	return (ft_echo(buf, n_flag));
 }
 
 /**
@@ -108,11 +119,11 @@ int	exec_ft_echo(char **com)
  * original : echo [-n] [string ...]
  * @return int 성공 시 0, 실패 시 -1
  */
-int	ft_echo(char *buf, int n_option)
+int	ft_echo(char *buf, int n_flag)
 {
 	char	*printing_buf;
 
-	if (n_option)
+	if (n_flag)
 		printing_buf = ft_strjoin(buf, "");
 	else
 		printing_buf = ft_strjoin(buf, "\n");
