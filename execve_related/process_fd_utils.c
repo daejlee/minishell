@@ -30,39 +30,40 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta, int stdinout_sto
 	int	redir_flag;
 
 	redir_flag = check_redir(meta);
-	// if (redir_flag == I_O_BOTH)
-	// {
-	// 	if (pcs_cnt == 1)
-	// 		prep(p->infile_fd, p->outfile_fd, -1, p);
-	// 	else if (i == pcs_cnt - 1)
-	// 		prep(p->pfd[0], p->outfile_fd, p->pfd[1], NULL);
-	// 	else if (!i)
-	// 		prep(p->infile_fd, p->next_pfd[1], 0, p);
-	// 	else
-	// 		prep(p->pfd[0], p->next_pfd[1], p->pfd[1], p);
-	// }
-	// else if (redir_flag == I_ONLY)
-	// {
-	// 	if (pcs_cnt == 1)
-	// 		prep(p->infile_fd, 1, -1, p);
-	// 	else if (i == pcs_cnt - 1)
-	// 		prep(p->pfd[0], stdinout_storage[1], 0, NULL);
-	// 	else if (!i)
-	// 		prep(p->infile_fd, p->next_pfd[1], 0, p);
-	// 	else
-	// 		prep(p->pfd[0], p->next_pfd[1], p->pfd[1], p);
-	// }
-	// else if (redir_flag == O_ONLY)
-	// {
-	// 	if (pcs_cnt == 1)
-	// 		prep(0, p->outfile_fd, -1, p);
-	// 	else if (i == pcs_cnt - 1)
-	// 		prep(p->pfd[0], p->outfile_fd, p->pfd[1], NULL);
-	// 	else if (!i)
-	// 		prep(0, p->next_pfd[1], 1, p);
-	// 	else
-	// 		prep(p->pfd[0], p->next_pfd[1], p->pfd[1], p);
-	// }
+	if (redir_flag == I_O_BOTH)
+	{
+		if (pcs_cnt == 1)
+			prep(p->infile_fd, p->outfile_fd, -1, p);
+		else if (i == pcs_cnt - 1)
+			prep(p->pfd_arr[i - 1][0], p->outfile_fd, p->pfd_arr[i - 1][1], NULL);
+		else if (!i)
+			prep(p->infile_fd, p->pfd_arr[i][1], 0, p); 
+		else
+			prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
+	}
+	else if (redir_flag == I_ONLY)
+	{
+		if (pcs_cnt == 1)
+			prep(p->infile_fd, 1, -1, p);
+		else if (i == pcs_cnt - 1)
+			prep(p->pfd_arr[i - 1][0], stdinout_storage[1], 0, NULL);
+		else if (!i)
+			prep(p->infile_fd, p->pfd_arr[i][1], 0, p); 
+		else
+			prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
+	}
+	else if (redir_flag == O_ONLY)
+	{
+		if (pcs_cnt == 1)
+			prep(0, p->outfile_fd, -1, p);
+		else if (i == pcs_cnt - 1)
+			prep(p->pfd_arr[i - 1][0], p->outfile_fd, p->pfd_arr[i - 1][1], NULL);
+		else if (!i)
+			prep(0, p->pfd_arr[i][1], 1, p); 
+		else
+			prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
+	}
+	else
 	{
 		if (pcs_cnt == 1)
 			return ;

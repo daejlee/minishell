@@ -16,8 +16,14 @@
  */
 
 int			get_pcs(t_token_meta *meta, t_env *env, char **envp);
-t_token		*get_last_redir(t_token *head);
 
+/**
+ * process_redir.c
+ */
+
+int			here_doc(t_token_meta *meta, t_pcs *p);
+void		input_redir(t_token_meta *meta, t_pcs *p);
+int			output_redir(t_token_meta *meta, t_pcs *p);
 
 /**
  * process_exec.c
