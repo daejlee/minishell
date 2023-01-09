@@ -71,7 +71,9 @@ int	exec_built_in(char **com, t_env *env)
 {
 	int	ret;
 	int	built_in_code;
+	int	i;
 
+	i = 1;
 	built_in_code = is_built_in(com[0]);
 	if (built_in_code == B_ECHO)
 		ret = exec_ft_echo(com);
@@ -80,9 +82,20 @@ int	exec_built_in(char **com, t_env *env)
 	else if (built_in_code == B_PWD)
 		ret = ft_pwd();
 	else if (built_in_code == B_EXPORT)
-		ret = ft_export(com[1], env);
+	{
+		if (!com[i])
+			ret = ft_export(NULL, env);
+		else
+		{
+			while (com[i])
+				ret = ft_export(com[i++], env);
+		}
+	}
 	else if (built_in_code == B_UNSET)
-		ret = ft_unset(com[1], env);
+	{
+		while (com[i])
+			ret = ft_unset(com[i++], env);
+	}
 	else if (built_in_code == B_ENV)
 		ret = ft_env(env);
 	else if (built_in_code == B_EXIT)

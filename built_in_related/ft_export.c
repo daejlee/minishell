@@ -13,7 +13,6 @@ static char *ft_split_modified(char *name)
 		i++;
 	ret[0] = (char *)malloc(sizeof(char) * (i + 1));
 	ret[1] = (char *)malloc(sizeof(char) * (ft_strlen(name) - i));
-	//malloc leak
 	ft_strlcpy(ret[0], name, i + 1);
 	ft_strlcpy(ret[1], name + i + 1, ft_strlen(name) - i);
 	return (ret);
@@ -74,9 +73,13 @@ static int	print_sorted_env(t_env *env)
 	{
 		write(1, "declare -x ", 12);
 		write(1, arr[i]->key, ft_strlen(arr[i]->key));
-		write(1, "=\"", 3);
-		write(1, arr[i]->value, ft_strlen(arr[i]->value));
-		write(1, "\"\n", 3);
+		if (arr[i]->value)
+		{
+			write(1, "=\"", 3);
+			write(1, arr[i]->value, ft_strlen(arr[i]->value));
+			write(1, "\"", 1);
+		}
+		write(1, "\n", 1);
 		i++;
 	}
 	return (0);
@@ -90,12 +93,23 @@ static int	print_sorted_env(t_env *env)
  */
 int	ft_export(char *name, t_env *env)
 {
-	// export만
 	char	**temp;
 	t_env	*env_temp;
 
 	if (!name)
 		return (print_sorted_env(env));
+	if (!ft_strchr(name, '='))
+	{
+		env_temp = NULL;
+		env_temp = find_env(env, name);
+		if (!env_temp)
+		{
+			env_temp = init_env(ft_strdup(name), "");
+			env_temp->value = NULL;
+			push_env(&env, env_temp);
+		}
+		return (0);
+	}
 	temp = ft_split_modified(name);
 	env_temp = find_env(env, temp[0]);
 	if (env_temp && env_temp->value)
@@ -105,6 +119,5 @@ int	ft_export(char *name, t_env *env)
 		env_temp = init_env(temp[0], temp[1]);
 		push_env(&env, env_temp);
 	}
-	//예외처리
 	return (0);
 }

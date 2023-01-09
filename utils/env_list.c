@@ -67,7 +67,8 @@ int	push_env(t_env **head, t_env *node)
 
 /**
  * @brief 
- * 삭제 대신, key값을 가지는 t_env의 value를 NULL로 설정해주는 함수 
+ * 삭제 대신, key값을 가지는 t_env의 value를 NULL로 설정해주는 함수
+ * ft_export와 관련하여 완전 삭제로 수정하였습니다.
  * @return int 성공시 0, 실패시 1
  */
 int	delete_env(t_env *head, char *key)
@@ -77,7 +78,14 @@ int	delete_env(t_env *head, char *key)
 	node = find_env(head, key);
 	if (!node)
 		return (1);
+	if (node->value)
+		free(node->value);
+	free(node->key);
 	node->value = NULL;
+	node->key = NULL;
+	node->next->prev = node->prev;
+	node->prev->next = node->next;
+	free(node);
 	return (0);
 }
 
