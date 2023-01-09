@@ -109,10 +109,9 @@ int	ft_cd(char *dir, t_env *env)
 	int		ret;
 
 	env_home = get_env_val("HOME", env);
-	env_cdpath = get_env_val("B_CDPATH", env);
-	env_pwd = get_env_val("B_PWD", env);
-
-	node = find_env(env, "OLDB_PWD");
+	env_cdpath = get_env_val("CDPATH", env);
+	env_pwd = get_env_val("PWD", env);
+	node = find_env(env, "OLDPWD");
 	if (node)
 		(*node).value = env_pwd;
 	if (!dir && (!env_home || env_home[0] == '\0'))
@@ -142,7 +141,13 @@ int	ft_cd(char *dir, t_env *env)
 	if (!curpath)
 		return (-1);
 	ret = chdir(curpath);
-	node = find_env(env, "B_PWD");
+	node = find_env(env, "PWD");
 	(*node).value = getcwd(NULL, 0);
+	if (ret)
+	{
+		write(2, "ft_cd: no such file or directory: ", 35);
+		write(2, dir, ft_strlen(dir));
+		write(2, "\n", 1);
+	}
 	return (ret);
 }
