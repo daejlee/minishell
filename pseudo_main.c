@@ -52,27 +52,6 @@ int	main(int argc, char **argv, char **envp)
 	terminal_init();
 	set_env(&env, envp);
 	meta = NULL;
-	// push_token(meta, init_token("cd .", ARG));
-	// push_token(meta, init_token("cat", ARG));
-	// push_token(meta, init_token("<", I_REDIR));
-	// push_token(meta, init_token("infile0", ARG));
-	// push_token(meta, init_token("<<", I_HRDOC));
-	// push_token(meta, init_token("limiter", LIMITER));
-	// push_token(meta, init_token("<", I_REDIR));
-	// push_token(meta, init_token("limiter1", LIMITER));
-	// push_token(meta, init_token("|", PIPE));
-	// push_token(meta, init_token("ls -l", ARG));
-	// push_token(meta, init_token("|", PIPE));
-	// push_token(meta, init_token("wc -l", ARG));
-	// push_token(meta, init_token(">", O_REDIR));
-	// push_token(meta, init_token("outfile0", ARG));
-	// push_token(meta, init_token(">>", O_APPND));
-	// push_token(meta, init_token("outfile1", ARG));
-	// push_token(meta, init_token(">", O_REDIR));
-	// push_token(meta, init_token("outfile2", ARG));
-	// push_token(meta, init_token("ls -l", ARG));
-	// push_token(meta, init_token("|", PIPE));
-	// push_token(meta, init_token("not_existing", ARG));
 	while (1)
 	{
 		buf = readline("minishell 0.1.3$ ");
@@ -92,8 +71,6 @@ int	main(int argc, char **argv, char **envp)
 			// }
 			g_exit_status = get_pcs(meta, env, envp);
 			free_token_meta(meta);
-			// 현솔님 ㅜ  free_token에서 token->str이 할당되지 않았을 때도 프리를 시도하는 현상이 발생합니다
-			// 제가 고치려다가 파싱부 건드리면 안될 것 같아 일단 주석처리 해놔써용~
 		}
 		else
 		{

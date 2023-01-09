@@ -19,6 +19,69 @@ static char *ft_split_modified(char *name)
 	return (ret);
 }
 
+static int	print_sorted_env(t_env *env)
+{
+	int	size;
+	int i;
+	int	k;
+	char	idx;
+	t_env	*head;
+	t_env	*temp;
+	t_env	**arr;
+
+	size = 1;
+	head = env;
+	temp = head->next;
+	while (temp != head)
+	{
+		size++;
+		temp = temp->next;
+	}
+	arr = (t_env **)malloc(sizeof(t_env *) * size);
+	if (!arr)
+		return (1);
+	idx = 'A';
+	i = 0;
+	while (idx <= 'Z')
+	{
+		if (temp->key[0] == idx)
+			arr[i++] = temp;
+		temp = temp->next;
+		while (temp != head)
+		{
+			if (temp->key[0] == idx)
+				arr[i++] = temp;
+			temp = temp->next;
+		}
+		idx++;
+	}
+	idx = 'a';
+	while (idx <= 'z')
+	{
+		if (temp->key[0] == idx)
+			arr[i++] = temp;
+		temp = temp->next;
+		while (temp != head)
+		{
+			if (temp->key[0] == idx)
+				arr[i++] = temp;
+			temp = temp->next;
+		}
+		idx++;
+	}
+	i = 0;
+	while (i < size - 2)
+	{
+		write(1, "declare -x ", 12);
+		write(1, arr[i]->key, ft_strlen(arr[i]->key));
+		write(1, "=\"", 3);
+		write(1, arr[i]->value, ft_strlen(arr[i]->value));
+		write(1, "\"\n", 3);
+		i++;
+	}
+	return (0);
+}
+
 /**
  * @brief 
  * 빌트인 export 함수입니다. 옵션을 지원하지 않습니다.
@@ -32,7 +95,7 @@ int	ft_export(char *name, t_env *env)
 	t_env	*env_temp;
 
 	if (!name)
-		return (ft_env(env));
+		return (print_sorted_env(env));
 	temp = ft_split_modified(name);
 	env_temp = find_env(env, temp[0]);
 	if (env_temp && env_temp->value)
