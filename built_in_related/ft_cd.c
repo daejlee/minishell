@@ -114,6 +114,16 @@ int	ft_cd(char *dir, t_env *env)
 	node = find_env(env, "OLDPWD");
 	if (node)
 		(*node).value = env_pwd;
+	if (!ft_strncmp(dir, "-", ft_strlen(dir)))
+	{
+		if (!node)
+		{
+			write(2, "minishell: ft_cd: OLDPWD not set\n", 34);
+			return (1);
+		}
+		else
+			return (chdir(node->value));
+	}
 	if (!dir && (!env_home || env_home[0] == '\0'))
 		return (1);
 	else if (!dir)
