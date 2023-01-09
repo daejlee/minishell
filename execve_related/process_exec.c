@@ -277,7 +277,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 			temp_flag = 1;
 		}
 		if (p->com)
-			free_arr(p->com);
+			free(p->com);
 		p->com = get_com(now, meta);
 		if (!p->com)
 			return (err_terminate(p));
