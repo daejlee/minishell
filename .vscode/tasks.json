@@ -1,0 +1,23 @@
+{
+	// tasks.json
+	"tasks": [
+	  {
+		"type": "shell",
+		"label": "Build minishell",
+		"command": "/usr/bin/make",
+		"args": ["-C", "${workspaceFolder}", "debug"],
+		"options": {
+		  "cwd": "/usr/bin",
+		  "env": {
+			"DEBUG": "true"
+		  }
+		},
+		"problemMatcher": ["$cc"],
+		"group": {
+		  "kind": "build",
+		  "isDefault": true
+		}
+	  }
+	],
+	"version": "2.0.0"
+}
