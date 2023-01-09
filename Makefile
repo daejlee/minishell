@@ -6,7 +6,7 @@
 #    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2023/01/09 15:00:16 by hkong            ###   ########.fr        #
+#    Updated: 2023/01/09 21:22:33 by hkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ EXECVE_DIR = execve_related/
 SRCS_EXECVE = process.c process_exec.c process_fd_utils.c process_utils_1.c process_utils_2.c
 
 UTILS_DIR = utils/
-SRCS_UTILS = env_list.c token.c token_meta.c string_utils.c number_utils.c error.c signal.c
+SRCS_UTILS = env_list.c token.c token_meta.c string_utils.c number_utils.c error.c signal.c terminal.c
 
 OBJ_FILES = $(SRCS:%.c=%.o) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.o) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.o) $(SRCS_UTILS:%.c=$(UTILS_DIR)%.o) $(SRCS_EXECVE:%.c=$(EXECVE_DIR)%.o)
 
