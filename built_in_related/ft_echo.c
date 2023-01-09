@@ -87,7 +87,7 @@ char	*get_echo_buf(char **com, int n_option)
 		if (!fst_flag)
 		{
 			ret = ft_strjoin_modified(ret, com[i]);
-			free(temp);
+			//free(temp);
 		}
 		else
 			ret = com[i];
