@@ -37,10 +37,8 @@ void	execve_failed(t_pcs *p, char *sh_func)
 
 void	init_p(t_pcs *p)
 {
-	p->here_doc_flag = 0;
-	p->outfile_fd = 1;
-	p->infile_fd = 0;
-	p->temp_infile_fd = 0;
+	p->outfile_fd = -1;
+	p->infile_fd = -1;
 	p->pfd_arr = NULL;
 	p->com = NULL;
 	p->envp = NULL;
@@ -49,8 +47,17 @@ void	init_p(t_pcs *p)
 	p->pids = NULL;
 }
 
-static int	check_redir_seg(int input_flag, int output_flag)
+int	check_redir(t_pcs *p)
 {
+	int		input_flag;
+	int		output_flag;
+
+	input_flag = 0;
+	output_flag = 0;
+	if (p->infile_fd != 0)
+		input_flag = p->infile_fd;
+	if (p->outfile_fd != 1)
+		output_flag = p->outfile_fd;
 	if (input_flag && output_flag)
 		return (I_O_BOTH);
 	else if (input_flag)
@@ -59,29 +66,4 @@ static int	check_redir_seg(int input_flag, int output_flag)
 		return (O_ONLY);
 	else
 		return (NONE);
-}
-
-int	check_redir(t_token_meta *meta)
-{
-	t_token	*now;
-	int		input_flag;
-	int		output_flag;
-
-	input_flag = 0;
-	output_flag = 0;
-	now = meta->head;
-	if (now->type == I_REDIR || now->type == I_HRDOC)
-		input_flag = 1;
-	if (now->type == O_REDIR || now->type == O_APPND)
-		output_flag = 1;
-	now = now->next;
-	while (now != meta->head)
-	{
-		if (now->type == I_REDIR || now->type == I_HRDOC)
-			input_flag = 1;
-		if (now->type == O_REDIR || now->type == O_APPND)
-			output_flag = 1;
-		now = now->next;
-	}
-	return (check_redir_seg(input_flag, output_flag));
 }

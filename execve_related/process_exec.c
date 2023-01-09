@@ -83,43 +83,6 @@ void	exec_com(t_pcs *p, t_token *now, t_env *env)
 	execve_failed(p, sh_func);
 }
 
-int	here_doc_seg(t_pcs *p, t_token *now)
-{
-	char	*limiter;
-	int		here_doc_fd;
-	char	*ret;
-	char	*temp;
-	int		fst_flag;
-	char	*buf;
-
-	limiter = now->next->origin_str;
-	unlink(HERE_DOC_INPUT_BUFFER);
-	here_doc_fd = open(HERE_DOC_INPUT_BUFFER, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	if (here_doc_fd == -1)
-		return (1);
-	ret = "";
-	fst_flag = 1;
-	while (!ft_strnstr(ret, limiter, ft_strlen(ret)))
-	{
-		buf = readline(">");
-		temp = ret;
-		ret = ft_strjoin(ret, buf);
-		free(buf);
-		if (!fst_flag)
-			free(temp);
-		fst_flag = 0;
-	}
-	temp = ft_strnstr(ret, limiter, ft_strlen(ret));
-	*temp = '\n';
-	*(temp + 1) = '\0';
-	write(here_doc_fd, ret, ft_strlen(ret));
-	close(here_doc_fd);
-	here_doc_fd = open(HERE_DOC_INPUT_BUFFER, O_RDONLY);
-	p->temp_infile_fd = here_doc_fd;
-	free(ret);
-	return (0);
-}
-
 t_token	*prep_fd_n_move(t_token *now, int i, int pcs_cnt, t_token_meta *meta, t_pcs *p)
 {
 	if (now == meta->head)
@@ -199,23 +162,10 @@ char	**get_com(t_token *now, t_token_meta *meta)
 	return (ret);
 }
 
-int	get_pipes(t_pcs *p, int pcs_cnt)
-{
-	int	i;
-
-	i = 0;
-	while (i < pcs_cnt)
-	{
-		p->pfd_arr[i] = (int *)malloc(sizeof(int[2]));
-		pipe(p->pfd_arr[i]);
-		i++;
-	}
-	return (0);
-}
-
 int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 {
 	int		i;
+	int		hdb_idx;
 	int		pcs_cnt;
 	int		ret;
 	t_token	*now;
@@ -237,22 +187,28 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 
 	i = 0;
 	now = meta->head;
-	if (p->infile_fd == -1)
-	{
-		while (now->type == ARG)
-			now = now->next;
-		pcs_cnt--;
-		while (now->type != PIPE && now != meta->head)
-		{
-			if (now->type != ARG)
-				now = now->next->next;
-			else
-				break ;
-		}
-		now = now->next;
-	}
+
+	hdb_idx = 0;
 	while (i < pcs_cnt)
 	{
+		p->infile_fd = 0;
+		p->outfile_fd = 1;
+		hdb_idx = input_redir(meta, now, p, hdb_idx);
+		output_redir(meta, now, p);
+		if (p->infile_fd == -1)
+		{
+			while (now->type == ARG)
+				now = now->next;
+			pcs_cnt--;
+			while (now->type != PIPE && now != meta->head)
+			{
+				if (now->type != ARG)
+					now = now->next->next;
+				else
+					break ;
+			}
+			now = now->next;
+		}
 		temp_flag = 0;
 		while (now->type == I_REDIR || now->type == I_HRDOC || now->type == O_REDIR || now->type == O_APPND)
 			now = now->next->next;
@@ -304,15 +260,16 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		now = now->next;
 		signal_ignore();
 	}
-	unlink(HERE_DOC_INPUT_BUFFER);
 	unlink(EMPTY_BUFFER);
 	i = 0;
 	while (i < pcs_cnt)
 	{
 		close(p->pfd_arr[i][0]);
 		close(p->pfd_arr[i][1]);
+		unlink(p->here_doc_buffers[i]);
 		i++;
 	}
+	unlink(p->here_doc_buffers[0]); //히어독 버퍼 프리
 	close(0);
 	close(1);
 	ret = wait_for_children(p, p->pids, pcs_cnt);

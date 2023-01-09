@@ -1,6 +1,3 @@
-#ifndef HERE_DOC_INPUT_BUFFER
-# define HERE_DOC_INPUT_BUFFER "here_doc_input_buffer"
-#endif
 
 #ifndef EMPTY_BUFFER
 # define EMPTY_BUFFER "empty_buffer"
@@ -22,15 +19,15 @@ int			get_pcs(t_token_meta *meta, t_env *env, char **envp);
  */
 
 int			here_doc(t_token_meta *meta, t_pcs *p);
-void		input_redir(t_token_meta *meta, t_pcs *p);
-int			output_redir(t_token_meta *meta, t_pcs *p);
+int			input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i);
+void		output_redir(t_token_meta *meta, t_token *now, t_pcs *p);
 
 /**
  * process_exec.c
  */
 
 void		exec_com(t_pcs *p, t_token *now, t_env *env);
-int			here_doc_seg(t_pcs *p, t_token *now);
+int			here_doc_seg(t_pcs *p, t_token *now, int i);
 int			exec_fork(t_pcs *p, t_token_meta *meta, t_env *env);
 
 /**
@@ -56,7 +53,7 @@ int			get_pcs_cnt(t_token_meta *meta);
 int			wait_for_children(t_pcs *p, pid_t *pids, int temp);
 void		execve_failed(t_pcs *p, char *sh_func);
 void		init_p(t_pcs *p);
-int			check_redir(t_token_meta *meta);
+int			check_redir(t_pcs *p);
 
 /**
  * process_utils_3.c
@@ -65,5 +62,6 @@ int			check_redir(t_token_meta *meta);
 int			err_terminate(t_pcs *p);
 int			free_arr(char **com);
 char		*ft_strjoin_modified(char const *s1, char const *s2);
+int			get_pipes(t_pcs *p, int pcs_cnt);
 
 #endif

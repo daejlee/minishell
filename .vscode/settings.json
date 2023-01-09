@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"chrono": "c",
+		"minishell.h": "c",
+		"process.h": "c"
+	}
+}

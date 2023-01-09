@@ -53,8 +53,20 @@ int	err_terminate(t_pcs *p)
 		free(p->pids);
 	close(0);
 	close(1);
-	if (p->here_doc_flag)
-		unlink(HERE_DOC_INPUT_BUFFER);
 	unlink(EMPTY_BUFFER);
 	return (1);
+}
+
+int	get_pipes(t_pcs *p, int pcs_cnt)
+{
+	int	i;
+
+	i = 0;
+	while (i < pcs_cnt)
+	{
+		p->pfd_arr[i] = (int *)malloc(sizeof(int[2]));
+		pipe(p->pfd_arr[i]);
+		i++;
+	}
+	return (0);
 }

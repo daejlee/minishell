@@ -98,10 +98,9 @@ enum	e_redir_flag
 
 typedef struct s_pcs
 {
-	int		here_doc_flag;
+	char	**here_doc_buffers;
 	int		outfile_fd;
 	int		infile_fd;
-	int		temp_infile_fd;
 	int		**pfd_arr;
 	char	**com;
 	char	**envp;

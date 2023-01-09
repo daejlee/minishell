@@ -78,7 +78,7 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
 {
 	int	redir_flag;
 
-	redir_flag = check_redir(meta);
+	redir_flag = check_redir(p);
 	if (redir_flag == I_O_BOTH)
 		prep_i_o(p, i, pcs_cnt, meta);
 	else if (redir_flag == I_ONLY)
