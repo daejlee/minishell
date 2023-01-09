@@ -24,6 +24,7 @@ static int	print_sorted_env(t_env *env)
 	int i;
 	int	k;
 	char	idx;
+	unsigned int	len;
 	t_env	*head;
 	t_env	*temp;
 	t_env	**arr;
@@ -39,47 +40,48 @@ static int	print_sorted_env(t_env *env)
 	arr = (t_env **)malloc(sizeof(t_env *) * size);
 	if (!arr)
 		return (1);
-	idx = 'A';
 	i = 0;
-	while (idx <= 'Z')
+	temp = head;
+	while (i < size)
 	{
-		if (temp->key[0] == idx)
-			arr[i++] = temp;
+		arr[i++] = temp;
 		temp = temp->next;
-		while (temp != head)
-		{
-			if (temp->key[0] == idx)
-				arr[i++] = temp;
-			temp = temp->next;
-		}
-		idx++;
 	}
-	idx = 'a';
-	while (idx <= 'z')
+	k = 0;
+	while (k < size)
 	{
-		if (temp->key[0] == idx)
-			arr[i++] = temp;
-		temp = temp->next;
-		while (temp != head)
+		i = 0;
+		while (i < size - 1)
 		{
-			if (temp->key[0] == idx)
-				arr[i++] = temp;
-			temp = temp->next;
+			if (ft_strlen(arr[i]->key) <= ft_strlen(arr[i + 1]->key))
+				len = ft_strlen(arr[i + 1]->key);
+			else
+				len = ft_strlen(arr[i]->key);
+			if (ft_strncmp(arr[i]->key, arr[i + 1]->key, len) > 0)
+			{
+				temp = arr[i];
+				arr[i] = arr[i + 1];
+				arr[i + 1] = temp;
+			}
+			i++;
 		}
-		idx++;
+		k++;
 	}
 	i = 0;
-	while (i < size - 2)
+	while (i < size)
 	{
-		write(1, "declare -x ", 12);
-		write(1, arr[i]->key, ft_strlen(arr[i]->key));
-		if (arr[i]->value)
+		if (ft_strncmp(arr[i]->key, "_", ft_strlen(arr[i]->key)))
 		{
-			write(1, "=\"", 3);
-			write(1, arr[i]->value, ft_strlen(arr[i]->value));
-			write(1, "\"", 1);
+			write(1, "declare -x ", 12);
+			write(1, arr[i]->key, ft_strlen(arr[i]->key));
+			if (arr[i]->value)
+			{
+				write(1, "=\"", 3);
+				write(1, arr[i]->value, ft_strlen(arr[i]->value));
+				write(1, "\"", 1);
+			}
+			write(1, "\n", 1);
 		}
-		write(1, "\n", 1);
 		i++;
 	}
 	return (0);
