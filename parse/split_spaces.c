@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/07 15:30:21 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/09 13:59:40 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ int	split_spaces_in_substr(t_token_meta *meta, char *str)
 {
 	size_t	start;
 	size_t	end;
+	size_t	flag;
 
-	initialize_numbers(&start, &end, NULL, NULL);
+	initialize_numbers(&start, &end, &flag, NULL);
 	while (str[end] || start != end)
 	{
 		if (str[end] && str[end] == ' ' && start == end)
@@ -73,8 +74,8 @@ int	split_spaces_in_substr(t_token_meta *meta, char *str)
 		}
 		else
 		{
-			if (push_token(meta, init_token(ft_strdup(" "), BLANK)) || \
-				push_token(meta, \
+			if ((flag++ && push_token(meta, init_token(ft_strdup(" "), BLANK)))
+				|| push_token(meta, \
 					init_token(ft_substr(str, start, end - start), INIT)))
 				return (print_error(MALLOC_FAIL, 0));
 			set_start_end(&start, NULL, end, end);
