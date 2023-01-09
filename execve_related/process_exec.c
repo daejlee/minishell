@@ -4,22 +4,14 @@
 static char	**get_sh_path(t_env *env, int *no_path_flag)
 {
 	unsigned int	i;
+	int				fst_flag;
 	char			**sh_paths;
 	t_env			*now;
 
 	i = 0;
 	now = env;
-	if (!ft_strncmp("PATH", now->key, 4))
-	{
-		sh_paths = ft_split(now->value, ':');
-		if (!sh_paths)
-			return (NULL);
-		ft_strlcpy(sh_paths[0], sh_paths[0] + 5,
-			ft_strlen(sh_paths[0]) - 4);
-		return (sh_paths);
-	}
-	now = now->next;
-	while (now != env)
+	fst_flag = 1;
+	while (now != env || fst_flag)
 	{
 		if (!ft_strncmp("PATH", now->key, 4) && now->value)
 		{
@@ -32,6 +24,7 @@ static char	**get_sh_path(t_env *env, int *no_path_flag)
 		}
 		else
 			now = now->next;
+		fst_flag = 0;
 	}
 	*no_path_flag = 1;
 	return (no_path_flag);

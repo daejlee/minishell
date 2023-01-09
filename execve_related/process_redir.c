@@ -6,6 +6,7 @@ static t_token	*get_last_redir(t_token *head)
 	t_token	*now;
 	t_token	*ret;
 
+	ret = NULL;
 	now = head;
 	if (now->type == I_REDIR || now->type == I_HRDOC)
 		ret = now;
@@ -67,7 +68,7 @@ void	input_redir(t_token_meta *meta, t_pcs *p)
 		}
 		now = now->next;
 	}
-	if (get_last_redir(meta->head)->type == I_HRDOC)
+	if (get_last_redir(meta->head) && get_last_redir(meta->head)->type == I_HRDOC)
 		p->infile_fd = p->temp_infile_fd;
 }
 
