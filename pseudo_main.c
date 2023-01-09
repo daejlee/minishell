@@ -24,17 +24,6 @@ int	set_env(t_env **env, char **envp)
 	return (0);
 }
 
-int	terminal_init(void)
-{
-	struct termios	new_terminal;
-
-	tcgetattr(0, &new_terminal);
-	new_terminal.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, TCSANOW, &new_terminal);
-	signal(SIGINT, signal_process);
-	signal(SIGQUIT, SIG_IGN);
-}
-
 /*
 ex) minishell $ cat temp.txt | grep 'a'
 scanner -> /cat/ /temp.txt/ /|/ /grep/ /'a'/로 분리 후 링크드 리스트로 저장
@@ -46,14 +35,13 @@ int	main(int argc, char **argv, char **envp)
 	char			*buf;
 	t_token_meta	*meta;
 	t_env			*env;
-	struct termios	terminal;
 
-	tcgetattr(0, &terminal);
-	terminal_init();
 	set_env(&env, envp);
 	meta = NULL;
 	while (1)
 	{
+		terminal_unset_echo();
+		signal_default();
 		buf = readline("minishell 0.1.3$ ");
 		if (buf)
 		{
@@ -78,6 +66,6 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 	}
-	tcsetattr(0, TCSANOW, &terminal);
+	terminal_set_echo();
 	return (0);
 }
