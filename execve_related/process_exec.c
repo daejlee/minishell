@@ -83,7 +83,7 @@ void	exec_com(t_pcs *p, t_token *now, t_env *env)
 	}
 	if (!sh_func)
 	{
-		free_arr(p->com);
+		free(p->com);
 		exit (err_terminate(p));
 	}
 	execve((const char *)sh_func, (char *const *)p->com, p->envp);

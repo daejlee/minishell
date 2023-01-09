@@ -47,7 +47,8 @@ void	execve_failed(t_pcs *p, char *sh_func)
 		write(2, sh_func, ft_strlen(sh_func));
 		write(2, ": command not found\n", 21);
 	}
-	free_arr(p->com);
+	
+	free(p->com);
 	if (sh_func)
 		free(sh_func);
 	exit (127);
