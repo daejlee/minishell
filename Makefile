@@ -6,7 +6,7 @@
 #    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2023/01/10 11:53:26 by hkong            ###   ########.fr        #
+#    Updated: 2023/01/10 21:16:43 by hkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ SRCS = pseudo_main.c
 PARSE_DIR = parse/
 SRCS_PARSE = parse.c interpret_env.c interpret_quotes.c split_spaces.c split_operator.c modify_arg.c syntax_error.c union_arg.c
 
-BUILT_IN_DIR = built_in_related/
-SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c built_in.c ft_cd.c
+BUILT_IN_DIR = built_in/
+SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c built_in.c ft_cd.c ft_cd_utils.c built_in_utils.c
 
 EXECVE_DIR = execve_related/
 SRCS_EXECVE = process.c process_here_doc.c process_redir.c process_exec.c process_fd_utils.c process_utils_1.c process_utils_2.c process_utils_3.c

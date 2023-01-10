@@ -3,18 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:32:43 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/10 13:32:47 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/10 21:58:30 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
 
+#include "built_in.h"
+
+/**
+ * @brief 
+ * built_in의 메인 함수
+ * @param com command 이차원 배열
+ * @param env
+ * @return int 실행 이후 exit status
+ */
+int	exec_built_in(char **com, t_env *env)
+{
+	int	built_in_code;
+
+	//? command 및 env가 null이 아님이 확정되어있나? 
+	built_in_code = is_built_in(com[0]);
+	return (exec_built_in_seg(built_in_code, com, env, 1));
+}
+
+/**
+ * @brief 
+ * 각각의 built_in을 실행하고 리턴한다.
+ * @param built_in_code enum 형태의 값
+ * @return int 실행 이후 exit status
+ */
 static int	exec_built_in_seg(int built_in_code, char **com, t_env *env, int i)
 {
 	if (built_in_code == B_ECHO)
-		return (exec_ft_echo(com));
+		return (ft_echo(com));
 	else if (built_in_code == B_CD)
 		return (ft_cd(com[1], env));
 	else if (built_in_code == B_PWD)
@@ -37,14 +60,4 @@ static int	exec_built_in_seg(int built_in_code, char **com, t_env *env, int i)
 		return (ft_env(env));
 	else if (built_in_code == B_EXIT)
 		return (ft_exit());
-}
-
-int	exec_built_in(char **com, t_env *env)
-{
-	int	ret;
-	int	built_in_code;
-
-	built_in_code = is_built_in(com[0]);
-	exec_built_in_seg(built_in_code, com, env, 1);
-	return (ret);
 }

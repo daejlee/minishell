@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/10 20:09:32 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/10 21:45:12 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,8 +211,7 @@ int		exec_built_in(char **com, t_env *env);
 int		ft_cd(char *dir, t_env *env);
 int		check_cdpath(char **curpath_adr, char *env_cdpath);
 char	*get_env_val(char *key, t_env *env);
-int		exec_ft_echo(char **com);
-int		ft_echo(char *buf, int n_flag);
+int		ft_echo(char **com);
 int		ft_env(t_env *env);
 int		ft_exit(void);
 int		ft_export(char *name, t_env *env);
