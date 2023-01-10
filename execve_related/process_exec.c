@@ -165,6 +165,7 @@ char	**get_com(t_token *now, t_token_meta *meta)
 int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 {
 	int		i;
+	int		prev_outfile_fd;
 	int		hdb_idx;
 	int		pcs_cnt;
 	int		ret;
@@ -191,6 +192,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	hdb_idx = 0;
 	while (i < pcs_cnt)
 	{
+		prev_outfile_fd = p->outfile_fd;
 		p->infile_fd = 0;
 		p->outfile_fd = 1;
 		hdb_idx = input_redir(meta, now, p, hdb_idx);
@@ -230,11 +232,12 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		if (!p->com)
 			return (err_terminate(p));
 		now = prep_fd_n_move(now, i, pcs_cnt, meta, p);
-		if (temp_flag)
+		if (temp_flag || prev_outfile_fd != 1)
 		{
 			temp_flag = open(EMPTY_BUFFER, O_RDONLY | O_CREAT, 0644);
 			if (!temp_flag)
 				return (err_terminate(p));
+			close (0);
 			dup2(temp_flag, 0);
 		}
 		signal_execute();
@@ -266,10 +269,9 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	{
 		close(p->pfd_arr[i][0]);
 		close(p->pfd_arr[i][1]);
-		unlink(p->here_doc_buffers[i]);
 		i++;
 	}
-	unlink(p->here_doc_buffers[0]); //히어독 버퍼 프리
+	//unlink(p->here_doc_buffers[0]); //히어독 버퍼 프리
 	close(0);
 	close(1);
 	ret = wait_for_children(p, p->pids, pcs_cnt);

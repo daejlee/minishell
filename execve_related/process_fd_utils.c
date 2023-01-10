@@ -30,11 +30,11 @@ static void	prep_i_o(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
 	if (pcs_cnt == 1)
 		prep(p->infile_fd, p->outfile_fd, -1, p);
 	else if (i == pcs_cnt - 1)
-		prep(p->pfd_arr[i - 1][0], p->outfile_fd, p->pfd_arr[i - 1][1], NULL);
+		prep(p->infile_fd, p->outfile_fd, p->pfd_arr[i - 1][0], NULL);
 	else if (!i)
-		prep(p->infile_fd, p->pfd_arr[i][1], 0, p);
+		prep(p->infile_fd, p->outfile_fd, p->pfd_arr[i - 1][0], p);
 	else
-		prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
+		prep(p->infile_fd, p->outfile_fd, p->pfd_arr[i - 1][0], p);
 }
 
 static void	prep_i(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
@@ -42,11 +42,11 @@ static void	prep_i(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
 	if (pcs_cnt == 1)
 		prep(p->infile_fd, 1, -1, p);
 	else if (i == pcs_cnt - 1)
-		prep(p->pfd_arr[i - 1][0], p->stdinout_storage[1], 0, NULL);
+		prep(p->infile_fd, p->stdinout_storage[1], p->pfd_arr[i - 1][0], NULL);
 	else if (!i)
 		prep(p->infile_fd, p->pfd_arr[i][1], 0, p);
 	else
-		prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
+		prep(p->infile_fd, p->pfd_arr[i][1], p->pfd_arr[i - 1][0], p);
 }
 
 static void	prep_o(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
@@ -57,9 +57,9 @@ static void	prep_o(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
 		prep(p->pfd_arr[i - 1][0], p->outfile_fd, p->pfd_arr[i - 1][1],
 			NULL);
 	else if (!i)
-		prep(0, p->pfd_arr[i][1], 1, p);
+		prep(0, p->outfile_fd, 1, p);
 	else
-		prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1], p->pfd_arr[i - 1][1], p);
+		prep(p->pfd_arr[i - 1][0], p->outfile_fd, p->pfd_arr[i - 1][1], p);
 }
 
 static void	prep_no_redir(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)

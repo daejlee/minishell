@@ -96,7 +96,7 @@ void	get_here_doc_buffers(t_token_meta *meta, t_pcs *p)
 
 	now = meta->head;
 	here_doc_cnt = get_here_doc_cnt(meta);
-	p->here_doc_buffers = (char **)malloc(sizeof(char *) * i);
+	p->here_doc_buffers = (char **)malloc(sizeof(char *) * here_doc_cnt);
 	i = 0;
 	while (i < here_doc_cnt)
 	{

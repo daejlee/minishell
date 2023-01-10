@@ -3,11 +3,12 @@
 
 int	input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i)
 {
-	if (now->type == I_REDIR)
-		p->infile_fd = open(now->next->str, O_RDONLY);
-	now = now->next;
-	while (now != meta->head && now->type != PIPE)
+	int	fst_flag;
+
+	fst_flag = 1;
+	while ((now != meta->head && now->type != PIPE) || fst_flag)
 	{
+		fst_flag = 0;
 		if (now->type == I_REDIR)
 		{
 			if (p->infile_fd)

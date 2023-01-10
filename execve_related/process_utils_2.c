@@ -37,8 +37,8 @@ void	execve_failed(t_pcs *p, char *sh_func)
 
 void	init_p(t_pcs *p)
 {
-	p->outfile_fd = -1;
-	p->infile_fd = -1;
+	p->outfile_fd = 1;
+	p->infile_fd = 0;
 	p->pfd_arr = NULL;
 	p->com = NULL;
 	p->envp = NULL;
