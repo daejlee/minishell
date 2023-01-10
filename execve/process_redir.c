@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:25:18 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/10 20:33:17 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 02:40:06 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i)
 	int	fst_flag;
 
 	fst_flag = 1;
+	p->infile_fd = 0;
 	while ((now != meta->head && now->type != PIPE) || fst_flag)
 	{
 		fst_flag = 0;
@@ -59,6 +60,8 @@ void	output_redir(t_token_meta *meta, t_token *now, t_pcs *p)
 	int	fst_flag;
 
 	fst_flag = 1;
+	p->prev_outfile_fd = p->outfile_fd;
+	p->outfile_fd = 1;
 	while ((now != meta->head && now->type != PIPE) || fst_flag)
 	{
 		fst_flag = 0;

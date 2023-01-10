@@ -6,7 +6,7 @@
 #    By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2023/01/11 01:09:30 by daejlee          ###   ########.fr        #
+#    Updated: 2023/01/11 02:57:40 by daejlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ RM = rm -f
 INCLUDE = -I./include -I/Users/daejlee/.brew/opt/readline/include
 LIBRARY = -lreadline -L/Users/daejlee/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
 
-SRCS = pseudo_main.c
+SRCS = main.c
 
 PARSE_DIR = parse/
 SRCS_PARSE = parse.c interpret_env.c interpret_quotes.c split_spaces.c split_operator.c modify_arg.c syntax_error.c union_arg.c
@@ -27,8 +27,8 @@ SRCS_PARSE = parse.c interpret_env.c interpret_quotes.c split_spaces.c split_ope
 BUILT_IN_DIR = built_in/
 SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c built_in.c ft_cd.c ft_cd_utils.c built_in_utils.c
 
-EXECVE_DIR = execve_related/
-SRCS_EXECVE = process.c process_hrdc.c process_hrdc_utils.c process_redir.c process_exec.c process_fd_utils_1.c process_fd_utils_2.c process_utils_1.c process_utils_2.c process_utils_3.c
+EXECVE_DIR = execve/
+SRCS_EXECVE = process.c process_hrdc.c process_hrdc_utils.c process_redir.c process_exec.c process_exec_utils_1.c process_exec_utils_2.c process_exec_utils_3.c process_fd_utils_1.c process_fd_utils_2.c process_utils_1.c process_utils_2.c process_utils_3.c
 
 UTILS_DIR = utils/
 SRCS_UTILS = env_list.c token.c token_meta.c string_utils.c number_utils.c error.c signal.c terminal.c

@@ -38,6 +38,34 @@ int			here_doc_seg(t_pcs *p, t_token *now, int i);
 int			exec_fork(t_pcs *p, t_token_meta *meta, t_env *env);
 
 /**
+ * process_exec_utils_1.c
+ */
+
+void		exec_com(t_pcs *p, t_token *now, t_env *env);
+t_token		*prep_fd_n_move(t_token *now, int i, t_token_meta *meta, t_pcs *p);
+int			prep_exec_loop(t_pcs *p, t_token_meta *meta);
+
+/**
+ * process_exec_utils_2.c
+ */
+
+char		**get_com(t_token *now, t_token_meta *meta);
+char		**get_trimmed_com(t_token *now, t_token_meta *meta);
+int			launch_com(t_pcs *p, t_token *now, t_env *env, int i);
+int			wrap_up_pcs(t_pcs *p, t_token_meta *meta, int stdout_dup);
+
+/**
+ * process_exec_utils_3.c
+ */
+
+t_token		*prep_bad_infile(t_pcs *p, t_token *now, t_token_meta *meta,
+			int *temp_flag_adr);
+t_token		*fast_forward_node(t_pcs *p, t_token *now, t_token_meta *meta,
+			int i);
+t_token		*prep_redir_n_com(t_pcs *p, t_token_meta *meta, t_token *now,
+			int i);
+
+/**
  * process_fd_utils.c
  */
 

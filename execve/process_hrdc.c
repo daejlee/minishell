@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:35:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 01:13:50 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 01:46:02 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ int	here_doc(t_token_meta *meta, t_pcs *p)
 		while (i--)
 			unlink(p->here_doc_buffers[i]);
 	}
-	return (WEXITSTATUS(status));
+	return (0);
 }

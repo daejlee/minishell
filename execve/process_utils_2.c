@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:46:03 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 00:46:04 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 01:58:05 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	execve_failed(t_pcs *p, char *sh_func)
 
 void	init_p(t_pcs *p)
 {
+	p->here_doc_buffers = NULL;
+	p->prev_outfile_fd = 1;
 	p->outfile_fd = 1;
 	p->infile_fd = 0;
 	p->pfd_arr = NULL;
@@ -57,6 +59,9 @@ void	init_p(t_pcs *p)
 	p->stdinout_storage[0] = -1;
 	p->stdinout_storage[1] = -1;
 	p->pids = NULL;
+	p->pcs_cnt = 0;
+	p->hdb_idx = 0;
+	p->empty_buf_flag = 0;
 }
 
 int	check_redir(t_pcs *p)

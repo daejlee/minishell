@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 01:05:49 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 02:44:46 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,16 @@ enum	e_redir_flag
 typedef struct s_pcs
 {
 	char	**here_doc_buffers;
+	int		prev_outfile_fd;
 	int		outfile_fd;
 	int		infile_fd;
 	int		**pfd_arr;
 	char	**com;
 	char	**envp;
 	int		stdinout_storage[2];
+	int		pcs_cnt;
+	int		hdb_idx;
+	int		empty_buf_flag;
 	pid_t	*pids;
 }	t_pcs;
 
@@ -231,7 +235,6 @@ int					is_built_in(char *com);
 int					is_echo(char *buf);
 int					is_pwd(char *buf);
 int					is_env(char *buf);
-int					is_built_in(char *com);
 int					exec_built_in(char **com, t_env *env);
 int					ft_cd(char *dir, t_env *env);
 int					check_cdpath(char **curpath_adr, char *env_cdpath);
