@@ -50,6 +50,8 @@ int	here_doc_seg(t_pcs *p, t_token *now, int i)
 	while (1)
 	{
 		buf = readline(">");
+		if (!buf)
+			break ;
 		if (!ft_strncmp(buf, limiter, ft_strlen(buf)))
 			break ;
 		if (!fst_flag)
@@ -61,7 +63,8 @@ int	here_doc_seg(t_pcs *p, t_token *now, int i)
 			ret = buf;
 		fst_flag = 0;
 	}
-	free (buf);
+	if (buf)
+		free (buf);
 	ret = ft_strjoin(ret, "\n");
 	write(here_doc_fd, ret, ft_strlen(ret));
 	close(here_doc_fd);

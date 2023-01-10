@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:38 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/10 15:40:04 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/10 17:17:19 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 void	signal_default(void)
 {
-	fprintf(stderr, "default\n");
+	// fprintf(stderr, "default\n");
 	signal(SIGINT, sig_main_process);
 	signal(SIGQUIT, SIG_IGN);
 }
 
 void	signal_execute(void)
 {
-	fprintf(stderr, "execute\n");
-	signal(SIGINT, sig_excute_process);
+	// fprintf(stderr, "execute\n");
 	signal(SIGQUIT, sig_excute_process);
+	signal(SIGINT, sig_excute_process);
 }
 
 void	signal_ignore(void)
 {
-	fprintf(stderr, "ignore\n");
+	// fprintf(stderr, "ignore\n");
 	signal(SIGINT, SIG_IGN);
-	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	signal_heredoc(void)
 {
-	fprintf(stderr, "hrdoc\n");
+	// fprintf(stderr, "hrdoc\n");
 	signal(SIGINT, sig_heredoc_process);
-	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	sig_main_process(int sig)
@@ -57,7 +57,7 @@ void	sig_main_process(int sig)
 
 void	sig_excute_process(int sig)
 {
-	fprintf(stderr, "execute_process\n");
+	// fprintf(stderr, "execute_\n");
 	if (sig == SIGINT)
 		write(2, "\n", 1);
 	if (sig == SIGQUIT)
@@ -66,9 +66,12 @@ void	sig_excute_process(int sig)
 
 void	sig_heredoc_process(int sig)
 {
+	// fprintf(stderr, "hrdoc_\n");
 	if (sig == SIGINT)
 	{
-		write(2, "\n", 1);
+		// fprintf(stderr, "exit\n");
+
+		// write(2, "\n", 1);
 		exit(1);
 	}
 }
