@@ -9,7 +9,7 @@ int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)
 	status = 0;
 	i = 0;
 	while (i < pcs_cnt)
-		waitpid(pids[i++], NULL, 0);
+		waitpid(pids[i++], &status, 0);
 	free(pids);
 	return (WEXITSTATUS(status));
 }
