@@ -1,5 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_redir.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/10 20:25:18 by daejlee           #+#    #+#             */
+/*   Updated: 2023/01/10 20:33:17 by daejlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "process.h"
+
+static void	seg(t_token *now, t_pcs *p, char *str)
+{
+	if (p->infile_fd)
+		close(p->infile_fd);
+	p->infile_fd = open(str, O_RDONLY);
+}
+
+static void	print_infile_err(t_token *now)
+{
+	write(2, "minishell: ", 12);
+	write(2, now->next->str, ft_strlen(now->next->str));
+	write(2, ": No such file or directory\n", 29);
+}
 
 int	input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i)
 {
@@ -11,22 +37,17 @@ int	input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i)
 		fst_flag = 0;
 		if (now->type == I_REDIR)
 		{
-			if (p->infile_fd)
-				close(p->infile_fd);
-			p->infile_fd = open(now->next->str, O_RDONLY);
+			seg(now, p, now->next->str);
 			if (p->infile_fd == -1)
 			{
-				write(2, "minishell: ", 12);
-				write(2, now->next->str, ft_strlen(now->next->str));
-				write(2, ": No such file or directory\n", 29);
+				print_infile_err(now);
 				break ;
 			}
 		}
 		else if (now->type == I_HRDOC)
 		{
-			if (p->infile_fd)
-				close(p->infile_fd);
-			p->infile_fd = open(p->here_doc_buffers[i++], O_RDONLY);
+			seg(now, p, p->here_doc_buffers[i]);
+			i++;
 		}
 		now = now->next;
 	}

@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:28:14 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/10 14:28:17 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 01:06:27 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
 
-typedef struct s_ft_cd
-{
-	char	*env_home;
-	char	*env_cdpath;
-	char	*env_pwd;
-	t_env	*node;
-}	t_ft_cd;
+#include "minishell.h"
 
 static int	set_1(t_ft_cd *p, char **dir_adr, t_env *env)
 {

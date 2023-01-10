@@ -1,31 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_fd_utils_1.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/10 20:19:57 by daejlee           #+#    #+#             */
+/*   Updated: 2023/01/10 20:22:03 by daejlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "process.h"
-
-void	swap_pfd(int **pfd1, int **pfd2)
-{
-	int	*temp;
-
-	temp = *pfd1;
-	*pfd1 = *pfd2;
-	*pfd2 = temp;
-}
-
-static void	prep(int input_fd, int output_fd, int closing_fd, t_pcs *p)
-{
-	close(closing_fd);
-	if (input_fd)
-	{
-		close (0);
-		dup2(input_fd, 0);
-		close(input_fd);
-	}
-	if (output_fd != 1)
-	{
-		close (1);
-		dup2(output_fd, 1);
-		close(output_fd);
-	}
-}
 
 static void	prep_i_o(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
 {
@@ -89,22 +75,4 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
 		prep_o(p, i, pcs_cnt, meta);
 	else
 		prep_no_redir(p, i, pcs_cnt, meta);
-}
-
-void	reset_fds(t_pcs *p, int stdinout_storage[2], t_token_meta *meta,
-	int pcs_cnt)
-{
-	int	i;
-
-	i = 0;
-	while (i < pcs_cnt)
-	{
-		close(p->pfd_arr[i][0]);
-		close(p->pfd_arr[i][1]);
-		i++;
-	}
-	dup2(stdinout_storage[1], 1);
-	dup2(stdinout_storage[0], 0);
-	close(stdinout_storage[1]);
-	close(stdinout_storage[0]);
 }

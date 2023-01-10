@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/10 21:45:12 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 01:05:49 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,17 @@
 
 enum	e_token_type {
 	INIT = 1,
-	ARG, // ex) echo -n 이 있으면 [echo -n]이 통째로 ARG인 형식을 따르는 게 좋을 것 같습니다.
+	ARG,
 	PIPE,
 	I_REDIR,
 	O_REDIR,
 	I_HRDOC,
-	LIMITER, // here_doc에 필요한 리미터입니다.
+	LIMITER,
 	O_APPND,
 	BLANK,
 	EMPTY
 };
 
-/*	구현해야 하는 쉘 빌트인 함수들을 열거형을 이용해 나열했습니다	*/
 enum	e_built_in_code
 {
 	B_ECHO = 1,
@@ -87,6 +86,35 @@ typedef struct s_env
 	struct s_env	*prev;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_ft_cd
+{
+	char	*env_home;
+	char	*env_cdpath;
+	char	*env_pwd;
+	t_env	*node;
+}	t_ft_cd;
+
+typedef struct s_ft_export
+{
+	t_env			*head;
+	t_env			*temp;
+	t_env			**arr;
+	int				size;
+	int				i;
+	int				k;
+	unsigned int	len;
+}	t_ft_export;
+
+typedef struct s_hrdc_seg
+{
+	char	*limiter;
+	int		here_doc_fd;
+	char	*ret;
+	int		fst_flag;
+	char	*temp;
+	char	*buf;
+}	t_hrdc_seg;
 
 enum	e_redir_flag
 {
@@ -130,8 +158,6 @@ int					set_token_origin(t_token *token, char *str);
 t_token_meta		*init_token_meta(void);
 t_token_meta		*free_token_meta(t_token_meta *meta);
 
-
-
 /**
  * utils/signal.c
  */
@@ -151,7 +177,6 @@ void				signal_heredoc(void);
 
 void				terminal_unset_echo(void);
 void				terminal_set_echo(void);
-
 
 /**
  * utils/error.c
@@ -202,21 +227,22 @@ void				set_start_end(size_t *start, size_t *end, \
  * built_in_related
  */
 
-int		is_built_in(char *com);
-int		is_echo(char *buf);
-int		is_pwd(char *buf);
-int		is_env(char *buf);
-int		is_built_in(char *com);
-int		exec_built_in(char **com, t_env *env);
-int		ft_cd(char *dir, t_env *env);
-int		check_cdpath(char **curpath_adr, char *env_cdpath);
-char	*get_env_val(char *key, t_env *env);
-int		ft_echo(char **com);
-int		ft_env(t_env *env);
-int		ft_exit(void);
-int		ft_export(char *name, t_env *env);
-int		ft_pwd(void);
-int		ft_unset(char *name, t_env *env);
-char	*ft_strjoin_modified(char const *s1, char const *s2, char c);
+int					is_built_in(char *com);
+int					is_echo(char *buf);
+int					is_pwd(char *buf);
+int					is_env(char *buf);
+int					is_built_in(char *com);
+int					exec_built_in(char **com, t_env *env);
+int					ft_cd(char *dir, t_env *env);
+int					check_cdpath(char **curpath_adr, char *env_cdpath);
+char				*get_env_val(char *key, t_env *env);
+int					exec_ft_echo(char **com);
+int					ft_echo(char **com);
+int					ft_env(t_env *env);
+int					ft_exit(void);
+int					ft_export(char *name, t_env *env);
+int					ft_pwd(void);
+int					ft_unset(char *name, t_env *env);
+char				*ft_strjoin_modified(char const *s1, char const *s2, char c);
 
 #endif

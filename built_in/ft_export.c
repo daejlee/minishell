@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:30:30 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/10 21:15:18 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 01:06:12 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-typedef struct s_ft_export
-{
-	t_env			*head;
-	t_env			*temp;
-	t_env			**arr;
-	int				size;
-	int				i;
-	int				k;
-	unsigned int	len;
-}	t_ft_export;
 
 static char	*ft_split_modified(char *name)
 {

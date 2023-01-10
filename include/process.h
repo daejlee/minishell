@@ -18,9 +18,16 @@ int			get_pcs(t_token_meta *meta, t_env *env, char **envp);
  * process_redir.c
  */
 
-int			here_doc(t_token_meta *meta, t_pcs *p);
 int			input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i);
 void		output_redir(t_token_meta *meta, t_token *now, t_pcs *p);
+
+/**
+ * process_here_doc_utils.c
+ */
+
+int			get_here_doc_cnt(t_token_meta *meta);
+void		get_here_doc_buffers(t_token_meta *meta, t_pcs *p);
+int			here_doc(t_token_meta *meta, t_pcs *p);
 
 /**
  * process_exec.c
@@ -34,6 +41,7 @@ int			exec_fork(t_pcs *p, t_token_meta *meta, t_env *env);
  * process_fd_utils.c
  */
 
+void		prep(int input_fd, int output_fd, int closing_fd, t_pcs *p);
 void		swap_pfd(int **pfd1, int **pfd2);
 void		prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta);
 void		reset_fds(t_pcs *p, int stdinout_storage[2], t_token_meta *meta, int pcs_cnt);

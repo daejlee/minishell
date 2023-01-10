@@ -1,5 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_utils_3.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/11 00:45:57 by daejlee           #+#    #+#             */
+/*   Updated: 2023/01/11 00:51:29 by daejlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "process.h"
+
+static void	free_pfd_arr(int **pfd_arr)
+{
+	int	i;
+
+	i = 0;
+	while (pfd_arr[i])
+	{
+		free(pfd_arr[i]);
+		i++;
+	}
+	free(pfd_arr);
+}
 
 int	err_terminate(t_pcs *p)
 {
@@ -8,7 +33,7 @@ int	err_terminate(t_pcs *p)
 	if (p->outfile_fd != -1)
 		close(p->outfile_fd);
 	if (p->pfd_arr)
-		free (p->pfd_arr); //1차원 프리도 필요함.
+		free_pfd_arr(p->pfd_arr);
 	if (p->pids)
 		free(p->pids);
 	close(0);
@@ -24,7 +49,7 @@ int	get_pipes(t_pcs *p, int pcs_cnt)
 	i = 0;
 	while (i < pcs_cnt)
 	{
-		p->pfd_arr[i] = (int *)malloc(sizeof(int[2]));
+		p->pfd_arr[i] = (int *)malloc(sizeof(int) * 2);
 		pipe(p->pfd_arr[i]);
 		i++;
 	}

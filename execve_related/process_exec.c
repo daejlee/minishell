@@ -185,10 +185,8 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	p->stdinout_storage[0] = dup(0);
 	p->stdinout_storage[1] = dup(1);
 	temp = dup(1);
-
 	i = 0;
 	now = meta->head;
-
 	hdb_idx = 0;
 	while (i < pcs_cnt)
 	{
