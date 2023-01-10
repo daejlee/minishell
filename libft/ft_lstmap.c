@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 13:51:30 by daejlee           #+#    #+#             */
-/*   Updated: 2022/04/23 20:35:54 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:02:10 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 t_lib_list	*ft_lstmap(t_lib_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	int		size;
-	int		count;
+	int			size;
+	int			count;
 	t_lib_list	*adr;
 
 	if (!lst)

@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 02:44:46 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:10:49 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 
 # ifndef PATH_MAX
 #  define PATH_MAX	1024
+# endif
+
+# ifndef EMPTY_BUFFER
+#  define EMPTY_BUFFER "empty_buffer"
 # endif
 
 enum	e_token_type {
@@ -246,6 +250,7 @@ int					ft_exit(void);
 int					ft_export(char *name, t_env *env);
 int					ft_pwd(void);
 int					ft_unset(char *name, t_env *env);
-char				*ft_strjoin_modified(char const *s1, char const *s2, char c);
+char				*ft_strjoin_modified(char const *s1, char const *s2, \
+												char c);
 
 #endif

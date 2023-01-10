@@ -1,7 +1,14 @@
-
-#ifndef EMPTY_BUFFER
-# define EMPTY_BUFFER "empty_buffer"
-#endif
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/11 03:04:32 by daejlee           #+#    #+#             */
+/*   Updated: 2023/01/11 03:11:17 by daejlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PROCESS_H
 # define PROCESS_H
@@ -59,11 +66,11 @@ int			wrap_up_pcs(t_pcs *p, t_token_meta *meta, int stdout_dup);
  */
 
 t_token		*prep_bad_infile(t_pcs *p, t_token *now, t_token_meta *meta,
-			int *temp_flag_adr);
+				int *temp_flag_adr);
 t_token		*fast_forward_node(t_pcs *p, t_token *now, t_token_meta *meta,
-			int i);
+				int i);
 t_token		*prep_redir_n_com(t_pcs *p, t_token_meta *meta, t_token *now,
-			int i);
+				int i);
 
 /**
  * process_fd_utils.c
@@ -72,7 +79,8 @@ t_token		*prep_redir_n_com(t_pcs *p, t_token_meta *meta, t_token *now,
 void		prep(int input_fd, int output_fd, int closing_fd, t_pcs *p);
 void		swap_pfd(int **pfd1, int **pfd2);
 void		prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta);
-void		reset_fds(t_pcs *p, int stdinout_storage[2], t_token_meta *meta, int pcs_cnt);
+void		reset_fds(t_pcs *p, int stdinout_storage[2], t_token_meta *meta,
+				int pcs_cnt);
 
 /**
  * process_utils_1.c

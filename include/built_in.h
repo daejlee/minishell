@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:17:28 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/10 22:09:02 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 03:03:56 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILT_IN_H
 # define BUILT_IN_H
-
-#include "minishell.h"
+# include "minishell.h"
 
 /**
  * built_in/built_in_utils.c
@@ -38,11 +37,5 @@ static int	exec_built_in_seg(int built_in_code, char **com, t_env *env, int i);
 int			ft_echo(char **com);
 int			get_n_option(char **com);
 char		*get_echo_str(char **com, int n_option);
-
-/**
- * built_in/ft_echo.c
- */
-
-
 
 #endif
