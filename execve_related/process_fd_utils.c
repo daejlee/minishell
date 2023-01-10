@@ -15,11 +15,13 @@ static void	prep(int input_fd, int output_fd, int closing_fd, t_pcs *p)
 	close(closing_fd);
 	if (input_fd)
 	{
+		close (0);
 		dup2(input_fd, 0);
 		close(input_fd);
 	}
 	if (output_fd != 1)
 	{
+		close (1);
 		dup2(output_fd, 1);
 		close(output_fd);
 	}

@@ -1,95 +1,74 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daejlee <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/10 14:28:14 by daejlee           #+#    #+#             */
+/*   Updated: 2023/01/10 14:28:17 by daejlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "minishell.h"
 
-static char	*ft_strjoin_modified(char const *s1, char const *s2)
+typedef struct s_ft_cd
 {
-	int				i;
-	unsigned int	s1_len;
-	char			*res;
+	char	*env_home;
+	char	*env_cdpath;
+	char	*env_pwd;
+	t_env	*node;
+}	t_ft_cd;
 
-	if (!s1 || !s2)
-		return (0);
-	s1_len = ft_strlen(s1);
-	res = (char *)malloc(sizeof(char) * (s1_len + ft_strlen(s2) + 2));
-	if (!res)
-		return (0);
-	i = 0;
-	while (s1[i])
+static int	set_1(t_ft_cd *p, char **dir_adr, t_env *env)
+{
+	p->env_home = get_env_val("HOME", env);
+	p->env_cdpath = get_env_val("CDPATH", env);
+	p->env_pwd = get_env_val("PWD", env);
+	p->node = find_env(env, "OLDPWD");
+	if (!ft_strncmp(*dir_adr, "-", ft_strlen(*dir_adr)))
 	{
-		res[i] = s1[i];
-		i++;
+		if (!p->node)
+		{
+			write(2, "minishell: ft_cd: OLDPWD not set\n", 34);
+			return (1);
+		}
+		else
+			return (chdir(p->node->value));
 	}
-	res[i] = '/';
-	i = 0;
-	while (s2[i])
-	{
-		res[s1_len + 1 + i] = s2[i];
-		i++;
-	}
-	res[s1_len + 1 + i] = '\0';
-	return (res);
+	if (p->node)
+		p->node->value = p->env_pwd;
+	if (!*dir_adr && (!p->env_home || p->env_home[0] == '\0'))
+		return (1);
+	else if (!*dir_adr)
+		*dir_adr = p->env_home;
+	return (1);
 }
 
-static int	check_cdpath(char **curpath_adr, char *env_cdpath)
+static int	set_2(char *dir, t_ft_cd p, char **curpath)
 {
-	char	**splitted_cdpath;
-	char	*temp;
-	int		i;
+	char	*temp_free;
 
-	if (!env_cdpath || env_cdpath[0] == '\0')
-		return (1);
-	else
-		splitted_cdpath = ft_split(env_cdpath, ':');
-	if (!splitted_cdpath)
+	if (dir[0] == '/')
+		*curpath = ft_strdup(dir);
+	else if (!ft_strncmp(dir, "..", 2) || dir[0] == '.'
+		|| check_cdpath(curpath, p.env_cdpath))
+			*curpath = ft_strdup(dir);
+	if (!*curpath)
 		return (-1);
-	i = 0;
-	while (splitted_cdpath[i])
+	if (*curpath[0] != '/')
 	{
-		temp = splitted_cdpath[i];
-		if (temp[ft_strlen(temp)] != '/')
-			temp = ft_strjoin_modified(env_cdpath, temp);
+		temp_free = *curpath;
+		if (p.env_pwd[ft_strlen(p.env_pwd) - 1] != '/')
+			*curpath = ft_strjoin_modified(p.env_pwd, *curpath, '/');
 		else
-			temp = ft_strjoin(env_cdpath, temp);
-		if (!opendir(temp))
-		{
-			free(temp);
-			i++;
-		}
-		else
-		{
-			*curpath_adr = temp;
-			//free_arr(splitted_cdpath);
-			return (0);
-		}
+			*curpath = ft_strjoin(p.env_pwd, *curpath);
+		free(temp_free);
+		if (!*curpath)
+			return (-1);
 	}
-	//free_arr(splitted_cdpath);
-	temp = ft_strjoin("./", *curpath_adr);
-	if (opendir(temp))
-	{
-		*curpath_adr = temp;
-		return (0);
-	}
-	else
-	{
-		free(temp);
-		return (1);
-	}
-}
-
-static char	*get_env_val(char *key, t_env *env)
-{
-	t_env	*now;
-
-	now = env;
-	if (!ft_strncmp((now->key), key, ft_strlen(key) + 1))
-		return (now->value);
-	now = now->next;
-	while (now != env)
-	{
-		if (!ft_strncmp((now->key), key, ft_strlen(key) + 1))
-			return (now->value);
-		now = now->next;
-	}
-	return (NULL);
+	if (!*curpath)
+		return (-1);
+	return (0);
 }
 
 /**
@@ -100,59 +79,17 @@ static char	*get_env_val(char *key, t_env *env)
  */
 int	ft_cd(char *dir, t_env *env)
 {
+	t_ft_cd	p;
 	char	*curpath;
-	char	*temp_free;
-	char	*env_home;
-	char	*env_cdpath;
-	char	*env_pwd;
-	t_env	*node;
 	int		ret;
 
-	env_home = get_env_val("HOME", env);
-	env_cdpath = get_env_val("CDPATH", env);
-	env_pwd = get_env_val("PWD", env);
-	node = find_env(env, "OLDPWD");
-	if (node)
-		(*node).value = env_pwd;
-	if (!ft_strncmp(dir, "-", ft_strlen(dir)))
-	{
-		if (!node)
-		{
-			write(2, "minishell: ft_cd: OLDPWD not set\n", 34);
-			return (1);
-		}
-		else
-			return (chdir(node->value));
-	}
-	if (!dir && (!env_home || env_home[0] == '\0'))
-		return (1);
-	else if (!dir)
-		dir = env_home;
-	if (dir[0] == '/')
-		curpath = ft_strdup(dir);
-	else
-	{
-		if (!ft_strncmp(dir, "..", 2) || dir[0] == '.' || check_cdpath(&curpath, env_cdpath))	//4th, 5th
-			curpath = ft_strdup(dir);
-	}
-	if (!curpath)
-		return (-1);
-	if (curpath[0] != '/')
-	{
-		temp_free = curpath;
-		if (env_pwd[ft_strlen(env_pwd) - 1] != '/')
-			curpath = ft_strjoin_modified(env_pwd, curpath);
-		else
-			curpath = ft_strjoin(env_pwd, curpath);
-		free(temp_free);
-		if (!curpath)
-			return (-1);
-	}
-	if (!curpath)
+	if (!set_1(&p, &dir, env))
+		return (0);
+	if (set_2(dir, p, &curpath) == -1)
 		return (-1);
 	ret = chdir(curpath);
-	node = find_env(env, "PWD");
-	(*node).value = getcwd(NULL, 0);
+	p.node = find_env(env, "PWD");
+	(*p.node).value = getcwd(NULL, 0);
 	if (ret)
 	{
 		write(2, "ft_cd: no such file or directory: ", 35);

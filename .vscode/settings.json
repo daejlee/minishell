@@ -2,6 +2,30 @@
 	"files.associations": {
 		"chrono": "c",
 		"minishell.h": "c",
-		"process.h": "c"
+		"process.h": "c",
+		"__node_handle": "c",
+		"__bit_reference": "c",
+		"__functional_base": "c",
+		"algorithm": "c",
+		"bitset": "c",
+		"__memory": "c",
+		"functional": "c",
+		"iterator": "c",
+		"limits": "c",
+		"memory": "c",
+		"optional": "c",
+		"ratio": "c",
+		"system_error": "c",
+		"tuple": "c",
+		"type_traits": "c",
+		"vector": "c",
+		"__hash_table": "c",
+		"__split_buffer": "c",
+		"array": "c",
+		"initializer_list": "c",
+		"string": "c",
+		"string_view": "c",
+		"unordered_map": "c",
+		"utility": "c"
 	}
 }

@@ -1,62 +1,49 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/10 16:30:54 by daejlee           #+#    #+#             */
+/*   Updated: 2023/01/10 16:37:03 by daejlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static char	*ft_strjoin_modified(char const *s1, char const *s2)
+static int	get_n_option_seg(char **com, int *n_flag_adr, int i)
 {
-	int				i;
-	unsigned int	s1_len;
-	char			*res;
+	int	k;
 
-	if (!s1 || !s2)
-		return (0);
-	s1_len = ft_strlen(s1);
-	res = (char *)malloc(sizeof(char) * (s1_len + ft_strlen(s2) + 2));
-	if (!res)
-		return (0);
-	i = 0;
-	while (s1[i])
+	while (!ft_strncmp(com[i], "-n", 2))
 	{
-		res[i] = s1[i];
+		k = 2;
+		while (com[i][k])
+		{
+			if (com[i][k] != 'n')
+				return (i);
+			k++;
+		}
+		*n_flag_adr = 1;
 		i++;
 	}
-	res[i] = ' ';
-	i = 0;
-	while (s2[i])
+	if (i == 1)
 	{
-		res[s1_len + 1 + i] = s2[i];
-		i++;
+		*n_flag_adr = 0;
+		return (0);
 	}
-	res[s1_len + 1 + i] = '\0';
-	return (res);
+	return (i);
 }
 
 int	get_n_option(char **com, int *n_flag_adr)
 {
 	int	i;
-	int	k;
+	int	ret;
 
 	i = 1;
 	if (!ft_strncmp(com[0], "echo", 4))
-	{
-		while (!ft_strncmp(com[i], "-n", 2))
-		{
-			k = 2;
-			while (com[i][k])
-			{
-				//echo -nnnkn -nnnnn a
-				if (com[i][k] != 'n')
-					return (i);
-				k++;
-			}
-			*n_flag_adr = 1;
-			i++;
-		}
-		if (i == 1)
-		{
-			*n_flag_adr = 0;
-			return (0);
-		}
-		return (i);
-	}
+		return (get_n_option_seg(com, n_flag_adr, i));
 	else
 	{
 		if (!ft_strncmp(com[1], "-n", 3))
@@ -83,11 +70,12 @@ char	*get_echo_buf(char **com, int n_option)
 	ret = "";
 	while (com[i])
 	{
-		temp = ret;
 		if (!fst_flag)
 		{
-			ret = ft_strjoin_modified(ret, com[i]);
-			//free(temp);
+			if (temp)
+				free(temp);
+			ret = ft_strjoin_modified(ret, com[i], ' ');
+			temp = ret;
 		}
 		else
 			ret = com[i];

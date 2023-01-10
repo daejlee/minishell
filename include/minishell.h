@@ -202,15 +202,20 @@ void				set_start_end(size_t *start, size_t *end, \
  * built_in_related
  */
 
-int	is_built_in(char *com);
-int	exec_built_in(char **com, t_env *env);
-int	ft_cd(char *dir, t_env *env);
-int	exec_ft_echo(char **com);
-int	ft_echo(char *buf, int n_flag);
-int	ft_env(t_env *env);
-int	ft_exit(void);
-int	ft_export(char *name, t_env *env);
-int	ft_pwd(void);
-int	ft_unset(char *name, t_env *env);
+int		is_built_in(char *com);
+int		is_echo(char *buf);
+int		is_pwd(char *buf);
+int		is_env(char *buf);
+int		is_built_in(char *com);
+int		exec_built_in(char **com, t_env *env);
+int		ft_cd(char *dir, t_env *env);
+int		exec_ft_echo(char **com);
+int		ft_echo(char *buf, int n_flag);
+int		ft_env(t_env *env);
+int		ft_exit(void);
+int		ft_export(char *name, t_env *env);
+int		ft_pwd(void);
+int		ft_unset(char *name, t_env *env);
+char	*ft_strjoin_modified(char const *s1, char const *s2, char c);
 
 #endif
