@@ -39,6 +39,7 @@ int	here_doc_seg(t_pcs *p, t_token *now, int i)
 	char	*temp;
 	char	*buf;
 
+	signal_heredoc();
 	limiter = now->next->origin_str;
 	here_doc_fd = open(p->here_doc_buffers[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (here_doc_fd == -1)
@@ -65,6 +66,7 @@ int	here_doc_seg(t_pcs *p, t_token *now, int i)
 	write(here_doc_fd, ret, ft_strlen(ret));
 	close(here_doc_fd);
 	free(ret);
+	signal_default();
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/09 21:51:41 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/10 15:19:27 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,14 @@ t_token_meta		*free_token_meta(t_token_meta *meta);
  * utils/signal.c
  */
 
-void				signal_process(int sig);
+void				sig_excute_process(int sig);
+void				sig_heredoc_process(int sig);
+void				sig_main_process(int sig);
+
 void				signal_default(void);
 void				signal_execute(void);
 void				signal_ignore(void);
-void	test1(int sig);
+void				signal_heredoc(void);
 
 /**
  * utils/terminal.c
