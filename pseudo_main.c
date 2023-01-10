@@ -24,12 +24,6 @@ int	set_env(t_env **env, char **envp)
 	return (0);
 }
 
-/*
-ex) minishell $ cat temp.txt | grep 'a'
-scanner -> /cat/ /temp.txt/ /|/ /grep/ /'a'/로 분리 후 링크드 리스트로 저장
-parser -> 링크드 리스트를 순회하며 이진 트리 구성 -> 하지만 멘데토리 한정에서는 링크드 리스트로 구현하는 것이 나을 수 있다.
-*/
-
 int	main(int argc, char **argv, char **envp)
 {
 	char			*buf;

@@ -1,6 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/10 16:30:30 by daejlee           #+#    #+#             */
+/*   Updated: 2023/01/10 17:26:19 by daejlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static char *ft_split_modified(char *name)
+typedef struct s_ft_export
+{
+	t_env			*head;
+	t_env			*temp;
+	t_env			**arr;
+	int				size;
+	int				i;
+	int				k;
+	unsigned int	len;
+}	t_ft_export;
+
+static char	*ft_split_modified(char *name)
 {
 	char	**ret;
 	int		i;
@@ -18,66 +41,46 @@ static char *ft_split_modified(char *name)
 	return (ret);
 }
 
-static int	print_sorted_env(t_env *env)
+static int	seg_1(t_ft_export *p, t_env *env)
 {
-	int	size;
-	int i;
-	int	k;
-	char	idx;
-	unsigned int	len;
-	t_env	*head;
-	t_env	*temp;
-	t_env	**arr;
+	int	i;
 
-	size = 1;
-	head = env;
-	temp = head->next;
-	while (temp != head)
+	p->size = 1;
+	p->head = env;
+	p->temp = p->head->next;
+	while (p->temp != p->head)
 	{
-		size++;
-		temp = temp->next;
+		p->size++;
+		p->temp = p->temp->next;
 	}
-	arr = (t_env **)malloc(sizeof(t_env *) * size);
-	if (!arr)
+	p->arr = (t_env **)malloc(sizeof(t_env *) * p->size);
+	if (!p->arr)
 		return (1);
 	i = 0;
-	temp = head;
-	while (i < size)
+	p->temp = p->head;
+	while (i < p->size)
 	{
-		arr[i++] = temp;
-		temp = temp->next;
+		p->arr[i++] = p->temp;
+		p->temp = p->temp->next;
 	}
-	k = 0;
-	while (k < size)
-	{
-		i = 0;
-		while (i < size - 1)
-		{
-			if (ft_strlen(arr[i]->key) <= ft_strlen(arr[i + 1]->key))
-				len = ft_strlen(arr[i + 1]->key);
-			else
-				len = ft_strlen(arr[i]->key);
-			if (ft_strncmp(arr[i]->key, arr[i + 1]->key, len) > 0)
-			{
-				temp = arr[i];
-				arr[i] = arr[i + 1];
-				arr[i + 1] = temp;
-			}
-			i++;
-		}
-		k++;
-	}
+	return (0);
+}
+
+static int	seg_2(t_ft_export p)
+{
+	int	i;
+
 	i = 0;
-	while (i < size)
+	while (i < p.size)
 	{
-		if (ft_strncmp(arr[i]->key, "_", ft_strlen(arr[i]->key)))
+		if (ft_strncmp(p.arr[i]->key, "_", ft_strlen(p.arr[i]->key)))
 		{
 			write(1, "declare -x ", 12);
-			write(1, arr[i]->key, ft_strlen(arr[i]->key));
-			if (arr[i]->value)
+			write(1, p.arr[i]->key, ft_strlen(p.arr[i]->key));
+			if (p.arr[i]->value)
 			{
 				write(1, "=\"", 3);
-				write(1, arr[i]->value, ft_strlen(arr[i]->value));
+				write(1, p.arr[i]->value, ft_strlen(p.arr[i]->value));
 				write(1, "\"", 1);
 			}
 			write(1, "\n", 1);
@@ -85,6 +88,35 @@ static int	print_sorted_env(t_env *env)
 		i++;
 	}
 	return (0);
+}
+
+static int	print_sorted_env(t_env *env)
+{
+	t_ft_export		p;
+
+	if (seg(&p, env))
+		return (1);
+	p.k = 0;
+	while (p.k < p.size)
+	{
+		p.i = 0;
+		while (p.i < p.size - 1)
+		{
+			if (ft_strlen(p.arr[p.i]->key) <= ft_strlen(p.arr[p.i + 1]->key))
+				p.len = ft_strlen(p.arr[p.i + 1]->key);
+			else
+				p.len = ft_strlen(p.arr[p.i]->key);
+			if (ft_strncmp(p.arr[p.i]->key, p.arr[p.i + 1]->key, p.len) > 0)
+			{
+				p.temp = p.arr[p.i];
+				p.arr[p.i] = p.arr[p.i + 1];
+				p.arr[p.i + 1] = p.temp;
+			}
+			p.i++;
+		}
+		p.k++;
+	}
+	return (seg_2(p));
 }
 
 /**
@@ -102,7 +134,6 @@ int	ft_export(char *name, t_env *env)
 		return (print_sorted_env(env));
 	if (!ft_strchr(name, '='))
 	{
-		env_temp = NULL;
 		env_temp = find_env(env, name);
 		if (!env_temp)
 		{
@@ -117,9 +148,6 @@ int	ft_export(char *name, t_env *env)
 	if (env_temp && env_temp->value)
 		env_temp->value = temp[1];
 	else
-	{
-		env_temp = init_env(temp[0], temp[1]);
-		push_env(&env, env_temp);
-	}
+		push_env(&env, init_env(temp[0], temp[1]));
 	return (0);
 }

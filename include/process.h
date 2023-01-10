@@ -61,7 +61,6 @@ int			check_redir(t_pcs *p);
 
 int			err_terminate(t_pcs *p);
 int			free_arr(char **com);
-char		*ft_strjoin_modified(char const *s1, char const *s2);
 int			get_pipes(t_pcs *p, int pcs_cnt);
 
 #endif
