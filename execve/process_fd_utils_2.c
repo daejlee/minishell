@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:20:30 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/10 20:21:58 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:43:57 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,13 @@ void	reset_fds(t_pcs *p, int stdinout_storage[2], t_token_meta *meta,
 	{
 		close(p->pfd_arr[i][0]);
 		close(p->pfd_arr[i][1]);
+		free(p->pfd_arr[i]);
 		i++;
 	}
 	dup2(stdinout_storage[1], 1);
 	dup2(stdinout_storage[0], 0);
 	close(stdinout_storage[1]);
 	close(stdinout_storage[0]);
+	free(p->pfd_arr);
+	free(p->com);
 }

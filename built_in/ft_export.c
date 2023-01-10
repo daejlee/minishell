@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:30:30 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 03:15:36 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 04:01:12 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static int	seg_2(t_ft_export p)
 		}
 		i++;
 	}
+	free(p.arr);
 	return (0);
 }
 
@@ -138,5 +139,6 @@ int	ft_export(char *name, t_env *env)
 		env_temp->value = temp[1];
 	else
 		push_env(&env, init_env(temp[0], temp[1]));
+	free(temp);
 	return (0);
 }

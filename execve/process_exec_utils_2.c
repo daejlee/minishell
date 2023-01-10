@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:36 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 03:25:20 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:37:14 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int	wrap_up_pcs(t_pcs *p, t_token_meta *meta, int stdout_dup)
 	i = get_here_doc_cnt(meta);
 	while (i--)
 		unlink(p->here_doc_buffers[i]);
+	free (p->here_doc_buffers);
 	close(0);
 	close(1);
 	p->stdinout_storage[1] = stdout_dup;

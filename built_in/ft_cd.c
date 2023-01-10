@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:28:14 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 01:06:27 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:53:10 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ static int	set_1(t_ft_cd *p, char **dir_adr, t_env *env)
 			return (chdir(p->node->value));
 	}
 	if (p->node)
+	{
+		free (p->node->value);
 		p->node->value = p->env_pwd;
+	}
 	if (!*dir_adr && (!p->env_home || p->env_home[0] == '\0'))
 		return (1);
 	else if (!*dir_adr)
@@ -89,5 +92,6 @@ int	ft_cd(char *dir, t_env *env)
 		write(2, dir, ft_strlen(dir));
 		write(2, "\n", 1);
 	}
+	free(curpath);
 	return (ret);
 }
