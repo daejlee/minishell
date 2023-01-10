@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 21:14:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 01:08:18 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:17:06 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	hrdc_seg_seg_1(t_pcs *p, t_hrdc_seg *l, t_token *now, int i)
 	return (0);
 }
 
-static int	hrdc_seg_seg_2(t_hrdc_seg *l)
+static void	hrdc_seg_seg_2(t_hrdc_seg *l)
 {
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 02:57:10 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 02:57:54 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:23:59 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ t_token	*prep_redir_n_com(t_pcs *p, t_token_meta *meta, t_token *now,
 		free(p->com);
 	p->com = get_com(now, meta);
 	if (!p->com)
-		return (err_terminate(p));
+		err_terminate(p);
 	now = prep_fd_n_move(now, i, meta, p);
 	if (p->empty_buf_flag || p->prev_outfile_fd != 1)
 	{
 		p->empty_buf_flag = open(EMPTY_BUFFER, O_RDONLY | O_CREAT, 0644);
 		if (!p->empty_buf_flag)
-			return (err_terminate(p));
+			err_terminate(p);
 		close (0);
 		dup2(p->empty_buf_flag, 0);
 	}

@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:26:07 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 02:55:41 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:25:05 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	**get_sh_path(t_env *env, int *no_path_flag)
 		fst_flag = 0;
 	}
 	*no_path_flag = 1;
-	return (no_path_flag);
+	return (NULL);
 }
 
 static char	*get_sh_func(char **com, t_env *env, int *no_path_flag)
@@ -50,9 +50,9 @@ static char	*get_sh_func(char **com, t_env *env, int *no_path_flag)
 
 	i = 0;
 	sh_paths = get_sh_path(env, no_path_flag);
-	if (!sh_paths)
-		return (NULL);
 	if (*no_path_flag)
+		return (NULL);
+	if (!sh_paths)
 		return (NULL);
 	while (sh_paths[i])
 	{
@@ -89,7 +89,7 @@ void	exec_com(t_pcs *p, t_token *now, t_env *env)
 	if (!sh_func)
 	{
 		free(p->com);
-		exit (err_terminate(p));
+		err_terminate(p);
 	}
 	execve((const char *)sh_func, (char *const *)p->com, p->envp);
 	execve_failed(p, sh_func);
@@ -112,12 +112,12 @@ int	prep_exec_loop(t_pcs *p, t_token_meta *meta)
 	p->pcs_cnt = get_pcs_cnt(meta);
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (p->pcs_cnt));
 	if (!p->pids)
-		return (err_terminate(p));
+		err_terminate(p);
 	p->pfd_arr = (int **)malloc(sizeof (int *) * (p->pcs_cnt));
 	if (!p->pfd_arr)
-		return (err_terminate(p));
+		err_terminate(p);
 	if (get_pipes(p, p->pcs_cnt))
-		return (err_terminate(p));
+		err_terminate(p);
 	p->stdinout_storage[0] = dup(0);
 	p->stdinout_storage[1] = dup(1);
 	p->hdb_idx = 0;

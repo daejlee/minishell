@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:36 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 02:56:22 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:25:20 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	launch_com(t_pcs *p, t_token *now, t_env *env, int i)
 	{
 		p->pids[i] = fork();
 		if (p->pids[i] == -1)
-			return (err_terminate(p));
+			err_terminate(p);
 		else if (!p->pids[i])
 		{
 			if (i)
@@ -106,6 +106,7 @@ int	launch_com(t_pcs *p, t_token *now, t_env *env, int i)
 		p->pids[i] = -1;
 		exec_com(p, now, env);
 	}
+	return (0);
 }
 
 int	wrap_up_pcs(t_pcs *p, t_token_meta *meta, int stdout_dup)

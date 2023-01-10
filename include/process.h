@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 03:04:32 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 03:11:17 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:23:36 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int			check_redir(t_pcs *p);
  * process_utils_3.c
  */
 
-int			err_terminate(t_pcs *p);
+void		err_terminate(t_pcs *p);
 int			free_arr(char **com);
 int			get_pipes(t_pcs *p, int pcs_cnt);
 

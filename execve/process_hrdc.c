@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:35:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 01:46:02 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:24:18 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	chld_hrdc(t_pcs *p, t_token *now, t_token_meta *meta)
 		if (now->type == I_HRDOC)
 		{
 			if (here_doc_seg(p, now, i))
-				return (err_terminate(p));
+				err_terminate(p);
 			i++;
 		}
 		now = now->next;

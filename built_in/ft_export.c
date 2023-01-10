@@ -6,13 +6,13 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:30:30 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 01:06:12 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 03:15:36 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*ft_split_modified(char *name)
+static char	**ft_split_modified(char *name)
 {
 	char	**ret;
 	int		i;
