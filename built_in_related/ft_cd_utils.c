@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 15:22:18 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/10 15:22:20 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/10 20:09:26 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 void	free_arr(char **arr)
@@ -79,7 +80,7 @@ static int	seg(char **curpath_adr, char *env_cdpath, char **splitted_cdpath)
 	return (0);
 }
 
-static int	check_cdpath(char **curpath_adr, char *env_cdpath)
+int	check_cdpath(char **curpath_adr, char *env_cdpath)
 {
 	char	**splitted_cdpath;
 	char	*temp;
@@ -105,7 +106,7 @@ static int	check_cdpath(char **curpath_adr, char *env_cdpath)
 	}
 }
 
-static char	*get_env_val(char *key, t_env *env)
+char	*get_env_val(char *key, t_env *env)
 {
 	t_env	*now;
 

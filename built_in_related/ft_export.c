@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:30:30 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/10 17:26:19 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/10 20:05:51 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	print_sorted_env(t_env *env)
 {
 	t_ft_export		p;
 
-	if (seg(&p, env))
+	if (seg_1(&p, env))
 		return (1);
 	p.k = 0;
 	while (p.k < p.size)

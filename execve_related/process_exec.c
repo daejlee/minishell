@@ -44,7 +44,7 @@ static char	*get_sh_func(char **com, t_env *env, int *no_path_flag)
 		return (NULL);
 	while (sh_paths[i])
 	{
-		sh_func = ft_strjoin_modified(sh_paths[i++], com[0]);
+		sh_func = ft_strjoin_modified(sh_paths[i++], com[0], '/');
 		if (!access(sh_func, X_OK) || !sh_func)
 		{
 			free_arr(sh_paths);
