@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:46:03 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 01:58:05 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 11:48:02 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)
 
 	status = 0;
 	i = 0;
+	close(0);
+	close(1);
 	while (i < pcs_cnt)
 		waitpid(pids[i++], &status, 0);
 	free(pids);

@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 21:14:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 03:17:06 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 11:14:44 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	hrdc_seg_seg_2(t_hrdc_seg *l)
 			free(l->buf);
 		}
 		else
-			l->ret = l->buf;
+			l->ret = ft_strdup(l->buf);
 		l->fst_flag = 0;
 	}
 	if (l->buf)

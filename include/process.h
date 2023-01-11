@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 03:04:32 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 03:23:36 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 11:37:11 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_token		*prep_redir_n_com(t_pcs *p, t_token_meta *meta, t_token *now,
  * process_fd_utils.c
  */
 
-void		prep(int input_fd, int output_fd, int closing_fd, t_pcs *p);
+void		prep(int input_fd, int output_fd);
 void		swap_pfd(int **pfd1, int **pfd2);
 void		prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta);
 void		reset_fds(t_pcs *p, int stdinout_storage[2], t_token_meta *meta,

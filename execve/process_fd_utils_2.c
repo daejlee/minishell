@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:20:30 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 03:43:57 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 11:36:41 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ void	swap_pfd(int **pfd1, int **pfd2)
 	*pfd2 = temp;
 }
 
-void	prep(int input_fd, int output_fd, int closing_fd, t_pcs *p)
+void	prep(int input_fd, int output_fd)
 {
-	close(closing_fd);
 	if (input_fd)
 	{
 		close (0);
