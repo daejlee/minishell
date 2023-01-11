@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:18:53 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:55:34 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:33:25 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		if (!now)
 			break ;
 		signal_execute();
-		launch_com(p, now, env, i);
+		launch_com(p, env, i);
 		i++;
 		now = now->next;
 		signal_ignore();

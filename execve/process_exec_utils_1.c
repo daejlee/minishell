@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec_utils_1.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:26:07 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:55:28 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:34:16 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*get_sh_func(char **com, t_env *env, int *no_path_flag)
 	return (sh_func);
 }
 
-void	exec_com(t_pcs *p, t_token *now, t_env *env)
+void	exec_com(t_pcs *p, t_env *env)
 {
 	char	*sh_func;
 	int		no_path_flag;
@@ -82,7 +82,7 @@ void	exec_com(t_pcs *p, t_token *now, t_env *env)
 	sh_func = get_sh_func(p->com, env, &no_path_flag);
 	if (no_path_flag)
 	{
-		execve_failed(p, p->com[0]);
+		execve_failed(p->com[0]);
 		return ;
 	}
 	if (!sh_func)
@@ -91,7 +91,7 @@ void	exec_com(t_pcs *p, t_token *now, t_env *env)
 		err_terminate(p);
 	}
 	execve((const char *)sh_func, (char *const *)p->com, p->envp);
-	execve_failed(p, sh_func);
+	execve_failed(sh_func);
 }
 
 t_token	*prep_fd_n_move(t_token *now, int i, t_token_meta *meta, t_pcs *p)
@@ -102,7 +102,7 @@ t_token	*prep_fd_n_move(t_token *now, int i, t_token_meta *meta, t_pcs *p)
 		now = now->next;
 	if (now->type == PIPE && i == p->pcs_cnt - 1)
 		now = now->next;
-	prep_fds(p, i, p->pcs_cnt, meta);
+	prep_fds(p, i, p->pcs_cnt);
 	return (now);
 }
 

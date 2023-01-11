@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 18:01:57 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 13:11:36 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:31:58 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int					insert_value_on_index(char **str, char *value, \
  * split_spaces.c
  */
 
-int					split_spaces(t_token_meta *meta, t_env *env);
+int					split_spaces(t_token_meta *meta);
 int					split_spaces_in_substr(t_token_meta *meta, char *str);
 int					skip_quotes(char *str, size_t *end);
 int					has_heredoc_before(t_token *token, size_t index);

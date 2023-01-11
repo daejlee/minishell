@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:15:05 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:03:42 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:30:31 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	set_env(t_env **env, char **envp)
 {
 	int		i;
 	char	**temp;
-	t_env	*now;
 
 	*env = NULL;
 	i = 0;
@@ -45,6 +44,8 @@ int	main(int argc, char **argv, char **envp)
 
 	set_env(&env, envp);
 	meta = NULL;
+	(void)argc;
+	(void)argv;
 	while (1)
 	{
 		terminal_unset_echo();

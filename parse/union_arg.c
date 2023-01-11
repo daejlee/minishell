@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   union_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:44:26 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 12:58:03 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 12:50:28 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ t_token	*create_union_token(size_t *num, t_token_meta *meta, t_token *node)
 	free_token(node);
 	node = init_token(str, ARG);
 	if (!node)
-		return (ok_and_free_multiple_str(origin_str, NULL, NULL, NULL));
+	{
+		ok_and_free_multiple_str(origin_str, NULL, NULL, NULL);
+		return (NULL);
+	}
 	set_token_origin(node, origin_str);
 	return (node);
 }

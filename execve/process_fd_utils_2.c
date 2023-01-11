@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_fd_utils_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:20:30 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:55:39 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:31:40 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void	prep(int input_fd, int output_fd)
 	}
 }
 
-void	reset_fds(t_pcs *p, int stdinout_storage[2], t_token_meta *meta,
-	int pcs_cnt)
+void	reset_fds(t_pcs *p, int stdinout_storage[2], int pcs_cnt)
 {
 	int	i;
 

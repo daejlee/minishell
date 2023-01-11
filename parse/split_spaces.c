@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/09 13:59:40 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 12:48:34 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 /**
  * @brief 
  * meta에 있는 모든 INIT인 토큰들에서 공백을 분리해주는 함수입니다.
- * @param meta 
- * @param env 
+ * @param meta
  * @return int 성공 시 0, 실패 시 1
  */
-int	split_spaces(t_token_meta *meta, t_env *env)
+int	split_spaces(t_token_meta *meta)
 {
 	t_token	*node;
 	size_t	token_num;

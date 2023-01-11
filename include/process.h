@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 03:04:32 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:17:16 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:31:59 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int			here_doc(t_token_meta *meta, t_pcs *p);
  * process_exec.c
  */
 
-void		exec_com(t_pcs *p, t_token *now, t_env *env);
 int			here_doc_seg(t_pcs *p, t_token *now, int i);
 int			exec_fork(t_pcs *p, t_token_meta *meta, t_env *env);
 
@@ -50,7 +49,7 @@ int			exec_fork(t_pcs *p, t_token_meta *meta, t_env *env);
  * process_exec_utils_1.c
  */
 
-void		exec_com(t_pcs *p, t_token *now, t_env *env);
+void		exec_com(t_pcs *p, t_env *env);
 t_token		*prep_fd_n_move(t_token *now, int i, t_token_meta *meta, t_pcs *p);
 int			prep_exec_loop(t_pcs *p, t_token_meta *meta);
 
@@ -60,7 +59,7 @@ int			prep_exec_loop(t_pcs *p, t_token_meta *meta);
 
 char		**get_com(t_token *now, t_token_meta *meta);
 char		**get_trimmed_com(t_token *now, t_token_meta *meta);
-int			launch_com(t_pcs *p, t_token *now, t_env *env, int i);
+int			launch_com(t_pcs *p, t_env *env, int i);
 int			wrap_up_pcs(t_pcs *p, t_token_meta *meta, int stdout_dup);
 
 /**
@@ -80,9 +79,8 @@ t_token		*prep_redir_n_com(t_pcs *p, t_token_meta *meta, t_token *now,
 
 void		prep(int input_fd, int output_fd);
 void		swap_pfd(int **pfd1, int **pfd2);
-void		prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta);
-void		reset_fds(t_pcs *p, int stdinout_storage[2], t_token_meta *meta,
-				int pcs_cnt);
+void		prep_fds(t_pcs *p, int i, int pcs_cnt);
+void		reset_fds(t_pcs *p, int stdinout_storage[2], int pcs_cnt);
 
 /**
  * process_utils_1.c
@@ -96,8 +94,8 @@ int			get_pcs_cnt(t_token_meta *meta);
  * process_utils_2.c
  */
 
-int			wait_for_children(t_pcs *p, pid_t *pids, int temp);
-void		execve_failed(t_pcs *p, char *sh_func);
+int			wait_for_children(pid_t *pids, int pcs_cnt);
+void		execve_failed(char *sh_func);
 void		init_p(t_pcs *p);
 int			check_redir(t_pcs *p);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 21:22:23 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/09 15:17:24 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:32:49 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_token_meta	*parse(t_env *env, char *str)
 	}
 	free(str);
 	if (interpret_quotes(meta, env) || split_operator(meta) \
-		|| interpret_env(meta, env) || split_spaces(meta, env) \
+		|| interpret_env(meta, env) || split_spaces(meta) \
 		|| modify_init_to_arg(meta) || union_args_to_one(meta) \
 		|| delete_space_token(meta) || syntax_error(meta) \
 		|| modify_arg_to_limiter(meta) || delete_empty_token(meta))

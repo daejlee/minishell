@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 16:33:27 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 13:01:35 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:32:01 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	delete_env(t_env *head, char *key)
 t_env	*find_env(t_env *head, char *key)
 {
 	t_env	*node;
-	size_t	key_len;
 
 	if (!head || !key)
 		return (NULL);

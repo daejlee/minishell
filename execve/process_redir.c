@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   process_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:25:18 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:55:50 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:31:44 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
-static void	seg(t_token *now, t_pcs *p, char *str)
+static void	seg(t_pcs *p, char *str)
 {
 	if (p->infile_fd)
 		close(p->infile_fd);
@@ -37,7 +37,7 @@ int	input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i)
 		fst_flag = 0;
 		if (now->type == I_REDIR)
 		{
-			seg(now, p, now->next->str);
+			seg(p, now->next->str);
 			if (p->infile_fd == -1)
 			{
 				print_infile_err(now);
@@ -46,7 +46,7 @@ int	input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i)
 		}
 		else if (now->type == I_HRDOC)
 		{
-			seg(now, p, p->here_doc_buffers[i]);
+			seg(p, p->here_doc_buffers[i]);
 			i++;
 		}
 		now = now->next;

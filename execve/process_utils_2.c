@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:46:03 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:55:58 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:31:48 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
-int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)
+int	wait_for_children(pid_t *pids, int pcs_cnt)
 {
 	int	i;
 	int	status;
@@ -27,7 +27,7 @@ int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)
 	return (WEXITSTATUS(status));
 }
 
-void	execve_failed(t_pcs *p, char *sh_func)
+void	execve_failed(char *sh_func)
 {
 	unlink(EMPTY_BUFFER);
 	if (sh_func && !access(sh_func, F_OK))

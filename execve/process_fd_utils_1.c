@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   process_fd_utils_1.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:19:57 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:55:37 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:31:35 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
-static void	prep_i(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
+static void	prep_i(t_pcs *p, int i, int pcs_cnt)
 {
 	if (pcs_cnt == 1)
 		prep(p->infile_fd, 1);
@@ -22,7 +22,7 @@ static void	prep_i(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
 		prep(p->infile_fd, p->pfd_arr[i][1]);
 }
 
-static void	prep_o(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
+static void	prep_o(t_pcs *p, int i, int pcs_cnt)
 {
 	if (pcs_cnt == 1 || !i)
 		prep(0, p->outfile_fd);
@@ -30,7 +30,7 @@ static void	prep_o(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
 		prep(p->pfd_arr[i - 1][0], p->outfile_fd);
 }
 
-static void	prep_no_redir(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
+static void	prep_no_redir(t_pcs *p, int i, int pcs_cnt)
 {
 	if (pcs_cnt == 1)
 		return ;
@@ -42,7 +42,7 @@ static void	prep_no_redir(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
 		prep(p->pfd_arr[i - 1][0], p->pfd_arr[i][1]);
 }
 
-void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
+void	prep_fds(t_pcs *p, int i, int pcs_cnt)
 {
 	int	redir_flag;
 
@@ -50,9 +50,9 @@ void	prep_fds(t_pcs *p, int i, int pcs_cnt, t_token_meta *meta)
 	if (redir_flag == I_O_BOTH)
 		prep(p->infile_fd, p->outfile_fd);
 	else if (redir_flag == I_ONLY)
-		prep_i(p, i, pcs_cnt, meta);
+		prep_i(p, i, pcs_cnt);
 	else if (redir_flag == O_ONLY)
-		prep_o(p, i, pcs_cnt, meta);
+		prep_o(p, i, pcs_cnt);
 	else
-		prep_no_redir(p, i, pcs_cnt, meta);
+		prep_no_redir(p, i, pcs_cnt);
 }

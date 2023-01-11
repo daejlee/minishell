@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec_utils_2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:36 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:55:25 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:34:53 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	**get_trimmed_com(t_token *now, t_token_meta *meta)
 {
 	int		slot_cnt;
 	char	**ret;
-	t_token	*temp;
 	int		i;
 
 	slot_cnt = get_com_slots(now, meta);
@@ -85,7 +84,7 @@ char	**get_com(t_token *now, t_token_meta *meta)
 	return (ret);
 }
 
-int	launch_com(t_pcs *p, t_token *now, t_env *env, int i)
+int	launch_com(t_pcs *p, t_env *env, int i)
 {
 	if (!is_built_in(p->com[0]))
 	{
@@ -97,13 +96,13 @@ int	launch_com(t_pcs *p, t_token *now, t_env *env, int i)
 			if (i)
 				close(p->pfd_arr[i - 1][1]);
 			close(p->pfd_arr[i][0]);
-			exec_com(p, now, env);
+			exec_com(p, env);
 		}
 	}
 	else
 	{
 		p->pids[i] = -1;
-		exec_com(p, now, env);
+		exec_com(p, env);
 	}
 	return (0);
 }
@@ -129,8 +128,8 @@ int	wrap_up_pcs(t_pcs *p, t_token_meta *meta, int stdout_dup)
 	}
 	free (p->here_doc_buffers);
 	p->stdinout_storage[1] = stdout_dup;
-	ret = wait_for_children(p, p->pids, p->pcs_cnt);
-	reset_fds(p, p->stdinout_storage, meta, p->pcs_cnt);
+	ret = wait_for_children(p->pids, p->pcs_cnt);
+	reset_fds(p, p->stdinout_storage, p->pcs_cnt);
 	if (!p->pcs_cnt)
 		return (g_exit_status);
 	else
