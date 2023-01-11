@@ -6,11 +6,39 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:28:14 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 03:53:10 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 10:59:16 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	set_3(t_ft_cd *p, char **dir_adr)
+{
+	if (!ft_strncmp(*dir_adr, "-", ft_strlen(*dir_adr)))
+	{
+		if (!p->node)
+		{
+			write(2, "minishell: ft_cd: OLDPWD not set\n", 34);
+			return (0);
+		}
+		else
+		{
+			printf("%s\n", p->node->value);
+			return (chdir(p->node->value));
+		}
+	}
+	else if (!ft_strncmp(*dir_adr, "~", ft_strlen(*dir_adr)))
+	{
+		if (!p->env_home)
+		{
+			write(2, "minishell: ft_cd: HOME not set\n", 32);
+			return (0);
+		}
+		else
+			return (chdir(p->env_home));
+	}
+	return (1);
+}
 
 static int	set_1(t_ft_cd *p, char **dir_adr, t_env *env)
 {
@@ -18,16 +46,9 @@ static int	set_1(t_ft_cd *p, char **dir_adr, t_env *env)
 	p->env_cdpath = get_env_val("CDPATH", env);
 	p->env_pwd = get_env_val("PWD", env);
 	p->node = find_env(env, "OLDPWD");
-	if (!ft_strncmp(*dir_adr, "-", ft_strlen(*dir_adr)))
-	{
-		if (!p->node)
-		{
-			write(2, "minishell: ft_cd: OLDPWD not set\n", 34);
-			return (1);
-		}
-		else
-			return (chdir(p->node->value));
-	}
+
+	if(!set_3(p, dir_adr))
+		return (0);
 	if (p->node)
 	{
 		free (p->node->value);
