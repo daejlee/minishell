@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 13:00:49 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:10:50 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,5 @@ typedef struct s_pcs
 }	t_pcs;
 
 int					g_exit_status;
-
-
 
 #endif

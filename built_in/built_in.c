@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:32:43 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 03:16:19 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 13:12:39 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
+
+static int	exec_built_in_seg(int built_in_code, char **com, t_env *env, int i);
 
 /**
  * @brief 

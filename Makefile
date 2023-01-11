@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2023/01/11 02:57:40 by daejlee          ###   ########.fr        #
+#    Updated: 2023/01/11 13:15:10 by hkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ CC = cc
 CFLAGS = -g #-Wall -Wextra -Werror
 RM = rm -f
 
-INCLUDE = -I./include -I/Users/daejlee/.brew/opt/readline/include
-LIBRARY = -lreadline -L/Users/daejlee/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
+INCLUDE = -I./include -I/Users/hkong/.brew/opt/readline/include
+LIBRARY = -lreadline -L/Users/hkong/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
 
 SRCS = main.c
 
@@ -31,7 +31,7 @@ EXECVE_DIR = execve/
 SRCS_EXECVE = process.c process_hrdc.c process_hrdc_utils.c process_redir.c process_exec.c process_exec_utils_1.c process_exec_utils_2.c process_exec_utils_3.c process_fd_utils_1.c process_fd_utils_2.c process_utils_1.c process_utils_2.c process_utils_3.c
 
 UTILS_DIR = utils/
-SRCS_UTILS = env_list.c token.c token_meta.c string_utils.c number_utils.c error.c signal.c terminal.c
+SRCS_UTILS = env_list.c token.c token_meta.c string_utils_1.c string_utils_2.c number_utils.c error.c signal.c signal_func.c terminal.c
 
 OBJ_FILES = $(SRCS:%.c=%.o) $(SRCS_BUILT_IN:%.c=$(BUILT_IN_DIR)%.o) $(SRCS_PARSE:%.c=$(PARSE_DIR)%.o) $(SRCS_UTILS:%.c=$(UTILS_DIR)%.o) $(SRCS_EXECVE:%.c=$(EXECVE_DIR)%.o)
 

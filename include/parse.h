@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 18:01:57 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 12:59:22 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:11:36 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSE_H
 
 # include "minishell.h"
+# include "utils.h"
 
 /**
  * parse.c

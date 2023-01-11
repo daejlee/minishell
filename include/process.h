@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 03:04:32 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:55:21 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:17:16 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define PROCESS_H
 
 # include "minishell.h"
+# include "utils.h"
+# include "built_in.h"
 
 /**
  * process.c
@@ -104,7 +106,6 @@ int			check_redir(t_pcs *p);
  */
 
 void		err_terminate(t_pcs *p);
-int			free_arr(char **com);
 int			get_pipes(t_pcs *p, int pcs_cnt);
 
 #endif

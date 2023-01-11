@@ -29,6 +29,7 @@
 		"utility": "c",
 		"built_in.h": "c",
 		"libft.h": "c",
-		"utils.h": "c"
+		"utils.h": "c",
+		"parse.h": "c"
 	}
 }

@@ -6,14 +6,14 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:00:08 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 13:01:11 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:14:46 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 /**
  * token.c
@@ -49,7 +49,6 @@ void				sig_excute_process(int sig);
 void				sig_heredoc_process(int sig);
 void				sig_main_process(int sig);
 
-
 /**
  * terminal.c
  */
@@ -74,7 +73,7 @@ int					delete_env(t_env *head, char *key);
 t_env				*find_env(t_env *head, char *key);
 
 /**
- * string_utils.c
+ * string_utils_1.c
  */
 
 int					is_exactly_same(char *str1, char *str2);
@@ -87,6 +86,14 @@ int					set_two_string(char **str1, char *new_str1, \
 										char **str2, char *new_str2);
 
 /**
+ * string_utils_2.c
+ */
+
+void				free_arr(char **arr);
+char				*ft_strjoin_modified(char const *s1, char const *s2, \
+																		char c);
+
+/**
  * number_utils.c
  */
 
@@ -94,6 +101,5 @@ void				initialize_numbers(size_t *num1, size_t *num2, \
 												size_t *num3, size_t *num4);
 void				set_start_end(size_t *start, size_t *end, \
 										size_t start_num, size_t end_num);
-
 
 #endif
