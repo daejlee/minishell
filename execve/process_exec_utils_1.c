@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec_utils_1.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:26:07 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:34:16 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 17:02:16 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static char	**get_sh_path(t_env *env, int *no_path_flag)
 			sh_paths = ft_split(now->value, ':');
 			if (!sh_paths)
 				return (NULL);
-			ft_strlcpy(sh_paths[0], sh_paths[0] + 5,
-				ft_strlen(sh_paths[0]) - 4);
+			// ft_strlcpy(sh_paths[0], sh_paths[0] + 5,
+			// 	ft_strlen(sh_paths[0]) - 4);
 			return (sh_paths);
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:35:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:40:58 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 16:55:21 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	here_doc(t_token_meta *meta, t_pcs *p)
 
 	get_here_doc_buffers(meta, p);
 	now = meta->head;
+	if (!get_here_doc_cnt(meta))
+		return (0);
 	pid = fork();
 	if (!pid)
 	{
@@ -55,6 +57,7 @@ int	here_doc(t_token_meta *meta, t_pcs *p)
 		i = get_here_doc_cnt(meta);
 		while (i--)
 			unlink(p->here_doc_buffers[i]);
+		// exit(1);
 	}
-	return (0);
+	return (status);
 }
