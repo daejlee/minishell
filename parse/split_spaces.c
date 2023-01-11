@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 15:16:44 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 12:48:34 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 13:54:09 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	split_spaces_in_substr(t_token_meta *meta, char *str)
 	initialize_numbers(&start, &end, &flag, NULL);
 	while (str[end] || start != end)
 	{
-		if (str[end] && str[end] == ' ' && start == end)
+		if (str[end] && (str[end] == ' ' || str[end] == '\t') && start == end)
 			set_start_end(&start, &end, start + 1, end + 1);
 		else if (str[end] && str[end] != ' ')
 		{
@@ -143,7 +143,7 @@ int	has_space(char *str)
 	index = 0;
 	while (str[index])
 	{
-		if (str[index] == ' ')
+		if (str[index] == ' ' || str[index] == '\t')
 			return (1);
 		index++;
 	}
