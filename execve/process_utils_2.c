@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:46:03 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 11:48:02 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 11:58:47 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)
 
 void	execve_failed(t_pcs *p, char *sh_func)
 {
-	err_terminate(p);
-	if (!access(sh_func, F_OK))
+	unlink(EMPTY_BUFFER);
+	if (sh_func && !access(sh_func, F_OK))
 	{
 		write(2, "minishell: ", 12);
 		write(2, sh_func, ft_strlen(sh_func));
@@ -43,9 +43,6 @@ void	execve_failed(t_pcs *p, char *sh_func)
 		write(2, sh_func, ft_strlen(sh_func));
 		write(2, ": command not found\n", 21);
 	}
-	free(p->com);
-	if (sh_func)
-		free(sh_func);
 	exit (127);
 }
 

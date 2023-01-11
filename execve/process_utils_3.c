@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:45:57 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 03:23:17 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 11:57:27 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	err_terminate(t_pcs *p)
 	close(0);
 	close(1);
 	unlink(EMPTY_BUFFER);
-	exit (1);
 }
 
 int	get_pipes(t_pcs *p, int pcs_cnt)

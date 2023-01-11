@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 21:14:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 11:14:44 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:30:55 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	hrdc_seg_seg_1(t_pcs *p, t_hrdc_seg *l, t_token *now, int i)
 			| O_CREAT, 0644);
 	if (l->here_doc_fd == -1)
 		return (1);
-	l->ret = "";
+	l->ret = ft_strdup("");
 	l->temp = NULL;
 	l->fst_flag = 1;
 	return (0);
@@ -29,13 +29,17 @@ static int	hrdc_seg_seg_1(t_pcs *p, t_hrdc_seg *l, t_token *now, int i)
 
 static void	hrdc_seg_seg_2(t_hrdc_seg *l)
 {
+	char	*temp;
+
 	while (1)
 	{
 		l->buf = readline(">");
 		if (!l->buf)
 			break ;
-		if (!ft_strncmp(l->buf, l->limiter, ft_strlen(l->buf)))
+		if (ft_strlen(l->buf) == ft_strlen(l->limiter) 
+				&& !ft_strncmp(l->buf, l->limiter, ft_strlen(l->limiter)))
 			break ;
+		temp = l->ret;
 		if (!l->fst_flag)
 		{
 			l->ret = ft_strjoin_modified(l->ret, l->buf, '\n');
@@ -43,6 +47,7 @@ static void	hrdc_seg_seg_2(t_hrdc_seg *l)
 		}
 		else
 			l->ret = ft_strdup(l->buf);
+		free(temp);
 		l->fst_flag = 0;
 	}
 	if (l->buf)
@@ -53,12 +58,14 @@ int	here_doc_seg(t_pcs *p, t_token *now, int i)
 {
 	t_hrdc_seg	l;
 
+	l.ret = NULL;
 	if (hrdc_seg_seg_1(p, &l, now, i))
 		return (1);
 	hrdc_seg_seg_2(&l);
 	l.temp = l.ret;
 	l.ret = ft_strjoin(l.ret, "\n");
-	free (l.temp);
+	if (l.temp)
+		free(l.temp);
 	write(l.here_doc_fd, l.ret, ft_strlen(l.ret));
 	close(l.here_doc_fd);
 	free(l.ret);
