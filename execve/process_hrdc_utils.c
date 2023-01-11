@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 21:14:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:30:55 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:34:17 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	hrdc_seg_seg_2(t_hrdc_seg *l)
 		l->buf = readline(">");
 		if (!l->buf)
 			break ;
-		if (ft_strlen(l->buf) == ft_strlen(l->limiter) 
-				&& !ft_strncmp(l->buf, l->limiter, ft_strlen(l->limiter)))
+		if (ft_strlen(l->buf) == ft_strlen(l->limiter)
+			&& !ft_strncmp(l->buf, l->limiter, ft_strlen(l->limiter)))
 			break ;
 		temp = l->ret;
 		if (!l->fst_flag)
