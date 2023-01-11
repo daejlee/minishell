@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:30:30 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:54:59 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 14:16:08 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,11 @@ int	ft_export(char *name, t_env *env)
 	temp = ft_split_modified(name);
 	env_temp = find_env(env, temp[0]);
 	if (env_temp && env_temp->value)
+	{
+		free(env_temp->value);
 		env_temp->value = temp[1];
+		free(temp[0]);
+	}
 	else
 		push_env(&env, init_env(temp[0], temp[1]));
 	free(temp);
