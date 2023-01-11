@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 21:14:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:55:42 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:40:26 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	hrdc_seg_seg_1(t_pcs *p, t_hrdc_seg *l, t_token *now, int i)
 {
-	signal_heredoc();
 	l->limiter = now->next->origin_str;
 	l->here_doc_fd = open(p->here_doc_buffers[i], O_WRONLY | O_TRUNC
 			| O_CREAT, 0644);
@@ -68,7 +67,6 @@ int	here_doc_seg(t_pcs *p, t_token *now, int i)
 	write(l.here_doc_fd, l.ret, ft_strlen(l.ret));
 	close(l.here_doc_fd);
 	free(l.ret);
-	signal_default();
 	return (0);
 }
 

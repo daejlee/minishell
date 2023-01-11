@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec_utils_2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:36 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:34:53 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 13:44:17 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	launch_com(t_pcs *p, t_env *env, int i)
 			err_terminate(p);
 		else if (!p->pids[i])
 		{
+			signal_execute();
 			if (i)
 				close(p->pfd_arr[i - 1][1]);
 			close(p->pfd_arr[i][0]);

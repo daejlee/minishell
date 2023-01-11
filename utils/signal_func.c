@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 12:57:23 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 13:01:42 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:45:30 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	sig_main_process(int sig)
 
 void	sig_excute_process(int sig)
 {
-	// fprintf(stderr, "execute_\n");
 	if (sig == SIGINT)
 		write(2, "\n", 1);
 	if (sig == SIGQUIT)
@@ -38,12 +37,9 @@ void	sig_excute_process(int sig)
 
 void	sig_heredoc_process(int sig)
 {
-	// fprintf(stderr, "hrdoc_\n");
 	if (sig == SIGINT)
 	{
-		// fprintf(stderr, "exit\n");
-
-		// write(2, "\n", 1);
+		write(2, "\n", 1);
 		exit(1);
 	}
 }

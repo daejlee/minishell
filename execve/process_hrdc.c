@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:35:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:55:47 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:40:58 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ int	here_doc(t_token_meta *meta, t_pcs *p)
 	now = meta->head;
 	pid = fork();
 	if (!pid)
+	{
+		signal_heredoc();
 		chld_hrdc(p, now, meta);
+	}
 	else
 		waitpid(pid, &status, 0);
 	if (WEXITSTATUS(status) == SIGINT || WEXITSTATUS(status) == SIGQUIT)

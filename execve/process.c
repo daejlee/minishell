@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:19:29 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:31:51 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 13:43:13 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	get_pcs(t_token_meta *meta, t_env *env, char **envp)
 
 	init_p(&p);
 	p.envp = envp;
+	signal_ignore();
 	if (here_doc(meta, &p))
 		return (1);
 	terminal_set_echo();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:18:53 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:33:25 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 13:43:00 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 		now = prep_redir_n_com(p, meta, now, i);
 		if (!now)
 			break ;
-		signal_execute();
 		launch_com(p, env, i);
 		i++;
 		now = now->next;
-		signal_ignore();
 	}
 	return (wrap_up_pcs(p, meta, stdout_dup));
 }
