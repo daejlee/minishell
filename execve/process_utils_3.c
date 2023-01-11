@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:45:57 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 11:57:27 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:56:01 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "process.h"
 
 static void	free_pfd_arr(int **pfd_arr)

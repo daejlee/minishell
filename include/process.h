@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   process.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 03:04:32 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 11:37:11 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:55:21 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROCESS_H
 # define PROCESS_H
-# include <unistd.h>
+
 # include "minishell.h"
 
 /**

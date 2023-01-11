@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:19:29 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/10 20:19:30 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:56:04 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "process.h"
 
 int	get_pcs(t_token_meta *meta, t_env *env, char **envp)

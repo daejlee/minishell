@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:18:53 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 02:57:47 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:55:34 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "process.h"
 
 int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)

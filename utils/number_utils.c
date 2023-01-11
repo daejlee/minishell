@@ -6,11 +6,11 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:06:29 by hkong             #+#    #+#             */
-/*   Updated: 2022/12/21 16:09:48 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:01:40 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
 void	initialize_numbers(size_t *num1, size_t *num2, \
 												size_t *num3, size_t *num4)

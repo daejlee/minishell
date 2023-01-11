@@ -6,11 +6,11 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 17:03:38 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/10 17:17:19 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:01:44 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
 void	signal_default(void)
 {
@@ -38,40 +38,4 @@ void	signal_heredoc(void)
 	// fprintf(stderr, "hrdoc\n");
 	signal(SIGINT, sig_heredoc_process);
 	signal(SIGQUIT, SIG_IGN);
-}
-
-void	sig_main_process(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(2, "\n", 1);
-		if (rl_on_new_line() == -1)
-			exit(1);
-		rl_replace_line("", 1);
-		rl_redisplay();
-	}
-}
-
-//!heredoc SIGINT일 때 quit하기.
-//!quit, enter 안먹히는 거 체크하기
-
-void	sig_excute_process(int sig)
-{
-	// fprintf(stderr, "execute_\n");
-	if (sig == SIGINT)
-		write(2, "\n", 1);
-	if (sig == SIGQUIT)
-		write(2, "Quit: 3\n", 8);
-}
-
-void	sig_heredoc_process(int sig)
-{
-	// fprintf(stderr, "hrdoc_\n");
-	if (sig == SIGINT)
-	{
-		// fprintf(stderr, "exit\n");
-
-		// write(2, "\n", 1);
-		exit(1);
-	}
 }

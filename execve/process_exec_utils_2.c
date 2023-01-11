@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec_utils_2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:36 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 11:48:06 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:55:25 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "process.h"
 
 static int	get_com_slots(t_token *now, t_token_meta *meta)

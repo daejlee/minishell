@@ -28,6 +28,7 @@
 		"unordered_map": "c",
 		"utility": "c",
 		"built_in.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"utils.h": "c"
 	}
 }

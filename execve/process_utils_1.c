@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:45:54 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 00:45:55 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:55:52 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "process.h"
 
 t_token	*get_i_redir_location(t_token_meta *meta)

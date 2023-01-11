@@ -6,11 +6,11 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 15:22:18 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/10 21:15:11 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 12:54:36 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "built_in.h"
 
 void	free_arr(char **arr)
 {

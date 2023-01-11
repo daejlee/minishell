@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 18:01:57 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/07 15:27:04 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 12:59:22 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 # include "minishell.h"
 
 /**
- * parse/parse.c
+ * parse.c
  */
 
 t_token_meta		*parse(t_env *env, char *str);
 
 /**
- * parse/interpret_quotes.c
+ * interpret_quotes.c
  */
 
 int					interpret_quotes(t_token_meta *meta, t_env *env);
@@ -35,7 +35,7 @@ char				*interpret_quotes_double(t_token_meta *meta, \
 size_t				quote_index(char *str);
 
 /**
- * parse/interpret_env.c
+ * interpret_env.c
  */
 
 int					interpret_env(t_token_meta *meta, t_env *env);
@@ -47,7 +47,7 @@ int					insert_value_on_index(char **str, char *value, \
 													size_t start, size_t end);
 
 /**
- * parse/split_spaces.c
+ * split_spaces.c
  */
 
 int					split_spaces(t_token_meta *meta, t_env *env);
@@ -57,7 +57,7 @@ int					has_heredoc_before(t_token *token, size_t index);
 int					has_space(char *str);
 
 /**
- * parse/split_operator.c
+ * split_operator.c
  */
 
 int					split_operator(t_token_meta *meta);
@@ -67,7 +67,7 @@ size_t				operator_index(char *str);
 enum e_token_type	operator_type(char *str);
 
 /**
- * parse/modify_arg.c
+ * modify_arg.c
  */
 
 int					modify_init_to_arg(t_token_meta *meta);
@@ -76,7 +76,7 @@ int					delete_empty_token(t_token_meta *meta);
 int					modify_arg_to_limiter(t_token_meta *meta);
 
 /**
- * parse/union_arg.c
+ * union_arg.c
  */
 
 int					union_args_to_one(t_token_meta *meta);
@@ -84,7 +84,7 @@ t_token				*create_union_token(size_t *num, \
 										t_token_meta *meta, t_token *node);
 
 /**
- * parse/syntax_error.c
+ * syntax_error.c
  */
 
 int					syntax_error(t_token_meta *meta);

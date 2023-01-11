@@ -6,11 +6,11 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:57:38 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/06 16:12:31 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:01:37 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
 int	print_error(enum e_error_code error_code, char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:44:56 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/09 21:32:48 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/11 13:01:48 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
 void	terminal_unset_echo(void)
 {

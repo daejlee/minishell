@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec_utils_1.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:26:07 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 03:25:05 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:55:28 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "process.h"
 
 static char	**get_sh_path(t_env *env, int *no_path_flag)

@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:46:03 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 11:58:47 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:55:58 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "process.h"
 
 int	wait_for_children(t_pcs *p, pid_t *pids, int pcs_cnt)

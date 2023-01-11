@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   process_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:25:18 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 02:40:06 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:55:50 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "process.h"
 
 static void	seg(t_token *now, t_pcs *p, char *str)

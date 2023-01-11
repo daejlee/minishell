@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:15:05 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 01:15:31 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 13:03:42 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "process.h"
 #include "parse.h"
+#include "utils.h"
 
 /* 시작 전 각종 초기화가 이뤄지는 부분 */
 int	set_env(t_env **env, char **envp)

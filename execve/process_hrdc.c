@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   process_hrdc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:35:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 03:24:18 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/11 12:55:47 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "process.h"
 
 static int	chld_hrdc(t_pcs *p, t_token *now, t_token_meta *meta)
