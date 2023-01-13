@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:57:38 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 13:01:37 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 15:14:10 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,19 @@ int	print_error(enum e_error_code error_code, char *str)
 {
 	printf("minishell: ");
 	if (error_code == MALLOC_FAIL)
+	{
 		printf("memory allocation fails\n");
+		exit(1);
+	}
 	else if (error_code == SYNTAX_ERROR)
 		printf("syntax error near unexpected token \'%s\'\n", str);
 	else if (error_code == AMBIGUOUS_REDIR)
 		printf ("%s: ambiguous redirect\n", str);
 	else if (error_code == UNEXPECTED)
+	{
 		printf ("unexpected behavior\n");
+		exit(1);
+	}
 	return (1);
 }
 

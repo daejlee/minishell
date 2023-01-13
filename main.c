@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:15:05 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 15:05:04 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 15:13:24 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
 
-	set_env(&env, envp);
+	if (set_env(&env, envp))
+		return (1);
 	(void)argc;
 	(void)argv;
 	do_minishell(env, envp);
