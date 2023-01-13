@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:15:05 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:30:31 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 15:05:04 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,11 @@ int	set_env(t_env **env, char **envp)
 	return (0);
 }
 
-int	main(int argc, char **argv, char **envp)
+static void	do_minishell(t_env *env, char **envp)
 {
 	char			*buf;
 	t_token_meta	*meta;
-	t_env			*env;
 
-	set_env(&env, envp);
-	meta = NULL;
-	(void)argc;
-	(void)argv;
 	while (1)
 	{
 		terminal_unset_echo();
@@ -58,13 +53,6 @@ int	main(int argc, char **argv, char **envp)
 			meta = parse(env, buf);
 			if (!meta)
 				continue ;
-			// t_token *node;
-			// node = meta->head;
-			// for (int i = 0; i < meta->size; i++)
-			// {
-			// 	printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
-			// 	node = node->next;
-			// }
 			g_exit_status = get_pcs(meta, env, envp);
 			free_token_meta(meta);
 		}
@@ -74,6 +62,16 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_env	*env;
+
+	set_env(&env, envp);
+	(void)argc;
+	(void)argv;
+	do_minishell(env, envp);
 	terminal_set_echo();
 	return (0);
 }

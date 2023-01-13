@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:17:28 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 13:31:55 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 14:56:09 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		ft_echo(char **com);
 int		ft_env(t_env *env);
 int		ft_exit(void);
 int		ft_export(char *name, t_env *env);
+int		print_sorted_env(t_env *env);
 int		ft_pwd(void);
 int		ft_unset(char *name, t_env *env);
 

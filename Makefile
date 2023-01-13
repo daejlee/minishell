@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
+#    By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2023/01/13 14:51:36 by hkong            ###   ########.fr        #
+#    Updated: 2023/01/13 14:59:43 by daejlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ PARSE_DIR = parse/
 SRCS_PARSE = parse.c interpret_env.c interpret_quotes.c split_spaces.c split_operator.c modify_arg.c syntax_error.c union_arg.c
 
 BUILT_IN_DIR = built_in/
-SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_pwd.c ft_unset.c built_in.c ft_cd.c ft_cd_utils.c built_in_utils.c
+SRCS_BUILT_IN = ft_echo.c ft_env.c ft_exit.c ft_export.c ft_export_utils.c ft_pwd.c ft_unset.c built_in.c ft_cd.c ft_cd_utils.c built_in_utils.c
 
 EXECVE_DIR = execve/
 SRCS_EXECVE = process.c process_hrdc.c process_hrdc_utils.c process_redir.c process_exec.c process_exec_utils_1.c process_exec_utils_2.c process_exec_utils_3.c process_fd_utils_1.c process_fd_utils_2.c process_utils_1.c process_utils_2.c process_utils_3.c
