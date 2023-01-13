@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:46:03 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 16:28:17 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 18:12:59 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,18 @@ int	wait_for_children(pid_t *pids, int pcs_cnt)
 	while (i < pcs_cnt)
 		waitpid(pids[i++], &status, 0);
 	free(pids);
-	while (status > 255)
-		status -= 255;
-	if (status == 2)
+	if (WIFSIGNALED(status) && status == 2)
 	{
 		status += 128;
 		write(1, "\n", 1);
 	}
-	else if (status == 3)
+	else if (WIFSIGNALED(status) && status == 3)
 	{
 		status += 128;
 		write(1, "Quit: 3\n", 9);
 	}
-	else if (status == 32512)
-		status = 127;
+	else
+		status = WEXITSTATUS(status);
 	close(0);
 	close(1);
 	return (status);
