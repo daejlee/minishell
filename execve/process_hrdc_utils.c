@@ -91,12 +91,10 @@ int	get_here_doc_cnt(t_token_meta *meta)
 
 void	get_here_doc_buffers(t_token_meta *meta, t_pcs *p)
 {
-	t_token	*now;
 	int		i;
 	int		here_doc_cnt;
 	char	*here_doc_idx;
 
-	now = meta->head;
 	here_doc_cnt = get_here_doc_cnt(meta);
 	p->here_doc_buffers = (char **)malloc(sizeof(char *) * here_doc_cnt);
 	i = 0;
