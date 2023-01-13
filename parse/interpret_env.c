@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:39:35 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/13 16:06:33 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 20:22:09 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	change_key_to_value(char **str, t_env *env, size_t *start, size_t end)
 	}
 	if (!key || !value || insert_value_on_index(str, value, *start, end))
 		return (fail_and_free_multiple_str(value, key, NULL, NULL));
-	*start = end + ft_strlen(value) - ft_strlen(key) - 1;
+	*start = end + ft_strlen(value) - ft_strlen(key) - 2;
 	return (ok_and_free_multiple_str(value, key, NULL, NULL));
 }
 
