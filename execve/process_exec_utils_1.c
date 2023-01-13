@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:26:07 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 15:19:06 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 16:30:59 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*get_sh_func(char **com, t_env *env, int *no_path_flag)
 	char			**sh_paths;
 	unsigned int	i;
 
-	if (!access(com[0], X_OK))
+	if (!access(com[0], X_OK) || !com[0][0])
 		return (com[0]);
 	i = 0;
 	sh_paths = get_sh_path(env, no_path_flag);
@@ -107,6 +107,8 @@ t_token	*prep_fd_n_move(t_token *now, int i, t_token_meta *meta, t_pcs *p)
 int	prep_exec_loop(t_pcs *p, t_token_meta *meta)
 {
 	p->pcs_cnt = get_pcs_cnt(meta);
+	if (!p->pcs_cnt)
+		p->pcs_cnt += 1;
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (p->pcs_cnt));
 	if (!p->pids)
 		return (print_error(MALLOC_FAIL, NULL));

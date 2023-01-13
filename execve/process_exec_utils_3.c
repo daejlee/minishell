@@ -6,13 +6,13 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 02:57:10 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 14:33:38 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 16:27:40 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "process.h"
 
-t_token	*prep_bad_infile(t_pcs *p, t_token *now, t_token_meta *meta,
+t_token	*prep_bad_redir(t_pcs *p, t_token *now, t_token_meta *meta,
 		int *temp_flag_adr)
 {
 	while (now->type == ARG)
@@ -26,7 +26,7 @@ t_token	*prep_bad_infile(t_pcs *p, t_token *now, t_token_meta *meta,
 	}
 	now = now->next;
 	*temp_flag_adr = 1;
-	p->bad_infile_flag = 1;
+	p->bad_redir_flag = 1;
 	return (now);
 }
 
@@ -56,10 +56,10 @@ t_token	*prep_redir_n_com(t_pcs *p, t_token_meta *meta, t_token *now,
 {
 	p->hdb_idx = input_redir(meta, now, p, p->hdb_idx);
 	output_redir(meta, now, p);
-	if (p->infile_fd == -1)
+	if (p->infile_fd == -1 || p->outfile_fd == -1)
 	{
 		p->empty_buf_flag = 0;
-		now = prep_bad_infile(p, now, meta, &(p->empty_buf_flag));
+		now = prep_bad_redir(p, now, meta, &(p->empty_buf_flag));
 		return (now);
 	}
 	now = fast_forward_node(p, now, meta, i);

@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:25:18 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:31:44 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 16:25:02 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static void	seg(t_pcs *p, char *str)
 	p->infile_fd = open(str, O_RDONLY);
 }
 
-static void	print_infile_err(t_token *now)
+static void	print_redir_err(t_token *now)
 {
 	write(2, "minishell: ", 12);
 	write(2, now->next->str, ft_strlen(now->next->str));
-	write(2, ": No such file or directory\n", 29);
+	perror(" ");
 }
 
 int	input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i)
@@ -40,7 +40,7 @@ int	input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i)
 			seg(p, now->next->str);
 			if (p->infile_fd == -1)
 			{
-				print_infile_err(now);
+				print_redir_err(now);
 				break ;
 			}
 		}
@@ -77,6 +77,11 @@ void	output_redir(t_token_meta *meta, t_token *now, t_pcs *p)
 				close(p->outfile_fd);
 			p->outfile_fd = open(now->next->str, O_WRONLY | O_TRUNC
 					| O_CREAT, 0644);
+		}
+		if (p->outfile_fd == -1)
+		{
+			print_redir_err(now);
+			break ;
 		}
 		now = now->next;
 	}
