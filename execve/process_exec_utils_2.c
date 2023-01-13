@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:36 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 18:06:26 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 18:18:08 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	launch_com(t_pcs *p, t_env *env, int i)
 {
 	if (is_built_in(p->com[0]) && p->pcs_cnt == 1)
 	{
+		p->single_built_in_flag = 1;
 		p->pids[i] = -1;
 		g_exit_status = exec_built_in(p->com, env);
 		return (0);
@@ -133,7 +134,7 @@ int	wrap_up_pcs(t_pcs *p, t_token_meta *meta, int stdout_dup)
 	p->stdinout_storage[1] = stdout_dup;
 	ret = wait_for_children(p->pids, p->pcs_cnt);
 	reset_fds(p, p->stdinout_storage, p->pcs_cnt);
-	if (is_built_in(p->com[0]) && p->pcs_cnt == 1)
+	if (p->single_built_in_flag)
 		return (i);
 	return (ret);
 }
