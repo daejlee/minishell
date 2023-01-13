@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:25:01 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:54:54 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 17:08:13 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@
  * original : exit [n]
  * @return int exit_status
  */
-int	ft_exit(void)
+int	ft_exit(int num)
 {
-	exit(0);
+	while (num < 0)
+		num += 256;
+	while (num > 255)
+		num -= 256;
+	exit(num);
 }

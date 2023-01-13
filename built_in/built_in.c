@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:32:43 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 15:15:37 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 17:07:27 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ static int	exec_built_in_seg(int built_in_code, char **com, t_env *env, int i)
 	else if (built_in_code == B_ENV)
 		return (ft_env(env));
 	else if (built_in_code == B_EXIT)
-		return (ft_exit());
+	{
+		if (!com[1])
+			return (ft_exit(0));
+		return (ft_exit(ft_atoi(com[1])));
+	}
 	return (0);
 }
 
