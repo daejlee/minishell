@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 15:22:18 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:18:09 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 17:24:07 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int	seg(char **curpath_adr, char *env_cdpath, char **splitted_cdpath)
 			temp = ft_strjoin_modified(env_cdpath, temp, '/');
 		else
 			temp = ft_strjoin(env_cdpath, temp);
+		if (!temp)
+			print_error(MALLOC_FAIL, NULL);
 		if (!opendir(temp))
 		{
 			free(temp);
@@ -51,10 +53,12 @@ int	check_cdpath(char **curpath_adr, char *env_cdpath)
 	else
 		splitted_cdpath = ft_split(env_cdpath, ':');
 	if (!splitted_cdpath)
-		return (-1);
+		print_error(MALLOC_FAIL, NULL);
 	if (seg(curpath_adr, env_cdpath, splitted_cdpath))
 		return (0);
 	temp = ft_strjoin("./", *curpath_adr);
+	if (!temp)
+		print_error(MALLOC_FAIL, NULL);
 	if (opendir(temp))
 	{
 		*curpath_adr = temp;

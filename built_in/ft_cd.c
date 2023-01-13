@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:28:14 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 14:53:15 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 17:25:16 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	set_2(char *dir, t_ft_cd p, char **curpath)
 		|| check_cdpath(curpath, p.env_cdpath))
 			*curpath = ft_strdup(dir);
 	if (!*curpath)
-		return (-1);
+		print_error(MALLOC_FAIL, NULL);
 	if (*curpath[0] != '/')
 	{
 		temp_free = *curpath;
@@ -78,7 +78,7 @@ static int	set_2(char *dir, t_ft_cd p, char **curpath)
 			*curpath = ft_strjoin(p.env_pwd, *curpath);
 		free(temp_free);
 		if (!*curpath)
-			return (-1);
+			print_error(MALLOC_FAIL, NULL);
 	}
 	if (!*curpath)
 		return (-1);

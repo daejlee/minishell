@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:30:54 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:54:46 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 17:25:24 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_echo(char **com)
 		n_option = get_n_option(com);
 		str = get_echo_str(com, n_option);
 		if (!str)
-			return (-1);
+			print_error(MALLOC_FAIL, NULL);
 		write(1, str, ft_strlen(str));
 		free(str);
 	}
@@ -85,7 +85,7 @@ char	*get_echo_str(char **com, int n_option)
 		return (NULL);
 	result = ft_strdup(com[index++]);
 	if (!result)
-		return (NULL);
+		print_error(MALLOC_FAIL, NULL);
 	while (com[index])
 	{
 		temp = result;

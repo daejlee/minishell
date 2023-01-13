@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 21:14:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 15:22:28 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 17:27:49 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static void	hrdc_seg_seg_2(t_hrdc_seg *l)
 		}
 		else
 			l->ret = ft_strdup(l->buf);
+		if (!l->ret)
+			print_error(MALLOC_FAIL, NULL);
 		free(temp);
 		l->fst_flag = 0;
 	}
@@ -62,6 +64,8 @@ int	here_doc_seg(t_pcs *p, t_token *now, int i)
 	hrdc_seg_seg_2(&l);
 	l.temp = l.ret;
 	l.ret = ft_strjoin(l.ret, "\n");
+	if (!l.ret)
+		print_error(MALLOC_FAIL, NULL);
 	if (l.temp)
 		free(l.temp);
 	write(l.here_doc_fd, l.ret, ft_strlen(l.ret));

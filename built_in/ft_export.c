@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:30:30 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 15:22:13 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 17:26:08 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static void	seg(char *name, t_env *env)
 	t_env	*env_temp;
 
 	temp = ft_split_modified(name);
+	if (!temp)
+		print_error(MALLOC_FAIL, NULL);
 	env_temp = find_env(env, temp[0]);
 	if (env_temp && env_temp->value)
 	{
@@ -70,6 +72,8 @@ int	ft_export(char *name, t_env *env)
 		if (!env_temp)
 		{
 			env_temp = init_env(ft_strdup(name), "");
+			if (!env_temp)
+				print_error(MALLOC_FAIL, NULL);
 			env_temp->value = NULL;
 			push_env(&env, env_temp);
 		}
