@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:00:08 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 13:14:46 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 14:55:59 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void				signal_heredoc(void);
  * signal_func.c
  */
 
-void				sig_excute_process(int sig);
 void				sig_heredoc_process(int sig);
 void				sig_main_process(int sig);
 
