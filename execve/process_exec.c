@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:18:53 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 18:07:47 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 21:13:03 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	stdout_dup = dup(1);
 	i = 0;
 	now = meta->head;
-	if (!p->pcs_cnt && !p->here_doc_buffers)
+	if (!p->pcs_cnt && !get_here_doc_cnt(meta))
 		prep_redir_n_com(p, meta, now, i);
 	while (i < p->pcs_cnt)
 	{
