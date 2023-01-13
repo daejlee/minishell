@@ -6,11 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 21:14:42 by daejlee           #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2023/01/13 14:41:38 by hkong            ###   ########.fr       */
-=======
-/*   Updated: 2023/01/13 14:47:30 by daejlee          ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2023/01/13 15:00:53 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
