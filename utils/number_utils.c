@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   number_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 16:06:29 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/13 17:37:56 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 18:08:35 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	set_start_end(size_t *start, size_t *end, \
 
 int	is_number(char *str)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (str[index])

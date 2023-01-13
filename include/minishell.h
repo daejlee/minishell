@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/13 16:58:01 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 18:18:04 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ typedef struct s_pcs
 	int		hdb_idx;
 	int		empty_buf_flag;
 	int		bad_redir_flag;
+	int		single_built_in_flag;
 	pid_t	*pids;
 }	t_pcs;
 

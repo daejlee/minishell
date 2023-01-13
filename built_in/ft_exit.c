@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:25:01 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 17:41:00 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 18:08:07 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 int	ft_exit(char **com)
 {
 	int	num;
-	
+
 	printf("exit\n");
 	if (!com[0])
 		exit (0);
