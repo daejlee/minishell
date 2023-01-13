@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:46:03 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:31:48 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 14:25:53 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	init_p(t_pcs *p)
 	p->pcs_cnt = 0;
 	p->hdb_idx = 0;
 	p->empty_buf_flag = 0;
+	p->bad_infile_flag = 0;
 }
 
 int	check_redir(t_pcs *p)

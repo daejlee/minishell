@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec_utils_3.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 02:57:10 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 12:55:32 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 14:33:38 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_token	*prep_bad_infile(t_pcs *p, t_token *now, t_token_meta *meta,
 {
 	while (now->type == ARG)
 		now = now->next;
-	p->pcs_cnt--;
 	while (now->type != PIPE && now != meta->head)
 	{
 		if (now->type != ARG)
@@ -27,6 +26,7 @@ t_token	*prep_bad_infile(t_pcs *p, t_token *now, t_token_meta *meta,
 	}
 	now = now->next;
 	*temp_flag_adr = 1;
+	p->bad_infile_flag = 1;
 	return (now);
 }
 
@@ -56,9 +56,12 @@ t_token	*prep_redir_n_com(t_pcs *p, t_token_meta *meta, t_token *now,
 {
 	p->hdb_idx = input_redir(meta, now, p, p->hdb_idx);
 	output_redir(meta, now, p);
-	p->empty_buf_flag = 0;
 	if (p->infile_fd == -1)
+	{
+		p->empty_buf_flag = 0;
 		now = prep_bad_infile(p, now, meta, &(p->empty_buf_flag));
+		return (now);
+	}
 	now = fast_forward_node(p, now, meta, i);
 	if (!now)
 		return (NULL);
@@ -71,9 +74,8 @@ t_token	*prep_redir_n_com(t_pcs *p, t_token_meta *meta, t_token *now,
 	if (p->empty_buf_flag || (p->prev_outfile_fd != 1 && !p->infile_fd))
 	{
 		p->empty_buf_flag = open(EMPTY_BUFFER, O_RDONLY | O_CREAT, 0644);
-		if (!p->empty_buf_flag)
+		if (p->empty_buf_flag == -1)
 			err_terminate(p);
-		close (0);
 		dup2(p->empty_buf_flag, 0);
 	}
 	return (now);

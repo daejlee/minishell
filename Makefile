@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
+#    By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2023/01/11 13:37:26 by hkong            ###   ########.fr        #
+#    Updated: 2023/01/13 14:31:13 by daejlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ CC = cc
 CFLAGS = -g -Wall -Wextra -Werror
 RM = rm -f
 
-INCLUDE = -I./include -I/Users/hkong/.brew/opt/readline/include
-LIBRARY = -lreadline -L/Users/hkong/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
+INCLUDE = -I./include -I/Users/daejlee/.brew/opt/readline/include
+LIBRARY = -lreadline -L/Users/daejlee/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
 
 SRCS = main.c
 

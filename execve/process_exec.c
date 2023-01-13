@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:18:53 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 13:43:00 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 14:33:36 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ int	exec_fork(t_pcs *p, t_token_meta *meta, t_env *env)
 	now = meta->head;
 	while (i < p->pcs_cnt)
 	{
+		p->bad_infile_flag = 0;
 		now = prep_redir_n_com(p, meta, now, i);
-		if (!now)
-			break ;
-		launch_com(p, env, i);
+		if (!p->bad_infile_flag)
+		{
+			if (!now)
+				break ;
+			launch_com(p, env, i);
+			now = now->next;
+		}
 		i++;
-		now = now->next;
 	}
 	return (wrap_up_pcs(p, meta, stdout_dup));
 }
