@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:15:05 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 15:13:24 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 15:20:52 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_env	*env;
 
-	if (set_env(&env, envp))
-		return (1);
+	set_env(&env, envp);
 	(void)argc;
 	(void)argv;
 	do_minishell(env, envp);
