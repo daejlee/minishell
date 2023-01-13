@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 17:11:20 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/13 18:18:04 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 20:26:44 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_ft_cd
 	char	*env_home;
 	char	*env_cdpath;
 	char	*env_pwd;
+	char	*env_oldpwd;
 	t_env	*node;
 }	t_ft_cd;
 
