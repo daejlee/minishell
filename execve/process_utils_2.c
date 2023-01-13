@@ -19,12 +19,24 @@ int	wait_for_children(pid_t *pids, int pcs_cnt)
 
 	status = 0;
 	i = 0;
-	close(0);
-	close(1);
 	while (i < pcs_cnt)
 		waitpid(pids[i++], &status, 0);
 	free(pids);
-	return (WEXITSTATUS(status));
+	if (status == 2)
+	{
+		status += 128;
+		write(1, "\n", 1);
+	}
+	else if (status == 3)
+	{
+		status += 128;
+		write(1, "Quit: 3\n", 9);
+	}
+	else if (status == 32512)
+		status = 127;
+	close(0);
+	close(1);
+	return (status);
 }
 
 void	execve_failed(char *sh_func)
