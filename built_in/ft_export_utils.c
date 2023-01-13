@@ -6,11 +6,12 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 14:55:26 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 14:55:51 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 15:17:10 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
+#include "utils.h"
 
 static int	seg_1(t_ft_export *p, t_env *env)
 {
@@ -26,7 +27,7 @@ static int	seg_1(t_ft_export *p, t_env *env)
 	}
 	p->arr = (t_env **)malloc(sizeof(t_env *) * p->size);
 	if (!p->arr)
-		return (1);
+		return (print_error(MALLOC_FAIL, NULL));
 	i = 0;
 	p->temp = p->head;
 	while (i < p->size)

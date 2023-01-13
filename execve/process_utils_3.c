@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_utils_3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 00:45:57 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 16:36:18 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 15:24:25 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	get_pipes(t_pcs *p, int pcs_cnt)
 	while (i < pcs_cnt)
 	{
 		p->pfd_arr[i] = (int *)malloc(sizeof(int) * 2);
+		if (!p->pfd_arr[i])
+			return (print_error(MALLOC_FAIL, NULL));
 		pipe(p->pfd_arr[i]);
 		i++;
 	}

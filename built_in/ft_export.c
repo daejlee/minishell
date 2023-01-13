@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:30:30 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 14:58:50 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 15:22:13 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@ static char	**ft_split_modified(char *name)
 
 	ret = (char **)malloc(sizeof(char *) * 2);
 	if (!ret)
-		return (NULL);
+		print_error(MALLOC_FAIL, NULL);
 	i = 0;
 	while (name[i] != '=')
 		i++;
 	ret[0] = (char *)malloc(sizeof(char) * (i + 1));
+	if (!ret[0])
+		print_error(MALLOC_FAIL, NULL);
 	ret[1] = (char *)malloc(sizeof(char) * (ft_strlen(name) - i));
+	if (!ret[1])
+		print_error(MALLOC_FAIL, NULL);
 	ft_strlcpy(ret[0], name, i + 1);
 	ft_strlcpy(ret[1], name + i + 1, ft_strlen(name) - i);
 	return (ret);

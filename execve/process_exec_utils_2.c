@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec_utils_2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:35:36 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 14:52:21 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 15:22:42 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**get_trimmed_com(t_token *now, t_token_meta *meta)
 	slot_cnt = get_com_slots(now, meta);
 	ret = (char **)malloc(sizeof(char *) * slot_cnt);
 	if (!ret)
-		return (NULL);
+		print_error(MALLOC_FAIL, NULL);
 	i = 0;
 	while (i < slot_cnt - 1)
 	{

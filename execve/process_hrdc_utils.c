@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 21:14:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 15:00:53 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 15:22:28 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	get_here_doc_buffers(t_token_meta *meta, t_pcs *p)
 
 	here_doc_cnt = get_here_doc_cnt(meta);
 	p->here_doc_buffers = (char **)malloc(sizeof(char *) * here_doc_cnt);
+	if (!p->here_doc_buffers)
+		print_error(MALLOC_FAIL, NULL);
 	i = 0;
 	while (i < here_doc_cnt)
 	{

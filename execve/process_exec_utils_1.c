@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_exec_utils_1.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:26:07 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 17:02:16 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 15:19:06 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,10 @@ int	prep_exec_loop(t_pcs *p, t_token_meta *meta)
 	p->pcs_cnt = get_pcs_cnt(meta);
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (p->pcs_cnt));
 	if (!p->pids)
-		err_terminate(p);
+		return (print_error(MALLOC_FAIL, NULL));
 	p->pfd_arr = (int **)malloc(sizeof (int *) * (p->pcs_cnt));
 	if (!p->pfd_arr)
-		err_terminate(p);
+		return (print_error(MALLOC_FAIL, NULL));
 	if (get_pipes(p, p->pcs_cnt))
 		err_terminate(p);
 	p->stdinout_storage[0] = dup(0);
