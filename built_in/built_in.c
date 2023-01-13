@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:32:43 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 17:07:27 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 17:12:41 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,7 @@ static int	exec_built_in_seg(int built_in_code, char **com, t_env *env, int i);
  */
 static int	exec_built_in_seg(int built_in_code, char **com, t_env *env, int i)
 {
-	if (built_in_code == B_ECHO)
-		return (ft_echo(com));
-	else if (built_in_code == B_CD)
-		return (ft_cd(com[1], env));
-	else if (built_in_code == B_PWD)
-		return (ft_pwd());
-	else if (built_in_code == B_EXPORT)
-	{
-		if (!com[i])
-			return (ft_export(NULL, env));
-		while (com[i])
-			ft_export(com[i++], env);
-		return (0);
-	}
-	else if (built_in_code == B_UNSET)
+	if (built_in_code == B_UNSET)
 	{
 		while (com[i])
 			built_in_code = ft_unset(com[i++], env);
@@ -63,7 +49,23 @@ static int	exec_built_in_seg(int built_in_code, char **com, t_env *env, int i)
 int	exec_built_in(char **com, t_env *env)
 {
 	int	built_in_code;
+	int	i;
 
+	i = 1;
 	built_in_code = is_built_in(com[0]);
+	if (built_in_code == B_ECHO)
+		return (ft_echo(com));
+	else if (built_in_code == B_CD)
+		return (ft_cd(com[1], env));
+	else if (built_in_code == B_PWD)
+		return (ft_pwd());
+	else if (built_in_code == B_EXPORT)
+	{
+		if (!com[i])
+			return (ft_export(NULL, env));
+		while (com[i])
+			ft_export(com[i++], env);
+		return (0);
+	}
 	return (exec_built_in_seg(built_in_code, com, env, 1));
 }

@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:25:18 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 16:25:02 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 17:11:18 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,24 @@ int	input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i)
 	return (i);
 }
 
+static void	output_redir_seg(t_token *now, t_pcs *p)
+{
+	if (now->type == O_APPND)
+	{
+		if (p->outfile_fd != 1)
+			close(p->outfile_fd);
+		p->outfile_fd = open(now->next->str, O_WRONLY | O_APPEND
+				| O_CREAT, 0644);
+	}
+	else if (now->type == O_REDIR)
+	{
+		if (p->outfile_fd != 1)
+			close(p->outfile_fd);
+		p->outfile_fd = open(now->next->str, O_WRONLY | O_TRUNC
+				| O_CREAT, 0644);
+	}
+}
+
 void	output_redir(t_token_meta *meta, t_token *now, t_pcs *p)
 {
 	int	fst_flag;
@@ -64,20 +82,7 @@ void	output_redir(t_token_meta *meta, t_token *now, t_pcs *p)
 	while ((now != meta->head && now->type != PIPE) || fst_flag)
 	{
 		fst_flag = 0;
-		if (now->type == O_APPND)
-		{
-			if (p->outfile_fd != 1)
-				close(p->outfile_fd);
-			p->outfile_fd = open(now->next->str, O_WRONLY | O_APPEND
-					| O_CREAT, 0644);
-		}
-		else if (now->type == O_REDIR)
-		{
-			if (p->outfile_fd != 1)
-				close(p->outfile_fd);
-			p->outfile_fd = open(now->next->str, O_WRONLY | O_TRUNC
-					| O_CREAT, 0644);
-		}
+		output_redir_seg(now, p);
 		if (p->outfile_fd == -1)
 		{
 			print_redir_err(now);
