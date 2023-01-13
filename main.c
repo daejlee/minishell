@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:15:05 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 15:20:52 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 16:43:45 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ static void	do_minishell(t_env *env, char **envp)
 			meta = parse(env, buf);
 			if (!meta)
 				continue ;
+			// t_token *node;
+			// node = meta->head;
+			// for (size_t i = 0; i < meta->size; i++)
+			// {
+			// 	printf("%s|%s|%d\n", node->str, node->origin_str, node->type);
+			// 	node = node->next;
+			// }
 			g_exit_status = get_pcs(meta, env, envp);
 			free_token_meta(meta);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 16:25:01 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 17:08:13 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 17:41:00 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,24 @@
  * original : exit [n]
  * @return int exit_status
  */
-int	ft_exit(int num)
+int	ft_exit(char **com)
 {
-	while (num < 0)
-		num += 256;
-	while (num > 255)
-		num -= 256;
+	int	num;
+	
+	printf("exit\n");
+	if (!com[0])
+		exit (0);
+	if (com[1])
+	{
+		printf("minishell: exit: too many arguments\n");
+		return (1);
+	}
+	if (!is_number(com[0]))
+	{
+		printf("minishell: exit: %s: numeric argument required\n", com[0]);
+		exit(255);
+	}
+	num = ft_atoi(com[0]);
+	num &= 255;
 	exit(num);
 }

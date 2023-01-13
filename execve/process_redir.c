@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:25:18 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 17:11:18 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 17:48:27 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	print_redir_err(t_token *now)
 {
 	write(2, "minishell: ", 12);
 	write(2, now->next->str, ft_strlen(now->next->str));
-	perror(" ");
+	perror(" \b");
 }
 
 int	input_redir(t_token_meta *meta, t_token *now, t_pcs *p, int i)

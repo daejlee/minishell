@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:00:08 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/13 15:06:23 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 17:39:05 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ void				initialize_numbers(size_t *num1, size_t *num2, \
 												size_t *num3, size_t *num4);
 void				set_start_end(size_t *start, size_t *end, \
 										size_t start_num, size_t end_num);
+int					is_number(char *str);
 
 #endif
