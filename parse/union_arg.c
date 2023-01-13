@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   union_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 12:44:26 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/11 12:50:28 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 15:07:34 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ int	union_args_to_one(t_token_meta *meta)
 t_token	*create_union_token(size_t *num, t_token_meta *meta, t_token *node)
 {
 	char	*str;
-	char	*origin_str;
+	char	*origin;
 
 	str = NULL;
-	origin_str = NULL;
+	origin = NULL;
 	if (set_two_string(&str, ft_strdup(node->str), \
-									&origin_str, ft_strdup(node->origin_str)))
+									&origin, ft_strdup(node->origin_str)))
 		return (NULL);
 	while ((*num) && (node->next->type == ARG || node->next->type == EMPTY))
 	{
@@ -68,16 +68,13 @@ t_token	*create_union_token(size_t *num, t_token_meta *meta, t_token *node)
 			return (NULL);
 		(*num)--;
 		if (set_two_string(&str, ft_strjoin(str, node->str), \
-						&origin_str, ft_strjoin(origin_str, node->origin_str)))
+						&origin, ft_strjoin(origin, node->origin_str)))
 			return (NULL);
 	}
 	free_token(node);
 	node = init_token(str, ARG);
 	if (!node)
-	{
-		ok_and_free_multiple_str(origin_str, NULL, NULL, NULL);
-		return (NULL);
-	}
-	set_token_origin(node, origin_str);
+		return ((t_token *)null_and_free_multiple_str(origin, str, NULL, NULL));
+	set_token_origin(node, origin);
 	return (node);
 }

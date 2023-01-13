@@ -6,7 +6,7 @@
 /*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 13:00:08 by hkong             #+#    #+#             */
-/*   Updated: 2023/01/13 14:55:59 by hkong            ###   ########.fr       */
+/*   Updated: 2023/01/13 15:06:23 by hkong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int					set_two_string(char **str1, char *new_str1, \
 void				free_arr(char **arr);
 char				*ft_strjoin_modified(char const *s1, char const *s2, \
 																		char c);
+void				*null_and_free_multiple_str(char *str1, char *str2, \
+												char *str3, char *str4);
 
 /**
  * number_utils.c
