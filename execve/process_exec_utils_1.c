@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:26:07 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 16:30:59 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 16:56:15 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,7 @@ void	exec_com(t_pcs *p, t_env *env)
 	int		no_path_flag;
 
 	if (is_built_in(p->com[0]))
-	{
-		g_exit_status = exec_built_in(p->com, env);
-		return ;
-	}
+		exit(exec_built_in(p->com, env));
 	no_path_flag = 0;
 	sh_func = get_sh_func(p->com, env, &no_path_flag);
 	if (no_path_flag)
@@ -107,8 +104,6 @@ t_token	*prep_fd_n_move(t_token *now, int i, t_token_meta *meta, t_pcs *p)
 int	prep_exec_loop(t_pcs *p, t_token_meta *meta)
 {
 	p->pcs_cnt = get_pcs_cnt(meta);
-	if (!p->pcs_cnt)
-		p->pcs_cnt += 1;
 	p->pids = (pid_t *)malloc(sizeof(pid_t) * (p->pcs_cnt));
 	if (!p->pids)
 		return (print_error(MALLOC_FAIL, NULL));
