@@ -3,21 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 20:51:25 by daejlee           #+#    #+#              #
-#    Updated: 2023/01/13 17:51:23 by daejlee          ###   ########.fr        #
+#    Updated: 2023/01/13 20:28:11 by hkong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
-INCLUDE = -I./include -I/Users/daejlee/.brew/opt/readline/include
-LIBRARY = -lreadline -L/Users/daejlee/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
+INCLUDE = -I./include -I/Users/hkong/.brew/opt/readline/include
+LIBRARY = -lreadline -L/Users/hkong/.brew/opt/readline/lib -lft -L$(LIBFT_DIR)
 
 SRCS = main.c
 
