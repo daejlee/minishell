@@ -6,18 +6,17 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 15:22:18 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 17:24:07 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 17:33:37 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "built_in.h"
 
-static int	seg(char **curpath_adr, char *env_cdpath, char **splitted_cdpath)
+static int	seg_seg(char **curpath_adr, char *env_cdpath,
+		char **splitted_cdpath, int i)
 {
-	int		i;
 	char	*temp;
 
-	i = 0;
 	while (splitted_cdpath[i])
 	{
 		temp = splitted_cdpath[i];
@@ -39,6 +38,16 @@ static int	seg(char **curpath_adr, char *env_cdpath, char **splitted_cdpath)
 			return (1);
 		}
 	}
+	return (0);
+}
+
+static int	seg(char **curpath_adr, char *env_cdpath, char **splitted_cdpath)
+{
+	int		i;
+
+	i = 0;
+	if (seg_seg(curpath_adr, env_cdpath, splitted_cdpath, i))
+		return (1);
 	free_arr(splitted_cdpath);
 	return (0);
 }
