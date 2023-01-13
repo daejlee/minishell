@@ -22,6 +22,8 @@ int	wait_for_children(pid_t *pids, int pcs_cnt)
 	while (i < pcs_cnt)
 		waitpid(pids[i++], &status, 0);
 	free(pids);
+	while (status > 255)
+		status -= 255;
 	if (status == 2)
 	{
 		status += 128;
@@ -47,14 +49,15 @@ void	execve_failed(char *sh_func)
 		write(2, "minishell: ", 12);
 		write(2, sh_func, ft_strlen(sh_func));
 		write(2, ": Permission denied\n", 21);
+		exit (126);
 	}
 	else
 	{
 		write(2, "minishell: ", 12);
 		write(2, sh_func, ft_strlen(sh_func));
 		write(2, ": command not found\n", 21);
+		exit (127);
 	}
-	exit (127);
 }
 
 void	init_p(t_pcs *p)
