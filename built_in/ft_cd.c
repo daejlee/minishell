@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 14:28:14 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/11 14:35:34 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 14:53:15 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,8 @@ static int	set_3(t_ft_cd *p, char **dir_adr)
 			write(2, "minishell: ft_cd: OLDPWD not set\n", 34);
 			return (0);
 		}
-		else
-		{
-			printf("%s\n", p->node->value);
-			return (chdir(p->node->value));
-		}
+		printf("%s\n", p->node->value);
+		return (chdir(p->node->value));
 	}
 	else if (!ft_strncmp(*dir_adr, "~", ft_strlen(*dir_adr)))
 	{
@@ -36,8 +33,7 @@ static int	set_3(t_ft_cd *p, char **dir_adr)
 			write(2, "minishell: ft_cd: HOME not set\n", 32);
 			return (0);
 		}
-		else
-			return (chdir(p->env_home));
+		return (chdir(p->env_home));
 	}
 	return (1);
 }

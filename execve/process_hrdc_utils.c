@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   process_hrdc_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkong <hkong@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 21:14:42 by daejlee           #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2023/01/13 14:41:38 by hkong            ###   ########.fr       */
+=======
+/*   Updated: 2023/01/13 14:47:30 by daejlee          ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +37,7 @@ static void	hrdc_seg_seg_2(t_hrdc_seg *l)
 	{
 		l->buf = readline(">");
 		if (!l->buf)
-			break ;
+			exit (0);
 		if (ft_strlen(l->buf) == ft_strlen(l->limiter)
 			&& !ft_strncmp(l->buf, l->limiter, ft_strlen(l->limiter)))
 			break ;

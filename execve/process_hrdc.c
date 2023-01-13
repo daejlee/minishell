@@ -6,7 +6,7 @@
 /*   By: daejlee <daejlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 20:35:42 by daejlee           #+#    #+#             */
-/*   Updated: 2023/01/13 14:35:17 by daejlee          ###   ########.fr       */
+/*   Updated: 2023/01/13 14:52:06 by daejlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	here_doc(t_token_meta *meta, t_pcs *p)
 	int		i;
 	int		status;
 
+	status = 0;
 	get_here_doc_buffers(meta, p);
 	now = meta->head;
 	if (!get_here_doc_cnt(meta))
@@ -50,13 +51,13 @@ int	here_doc(t_token_meta *meta, t_pcs *p)
 		signal_heredoc();
 		chld_hrdc(p, now, meta);
 	}
-	else
-		waitpid(pid, &status, 0);
+	waitpid(pid, &status, 0);
 	if (WEXITSTATUS(status) == SIGINT || WEXITSTATUS(status) == SIGQUIT)
 	{
 		i = get_here_doc_cnt(meta);
 		while (i--)
 			unlink(p->here_doc_buffers[i]);
 	}
+	g_exit_status = status;
 	return (status);
 }
